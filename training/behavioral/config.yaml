@@ -1,0 +1,33 @@
+# Behavioral Bi-LSTM config.
+# NOTE: This pipeline is currently validated on SYNTHETIC data (see synthetic_data.py).
+# Real training requires Phase A pilot data. Swap the data source in train_bilstm.py
+# (use_synthetic: false) once phase_a/{train,val,test}.pkl exist.
+
+window:
+  window_length_ms: 30000      # 30-second affect window
+  bin_length_ms: 1000          # 1-second sub-aggregation -> 30 timesteps
+
+model:
+  hidden_size: 64
+  n_layers: 1
+  n_classes: 4                 # Engaged / Bored / Confused / Frustrated
+  dropout: 0.3
+
+training:
+  epochs: 60
+  lr: 5.0e-4
+  weight_decay: 1.0e-4
+  batch_size: 32
+  early_stopping_patience: 12
+  class_weighting: true        # engaged dominates — always on
+  normalization: global_zscore # global z-score saved to behavioral_feature_stats.json
+
+data:
+  use_synthetic: true          # <- flip to false when Phase A data is available
+  synthetic_participants: 15
+  seed: 42
+
+labels: [Engaged, Bored, Confused, Frustrated]
+
+paths:
+  models: ../../models
