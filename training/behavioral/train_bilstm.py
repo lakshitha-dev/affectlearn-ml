@@ -49,7 +49,10 @@ def main():
     # ---- data ----
     if cfg["data"]["use_synthetic"]:
         print("=== SYNTHETIC data (pipeline validation / demo) ===")
-        windows = generate_dataset(cfg["data"]["synthetic_participants"], seed)
+        windows = generate_dataset(cfg["data"]["synthetic_participants"], seed,
+                                   cfg.get("synthetic", {}))
+        noisy = sum(w["label"] != w["true_label"] for w in windows)
+        print(f"  label noise: {noisy}/{len(windows)} windows have a wrong self-report")
     else:
         raise SystemExit("Phase A data path not implemented yet — set use_synthetic: true.")
 

@@ -27,6 +27,14 @@ data:
   synthetic_participants: 15
   seed: 42
 
+# Realism knobs for the synthetic generator (so it behaves like messy real data,
+# not artificially-separable toy data). Higher = harder / more realistic.
+synthetic:
+  class_overlap: 0.55          # 0 = perfectly distinct classes, 1 = indistinguishable
+  participant_noise: 0.45      # per-participant log-normal spread on behaviour params
+  label_noise: 0.15            # fraction of windows with a wrong self-report label
+  lazy_fraction: 0.13          # fraction of participants who mostly report "Engaged"
+
 labels: [Engaged, Bored, Confused, Frustrated]
 
 paths:
