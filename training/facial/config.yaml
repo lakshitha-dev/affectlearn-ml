@@ -15,14 +15,19 @@ model:
   num_layers: 1
   num_classes: 4          # 0=very low, 1=low, 2=high, 3=very high
   dropout: 0.5
+  backbone: resnet18      # scratch | resnet18 (ImageNet-pretrained)
 
 training:
   batch_size: 32          # 32 for T4, 64 for A100
-  epochs: 50
-  lr: 5.0e-4
+  epochs: 40
+  lr: 2.0e-4
   weight_decay: 1.0e-4
   focal_gamma: 2.0
-  early_stopping_patience: 10
+  balanced_sampling: true        # WeightedRandomSampler (sqrt) to counter class imbalance
+  freeze_backbone: true          # freeze ResNet18 except layer4 (anti-overfit)
+  # freeze_backbone_full: true   # (optional) freeze entire backbone, train LSTM+head only
+  # label_smoothing: 0.1         # (optional) extra regularisation
+  early_stopping_patience: 12
   mixed_precision: true
   num_workers: 2
 

@@ -123,8 +123,13 @@ def _clips_from_zip(zip_path: str, split: str):
         entries = [n for n in zf.namelist() if n.startswith(prefix) and n.endswith(".avi")]
         for entry in entries:
             clip_id = Path(entry).name
+            try:
+                data = zf.read(entry)
+            except Exception as e:
+                log.warning("Skipping unreadable zip entry %s: %s", entry, e)
+                continue
             with tempfile.NamedTemporaryFile(suffix=".avi", delete=False) as tmp:
-                tmp.write(zf.read(entry))
+                tmp.write(data)
                 tmp_path = tmp.name
             yield clip_id, tmp_path
             try:
