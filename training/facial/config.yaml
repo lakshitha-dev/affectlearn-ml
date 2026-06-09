@@ -6,6 +6,10 @@ paths:
   daisee_preprocessed: /content/daisee_preprocessed
   checkpoints: /content/drive/MyDrive/affectlearn-ml/models
   labels_dir: /content/drive/MyDrive/affectlearn-ml/data/DAiSEE/Labels
+  # MediaPipe blaze_face_short_range.tflite cache. If absent it is auto-downloaded
+  # from the same Google URL the browser loads at runtime. Put it on Drive so the
+  # download is not repeated on every runtime reset.
+  face_detector_model: /content/drive/MyDrive/affectlearn-ml/models/blaze_face_short_range.tflite
 
 model:
   input_size: 96
