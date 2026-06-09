@@ -1,0 +1,28 @@
+# Datasets
+data/
+!data/.gitkeep
+
+# Model artifacts
+models/*.pt
+models/*.onnx
+models/*.bin
+models/*.safetensors
+!models/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Notebook outputs
+.ipynb_checkpoints/
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
+
+# Colab / Drive sync artifacts
+*.tmp

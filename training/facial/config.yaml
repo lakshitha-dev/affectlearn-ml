@@ -1,0 +1,29 @@
+paths:
+  # Google Drive paths (used in Colab after mounting Drive)
+  daisee_zip: /content/drive/MyDrive/affectlearn-ml/data/DAiSEE.zip
+  daisee_raw: /content/drive/MyDrive/affectlearn-ml/data/DAiSEE
+  # Preprocessed goes to local Colab disk for fast I/O during training
+  daisee_preprocessed: /content/daisee_preprocessed
+  checkpoints: /content/drive/MyDrive/affectlearn-ml/models
+  labels_dir: /content/drive/MyDrive/affectlearn-ml/data/DAiSEE/Labels
+
+model:
+  input_size: 96
+  frames_per_clip: 16
+  cnn_out_dim: 512
+  hidden_size: 256
+  num_layers: 1
+  num_classes: 4          # 0=very low, 1=low, 2=high, 3=very high
+  dropout: 0.5
+
+training:
+  batch_size: 32          # 32 for T4, 64 for A100
+  epochs: 50
+  lr: 5.0e-4
+  weight_decay: 1.0e-4
+  focal_gamma: 2.0
+  early_stopping_patience: 10
+  mixed_precision: true
+  num_workers: 2
+
+target_affect: Engagement  # Boredom | Engagement | Confusion | Frustration

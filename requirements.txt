@@ -1,0 +1,31 @@
+# Core ML
+torch>=2.1
+torchvision>=0.16
+numpy>=1.26
+pandas>=2.1
+scikit-learn>=1.4
+
+# Facial pipeline
+opencv-python>=4.9
+mediapipe>=0.10
+pillow>=10.2
+
+# LLM fine-tuning
+transformers>=4.40
+peft>=0.10
+accelerate>=0.29
+bitsandbytes>=0.43
+datasets>=2.18
+
+# Evaluation
+scipy>=1.12
+matplotlib>=3.8
+seaborn>=0.13
+
+# Notebook
+jupyter>=1.0
+ipywidgets>=8.1
+
+# Utilities
+pyyaml>=6.0
+tqdm>=4.66
