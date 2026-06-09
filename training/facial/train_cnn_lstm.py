@@ -94,24 +94,54 @@ def train(cfg: dict):
 
     log.info("Train clips: %d  |  Val clips: %d", len(train_ds), len(val_ds))
 
-    train_loader = DataLoader(train_ds, batch_size=tcfg["batch_size"],
-                              shuffle=True,  num_workers=tcfg["num_workers"],
-                              pin_memory=True)
+    if tcfg.get("balanced_sampling", False):
+        labels_arr  = np.array(train_ds.labels)
+        class_count = np.bincount(labels_arr, minlength=4).astype(np.float64)
+        per_class_w = 1.0 / np.sqrt(np.maximum(class_count, 1.0))   # sqrt-balanced
+        sample_w    = per_class_w[labels_arr]
+        sampler     = torch.utils.data.WeightedRandomSampler(
+            torch.as_tensor(sample_w, dtype=torch.double), len(sample_w), replacement=True)
+        train_loader = DataLoader(train_ds, batch_size=tcfg["batch_size"],
+                                  sampler=sampler, num_workers=tcfg["num_workers"],
+                                  pin_memory=True)
+        log.info("Class-balanced sampling ON (sqrt). Class counts: %s", class_count.astype(int).tolist())
+    else:
+        train_loader = DataLoader(train_ds, batch_size=tcfg["batch_size"],
+                                  shuffle=True,  num_workers=tcfg["num_workers"],
+                                  pin_memory=True)
     val_loader   = DataLoader(val_ds,   batch_size=tcfg["batch_size"],
                               shuffle=False, num_workers=tcfg["num_workers"],
                               pin_memory=True)
 
     # ── model + loss ──────────────────────────────────────────────────────────
     model     = build_model(mcfg).to(device)
-    alpha     = train_ds.class_weights().to(device)
-    criterion = FocalLoss(gamma=tcfg["focal_gamma"], alpha=alpha)
+
+    # anti-overfit: freeze pretrained backbone (fully, or all-but-last-block)
+    if mcfg.get("backbone") == "resnet18" and tcfg.get("freeze_backbone_full", False):
+        for p in model.cnn.net.parameters():
+            p.requires_grad_(False)
+        log.info("Froze ENTIRE backbone (train LSTM + head only)")
+    elif mcfg.get("backbone") == "resnet18" and tcfg.get("freeze_backbone", False):
+        frozen = 0
+        for name, p in model.cnn.net.named_parameters():
+            if not name.startswith("layer4"):
+                p.requires_grad_(False); frozen += 1
+        log.info("Froze %d backbone tensors (layer4 + LSTM + head trainable)", frozen)
+
+    # with balanced sampling the loss must NOT also re-weight by class (double-correction)
+    ls = tcfg.get("label_smoothing", 0.0)
+    if tcfg.get("balanced_sampling", False):
+        criterion = FocalLoss(gamma=tcfg["focal_gamma"], alpha=None, label_smoothing=ls)
+    else:
+        criterion = FocalLoss(gamma=tcfg["focal_gamma"], alpha=train_ds.class_weights().to(device), label_smoothing=ls)
 
     total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
     log.info("Model parameters: %s", f"{total_params:,}")
 
     # ── optimiser + scheduler ─────────────────────────────────────────────────
     optimiser = torch.optim.AdamW(
-        model.parameters(), lr=tcfg["lr"], weight_decay=tcfg["weight_decay"]
+        [p for p in model.parameters() if p.requires_grad],
+        lr=tcfg["lr"], weight_decay=tcfg["weight_decay"]
     )
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
         optimiser, T_max=tcfg["epochs"]

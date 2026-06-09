@@ -32,6 +32,12 @@ def _random_brightness(clip: np.ndarray, delta: float = 0.2) -> np.ndarray:
     return np.clip(clip + shift, -3.0, 3.0)  # stay within sane normalised range
 
 
+def _random_contrast(clip: np.ndarray, lo: float = 0.8, hi: float = 1.2) -> np.ndarray:
+    """Multiplicative contrast jitter in normalised space."""
+    factor = np.random.uniform(lo, hi)
+    return np.clip(clip * factor, -3.0, 3.0)
+
+
 # ── dataset ───────────────────────────────────────────────────────────────────
 
 class DAiSEEDataset(Dataset):
@@ -88,7 +94,8 @@ class DAiSEEDataset(Dataset):
 
         if self.augment:
             clip = _random_hflip(clip)
-            clip = _random_brightness(clip)
+            clip = _random_brightness(clip, delta=0.3)
+            clip = _random_contrast(clip)
 
         return torch.from_numpy(clip.copy()), self.labels[idx]
 
@@ -99,6 +106,6 @@ class DAiSEEDataset(Dataset):
         """
         counts = np.bincount(self.labels, minlength=4).astype(np.float64)
         counts = np.maximum(counts, 1.0)          # avoid division by zero
-        w = 1.0 / counts
+        w = 1.0 / np.sqrt(counts)                 # sqrt-inverse-freq (softer than 1/counts)
         w = w / w.sum() * 4.0                     # normalise so weights sum to 4
         return torch.tensor(w, dtype=torch.float32)
