@@ -71,6 +71,7 @@ class DAiSEEDataset(Dataset):
         label_map: dict[str, int] = {}
         with open(label_csv, newline="") as f:
             for row in csv.DictReader(f):
+                row = {k.strip(): v for k, v in row.items()}   # DAiSEE CSV has a "Frustration " header
                 label_map[row["ClipID"].strip()] = int(row[target])
 
         clip_dir = Path(preprocessed_dir) / split
