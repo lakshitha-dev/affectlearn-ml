@@ -26,8 +26,8 @@ import torch.nn.functional as F
 
 # allow running from any working directory
 sys.path.insert(0, str(Path(__file__).parent))
-from model      import build_model                          # noqa: E402
-from preprocess import crop_face, normalize, FRAMES_PER_CLIP  # noqa: E402
+from model      import build_model                                         # noqa: E402
+from preprocess import crop_face, normalize, FRAMES_PER_CLIP, _get_cascade  # noqa: E402
 
 CLASS_NAMES = ["Very Low", "Low", "High", "Very High"]
 COLORS = [(0, 0, 255), (0, 165, 255), (0, 200, 0), (0, 255, 0)]  # BGR per class
@@ -87,6 +87,17 @@ def main():
 
             # ---- overlay ----
             color = COLORS[CLASS_NAMES.index(label)] if label in CLASS_NAMES else (200, 200, 200)
+
+            # face bounding box (same detector the model crops with)
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            faces = _get_cascade().detectMultiScale(gray, scaleFactor=1.1,
+                                                    minNeighbors=4, minSize=(48, 48))
+            if len(faces):
+                x, y, w, h = max(faces, key=lambda f: f[2] * f[3])
+                cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
+                cv2.putText(frame, f"{label} {conf*100:.0f}%", (x, max(22, y - 8)),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
+
             cv2.rectangle(frame, (0, 0), (frame.shape[1], 40), (0, 0, 0), -1)
             cv2.putText(frame, f"{target}: {label}  {conf*100:4.1f}%", (10, 28),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.8, color, 2)
