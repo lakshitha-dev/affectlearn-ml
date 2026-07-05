@@ -25,7 +25,12 @@ class WindowDataset(Dataset):
 
 
 def windows_to_arrays(windows):
-    X = np.stack([extract_features(w["events"], 0) for w in windows])   # (N, T, F)
+    if windows and "features" in windows[0]:
+        # Real Phase A windows already carry the backend-computed aggregate feature window
+        # (train/serve parity by construction — see phase_a.py). Do NOT re-extract.
+        X = np.stack([np.asarray(w["features"], dtype=np.float32) for w in windows])
+    else:
+        X = np.stack([extract_features(w["events"], 0) for w in windows])   # (N, T, F)
     y = np.array([w["label_idx"] for w in windows], dtype=np.int64)
     pid = np.array([w["participant"] for w in windows])
     return X, y, pid

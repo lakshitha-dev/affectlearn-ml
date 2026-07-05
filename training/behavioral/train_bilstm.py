@@ -54,7 +54,19 @@ def main():
         noisy = sum(w["label"] != w["true_label"] for w in windows)
         print(f"  label noise: {noisy}/{len(windows)} windows have a wrong self-report")
     else:
-        raise SystemExit("Phase A data path not implemented yet — set use_synthetic: true.")
+        from phase_a import load_phase_a_windows
+        export_path = cfg["data"]["phase_a_export"]
+        print(f"=== PHASE A real data ({export_path}) ===")
+        raw = json.load(open(export_path))
+        export_events = raw["items"] if isinstance(raw, dict) and "items" in raw else raw
+        windows = load_phase_a_windows(
+            export_events, propagate_ms=int(cfg["data"].get("label_propagate_ms", 0)))
+        if not windows:
+            raise SystemExit(
+                f"No labeled windows in {export_path}: need behavioral_affect_detected events "
+                "with a `features` payload joined to self_report labels. Is Phase A data present?")
+        print(f"  {len(windows)} labeled windows across "
+              f"{len({w['participant'] for w in windows})} participants")
 
     X, y, pid = windows_to_arrays(windows)
     print("Feature tensor:", X.shape, "(windows, timesteps, features)")

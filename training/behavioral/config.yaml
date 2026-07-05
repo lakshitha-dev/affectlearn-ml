@@ -26,6 +26,10 @@ data:
   use_synthetic: true          # <- flip to false when Phase A data is available
   synthetic_participants: 15
   seed: 42
+  # Real Phase A source (used when use_synthetic: false). Path to the platform research
+  # export JSON — the phase-a-dataset API page, or its `items` list. See phase_a.py.
+  phase_a_export: ../../data/phase_a/export.json
+  label_propagate_ms: 0        # 0 = self-reports only (clean); >0 = propagate label back N ms
 
 # Realism knobs for the synthetic generator (so it behaves like messy real data,
 # not artificially-separable toy data). Higher = harder / more realistic.
