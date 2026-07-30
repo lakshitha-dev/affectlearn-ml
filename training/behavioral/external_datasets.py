@@ -84,43 +84,48 @@ def load_dux(dux_dir: str) -> list[dict]:
     return windows
 
 
+def _norm(col) -> str:
+    """Normalise a column header for tolerant matching (EmoSurv headers vary: 'key Down' etc.)."""
+    return str(col).strip().lower().replace(" ", "").replace("_", "")
+
+
 def load_emosurv(emosurv_dir: str) -> list[dict]:
     """EmoSurv (IEEE DataPort) keystroke-only. Keyboard features populate; mouse/scroll stay 0.
 
-    EmoSurv ships per-keystroke timing with an emotion label (Anger/Happiness/Calmness/
-    Sadness/Neutral). It requires a free IEEE DataPort account to download, so this adapter is
-    written against the documented format and returns [] gracefully if the files are absent.
-    ⚠ CONFIRM the exact column names against the downloaded CSV and adjust `_COL` below.
+    Real EmoSurv per-keystroke schema (Fixed/Free Text Typing Dataset.csv):
+      User Id, Emotion Index (H/S/A/C/N), Index, Key Code, key Down, key Up, D1U1, ...
+    We use `key Down` as the timestamp, `Key Code` for the key, `Emotion Index` for the proxy
+    (N=Neutral -> proxy 0; H/S/A/C -> proxy 1). Requires a free IEEE DataPort account; returns
+    [] if the files are absent. LICENSE: non-commercial research only, no redistribution —
+    keep the files local (gitignored), never commit them.
     """
     d = Path(emosurv_dir)
     if not d.exists():
         return []
-    # Expected (confirm against the real file): one row per keystroke with a press timestamp,
-    # the key, a subject id, and an emotion label. Adjust these names to the actual columns.
-    _COL = {"subject": "subject", "timestamp": "press_time", "key": "key", "emotion": "emotion"}
+    # the per-keystroke typing files (skip the Frequency / Participants files)
+    files = [f for f in d.glob("*.csv") if "typing" in f.name.lower()] or list(d.glob("*.csv"))
     windows = []
-    for f in sorted(d.glob("*.csv")):
+    for f in sorted(files):
         try:
             raw = pd.read_csv(f)
         except Exception:
             continue
-        if not set(_COL.values()).issubset(raw.columns):
-            continue  # columns don't match the assumption — skip (adjust _COL and re-run)
-        raw = raw.rename(columns={v: k for k, v in _COL.items()})
-        raw["ts"] = pd.to_numeric(raw["timestamp"], errors="coerce")
-        raw["type"] = "key"
-        raw["x"] = 0.0; raw["y"] = 0.0                        # keystroke-only -> no mouse
-        raw["key"] = np.where(raw["key"].astype(str).str.lower().isin(["backspace", "back_space"]),
-                              "Backspace", "a")
-        raw["dy"] = 0.0
+        cmap = {_norm(c): c for c in raw.columns}
+        if not all(k in cmap for k in ("userid", "emotionindex", "keycode", "keydown")):
+            continue  # not the per-keystroke EmoSurv schema (e.g. Frequency file) — skip
+        raw = raw.rename(columns={cmap["userid"]: "userid", cmap["emotionindex"]: "emotion",
+                                  cmap["keycode"]: "keycode", cmap["keydown"]: "keydown"})
+        raw["ts"] = pd.to_numeric(raw["keydown"], errors="coerce")
+        raw["type"] = "key"; raw["x"] = 0.0; raw["y"] = 0.0; raw["dy"] = 0.0  # keystroke-only
+        bs = raw["keycode"].astype(str).str.strip().str.lower().isin(
+            ["backspace", "back_space", "back", "8"])
+        raw["key"] = np.where(bs, "Backspace", "a")
         raw = raw.dropna(subset=["ts"])
-        for (subj, emo), g in raw.groupby(["subject", "emotion"]):
+        for (uid, emo), g in raw.groupby(["userid", "emotion"]):
             g = g.sort_values("ts").reset_index(drop=True)
-            # neutral emotion -> signal 100 (proxy 0); any other emotion -> 0 (proxy 1), via the
-            # same <cutoff logic _windows_from_session uses for DUX.
-            neutral_val = 100.0 if str(emo).lower() == "neutral" else 0.0
+            neutral_val = 100.0 if str(emo).strip().upper() in ("N", "NEUTRAL") else 0.0
             windows += _windows_from_session(
-                g[["ts", "type", "x", "y", "key", "dy"]], f"emosurv_{subj}",
+                g[["ts", "type", "x", "y", "key", "dy"]], f"emosurv_{uid}",
                 np.full(len(g), neutral_val))
     return windows
 

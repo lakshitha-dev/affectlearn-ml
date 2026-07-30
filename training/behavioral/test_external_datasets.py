@@ -48,12 +48,13 @@ def test_dux_adapter_produces_valid_windows():
 
 def test_emosurv_adapter_keyboard_only():
     with tempfile.TemporaryDirectory() as d:
-        rows = ["subject,press_time,key,emotion"]
+        # real EmoSurv per-keystroke schema (Emotion Index N/H/S/A/C; key Down = timestamp)
+        rows = ["User Id,Emotion Index,Index,Key Code,key Down,key Up"]
         base = 500_000
         for i in range(8):
-            rows.append(f"S1,{base + i * 1000},a,Neutral")
-        rows.append(f"S1,{base + 8500},backspace,Neutral")
-        Path(d, "emosurv.csv").write_text("\n".join(rows))
+            rows.append(f"S1,N,{i},a,{base + i * 1000},{base + i * 1000 + 50}")
+        rows.append(f"S1,N,8,Backspace,{base + 8500},{base + 8550}")
+        Path(d, "Fixed Text Typing Dataset.csv").write_text("\n".join(rows))
         w = load_emosurv(d)
     assert len(w) >= 1
     feats = extract_features(w[0]["events"], 0)
