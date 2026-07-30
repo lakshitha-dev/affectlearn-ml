@@ -48,12 +48,12 @@ def test_dux_adapter_produces_valid_windows():
 
 def test_emosurv_adapter_keyboard_only():
     with tempfile.TemporaryDirectory() as d:
-        # real EmoSurv per-keystroke schema (Emotion Index N/H/S/A/C; key Down = timestamp)
-        rows = ["User Id,Emotion Index,Index,Key Code,key Down,key Up"]
-        base = 500_000
-        for i in range(8):
-            rows.append(f"S1,N,{i},a,{base + i * 1000},{base + i * 1000 + 50}")
-        rows.append(f"S1,N,8,Backspace,{base + 8500},{base + 8550}")
+        # real EmoSurv schema: ';'-separated, emotionIndex N/H/S/A/C, timeline from D1D2
+        # (keyDown is mangled scientific notation and deliberately unused).
+        rows = ["userId;emotionIndex;index;keyCode;keyDown;keyUp;D1U1;D1U2;D1D2;U1D2;U1U2;D1U3;D1D3;answer"]
+        for i in range(10):
+            rows.append(f"100;N;{i};a;1,58E+12;1,58E+12;90;200;300;100;150;400;350;R")
+        rows.append("100;N;10;Backspace;1,58E+12;1,58E+12;90;200;300;100;150;400;350;R")
         Path(d, "Fixed Text Typing Dataset.csv").write_text("\n".join(rows))
         w = load_emosurv(d)
     assert len(w) >= 1

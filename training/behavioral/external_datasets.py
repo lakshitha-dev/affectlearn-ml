@@ -92,12 +92,14 @@ def _norm(col) -> str:
 def load_emosurv(emosurv_dir: str) -> list[dict]:
     """EmoSurv (IEEE DataPort) keystroke-only. Keyboard features populate; mouse/scroll stay 0.
 
-    Real EmoSurv per-keystroke schema (Fixed/Free Text Typing Dataset.csv):
-      User Id, Emotion Index (H/S/A/C/N), Index, Key Code, key Down, key Up, D1U1, ...
-    We use `key Down` as the timestamp, `Key Code` for the key, `Emotion Index` for the proxy
-    (N=Neutral -> proxy 0; H/S/A/C -> proxy 1). Requires a free IEEE DataPort account; returns
-    [] if the files are absent. LICENSE: non-commercial research only, no redistribution —
-    keep the files local (gitignored), never commit them.
+    Real EmoSurv per-keystroke schema (Fixed/Free Text Typing Dataset.csv, ';'-separated,
+    European decimal comma): userId, emotionIndex (H/S/A/C/N), index, keyCode, keyDown, keyUp,
+    D1U1, D1U2, D1D2, ... We do NOT use `keyDown` — the CSV export mangles the absolute
+    timestamp into 3-sig-fig scientific notation (e.g. `1,58E+12`), destroying ms precision.
+    Instead we reconstruct the key-down timeline by cumulatively summing `D1D2` (the down-to-
+    down inter-key interval, in ms). `Key Code` -> key; `emotionIndex` -> proxy (N -> 0, else
+    1). Requires a free IEEE DataPort account. LICENSE: non-commercial research only, NO
+    redistribution — keep the files local (gitignored), never commit them.
     """
     d = Path(emosurv_dir)
     if not d.exists():
@@ -107,22 +109,32 @@ def load_emosurv(emosurv_dir: str) -> list[dict]:
     windows = []
     for f in sorted(files):
         try:
-            raw = pd.read_csv(f)
+            raw = pd.read_csv(f, sep=None, engine="python", dtype=str)   # auto-detect ',' or ';'
         except Exception:
             continue
         cmap = {_norm(c): c for c in raw.columns}
-        if not all(k in cmap for k in ("userid", "emotionindex", "keycode", "keydown")):
+        if not all(k in cmap for k in ("userid", "emotionindex", "keycode", "d1d2")):
             continue  # not the per-keystroke EmoSurv schema (e.g. Frequency file) — skip
-        raw = raw.rename(columns={cmap["userid"]: "userid", cmap["emotionindex"]: "emotion",
-                                  cmap["keycode"]: "keycode", cmap["keydown"]: "keydown"})
-        raw["ts"] = pd.to_numeric(raw["keydown"], errors="coerce")
-        raw["type"] = "key"; raw["x"] = 0.0; raw["y"] = 0.0; raw["dy"] = 0.0  # keystroke-only
+        ren = {cmap["userid"]: "userid", cmap["emotionindex"]: "emotion",
+               cmap["keycode"]: "keycode", cmap["d1d2"]: "gap"}
+        if "index" in cmap:
+            ren[cmap["index"]] = "kindex"
+        raw = raw.rename(columns=ren)
+        # down-to-down interval in ms (handle European decimal comma); cap pauses at 5s
+        raw["gap"] = (pd.to_numeric(raw["gap"].astype(str).str.replace(",", ".", regex=False),
+                                    errors="coerce").fillna(0.0).clip(lower=0, upper=5_000))
+        if "kindex" in raw.columns:
+            raw["kindex"] = pd.to_numeric(raw["kindex"], errors="coerce")
         bs = raw["keycode"].astype(str).str.strip().str.lower().isin(
             ["backspace", "back_space", "back", "8"])
+        raw["type"] = "key"; raw["x"] = 0.0; raw["y"] = 0.0; raw["dy"] = 0.0  # keystroke-only
         raw["key"] = np.where(bs, "Backspace", "a")
-        raw = raw.dropna(subset=["ts"])
         for (uid, emo), g in raw.groupby(["userid", "emotion"]):
-            g = g.sort_values("ts").reset_index(drop=True)
+            g = g.sort_values("kindex") if "kindex" in g.columns else g
+            g = g.reset_index(drop=True)
+            gaps = g["gap"].to_numpy(dtype=float)
+            ts = np.concatenate([[0.0], np.cumsum(gaps)[:-1]]) if len(gaps) else np.array([])
+            g = g.assign(ts=ts)
             neutral_val = 100.0 if str(emo).strip().upper() in ("N", "NEUTRAL") else 0.0
             windows += _windows_from_session(
                 g[["ts", "type", "x", "y", "key", "dy"]], f"emosurv_{uid}",
