@@ -23,7 +23,7 @@ from torch.utils.data import DataLoader
 sys.path.insert(0, str(Path(__file__).parent))
 from feature_engineering import FEATURE_NAMES, N_FEATURES
 from synthetic_data import generate_dataset, LABELS
-from model import build_model
+from model import build_model, load_pretrained_lstm, freeze_lstm
 from dataset import (WindowDataset, windows_to_arrays, split_by_participant,
                      fit_zscore, apply_zscore)
 import data_quality
@@ -34,6 +34,58 @@ def evaluate(model, X, y, device):
     with torch.no_grad():
         logits = model(torch.tensor(X, dtype=torch.float32, device=device))
         return logits.argmax(1).cpu().numpy()
+
+
+def train_eval(cfg, Xtr, ytr, Xva, yva, Xte, yte, pid_te, labels, device, class_w,
+               *, pretrained_ckpt=None, freeze_epochs=0, tag="main"):
+    """Build → (optionally load pretrained encoder + freeze) → train → test-eval.
+
+    Returns (model, test_macro_f1). Run once normally, or twice (scratch vs pretrained) for
+    the transfer-learning ablation. Prints per-arm metrics + per-participant accuracy.
+    """
+    model = build_model(cfg["model"], N_FEATURES).to(device)
+    src = "scratch"
+    if pretrained_ckpt and load_pretrained_lstm(model, str(Path(__file__).parent / pretrained_ckpt)):
+        src = "pretrained"
+        if freeze_epochs > 0:
+            freeze_lstm(model, True)
+    print(f"\n[{tag}] init={src}  params={sum(p.numel() for p in model.parameters()):,}"
+          + (f"  (encoder frozen for first {freeze_epochs} epochs)"
+             if src == "pretrained" and freeze_epochs else ""))
+    opt = torch.optim.AdamW(model.parameters(), lr=cfg["training"]["lr"],
+                            weight_decay=cfg["training"]["weight_decay"])
+    crit = nn.CrossEntropyLoss(weight=class_w)
+    loader = DataLoader(WindowDataset(Xtr, ytr), batch_size=cfg["training"]["batch_size"], shuffle=True)
+
+    best_f1, best_state, patience = -1.0, None, 0
+    for epoch in range(1, cfg["training"]["epochs"] + 1):
+        if src == "pretrained" and freeze_epochs and epoch == freeze_epochs + 1:
+            freeze_lstm(model, False); print(f"[{tag}] unfroze encoder @ epoch {epoch}")
+        model.train()
+        for xb, yb in loader:
+            xb, yb = xb.to(device), yb.to(device)
+            opt.zero_grad(); loss = crit(model(xb), yb); loss.backward(); opt.step()
+        vf1 = f1_score(yva, evaluate(model, Xva, yva, device), average="macro", zero_division=0)
+        if vf1 > best_f1:
+            best_f1, best_state, patience = vf1, {k: v.cpu().clone() for k, v in model.state_dict().items()}, 0
+        else:
+            patience += 1
+        if epoch % 10 == 0 or epoch == 1:
+            print(f"[{tag}]  epoch {epoch:2d}  loss={loss.item():.3f}  val_macroF1={vf1:.3f}")
+        if patience >= cfg["training"]["early_stopping_patience"]:
+            print(f"[{tag}]  early stop @ epoch {epoch}"); break
+
+    model.load_state_dict(best_state)
+    pred = evaluate(model, Xte, yte, device)
+    tf1 = f1_score(yte, pred, average="macro", zero_division=0)
+    print(f"[{tag}] TEST (held-out participants): accuracy={(pred==yte).mean():.3f}  "
+          f"weighted F1={f1_score(yte,pred,average='weighted',zero_division=0):.3f}  macro F1={tf1:.3f}")
+    print(classification_report(yte, pred, labels=list(range(len(labels))),
+                                target_names=labels, zero_division=0))
+    print("confusion (rows=true):\n", confusion_matrix(yte, pred, labels=list(range(len(labels)))))
+    print("per-participant accuracy:",
+          {p: round(float((pred[pid_te == p] == yte[pid_te == p]).mean()), 2) for p in sorted(set(pid_te))})
+    return model, tf1
 
 
 def main():
@@ -86,45 +138,28 @@ def main():
     w = w / w.sum() * len(labels)
     class_w = torch.tensor(w, dtype=torch.float32, device=device)
 
-    model = build_model(cfg["model"], N_FEATURES).to(device)
-    print("Model params:", f"{sum(p.numel() for p in model.parameters()):,}")
-    opt = torch.optim.AdamW(model.parameters(), lr=cfg["training"]["lr"],
-                            weight_decay=cfg["training"]["weight_decay"])
-    crit = nn.CrossEntropyLoss(weight=class_w)
-    loader = DataLoader(WindowDataset(Xtr, ytr), batch_size=cfg["training"]["batch_size"], shuffle=True)
+    # ---- train (transfer-learning aware): pretrain-then-fine-tune + optional ablation ----
+    pcfg = cfg.get("pretrain", {})
+    ckpt = pcfg.get("checkpoint")
+    freeze = int(pcfg.get("freeze_lstm_epochs", 0))
+    have_ckpt = bool(ckpt) and (Path(__file__).parent / ckpt).exists()
+    use_pre = (not cfg["data"]["use_synthetic"]) and bool(pcfg.get("enabled")) and have_ckpt
+    if (not cfg["data"]["use_synthetic"]) and pcfg.get("enabled") and not have_ckpt:
+        print(f"  (pretrain enabled but checkpoint '{ckpt}' not found → training from scratch; "
+              "run pretrain_bilstm.py first)")
+    args_te = (Xtr, ytr, Xva, yva, Xte, yte, pid[te], labels, device, class_w)
 
-    best_f1, best_state, patience = -1.0, None, 0
-    for epoch in range(1, cfg["training"]["epochs"] + 1):
-        model.train()
-        for xb, yb in loader:
-            xb, yb = xb.to(device), yb.to(device)
-            opt.zero_grad()
-            loss = crit(model(xb), yb)
-            loss.backward(); opt.step()
-        val_pred = evaluate(model, Xva, yva, device)
-        vf1 = f1_score(yva, val_pred, average="macro", zero_division=0)
-        if vf1 > best_f1:
-            best_f1, best_state, patience = vf1, {k: v.cpu().clone() for k, v in model.state_dict().items()}, 0
-        else:
-            patience += 1
-        if epoch % 10 == 0 or epoch == 1:
-            print(f"  epoch {epoch:2d}  loss={loss.item():.3f}  val_macroF1={vf1:.3f}")
-        if patience >= cfg["training"]["early_stopping_patience"]:
-            print(f"  early stop @ epoch {epoch}"); break
-
-    model.load_state_dict(best_state)
-
-    # ---- test eval (held-out participants) ----
-    pred = evaluate(model, Xte, yte, device)
-    print("\n=== TEST (held-out participants) ===")
-    print(f"  accuracy={ (pred==yte).mean():.3f}  weighted F1={f1_score(yte,pred,average='weighted',zero_division=0):.3f}"
-          f"  macro F1={f1_score(yte,pred,average='macro',zero_division=0):.3f}")
-    print(classification_report(yte, pred, labels=list(range(len(labels))),
-                                target_names=labels, zero_division=0))
-    print("confusion (rows=true):\n", confusion_matrix(yte, pred, labels=list(range(len(labels)))))
-    pid_te = pid[te]
-    print("per-participant accuracy:",
-          {p: round(float((pred[pid_te == p] == yte[pid_te == p]).mean()), 2) for p in sorted(set(pid_te))})
+    if use_pre and pcfg.get("ablation"):
+        print("\n=== ABLATION: from-scratch vs pretrained-then-fine-tuned (same held-out participants) ===")
+        _, f1_scratch = train_eval(cfg, *args_te, pretrained_ckpt=None, tag="scratch")
+        model, f1_pre = train_eval(cfg, *args_te, pretrained_ckpt=ckpt, freeze_epochs=freeze, tag="pretrained")
+        print(f"\n>>> ABLATION: scratch macroF1={f1_scratch:.3f} | pretrained macroF1={f1_pre:.3f} "
+              f"| delta={f1_pre - f1_scratch:+.3f}  (report both; deploy pretrained only if delta > 0)")
+    else:
+        model, _ = train_eval(cfg, *args_te,
+                              pretrained_ckpt=(ckpt if use_pre else None),
+                              freeze_epochs=(freeze if use_pre else 0),
+                              tag=("pretrained" if use_pre else "scratch"))
 
     # ---- save artifacts ----
     out = Path(__file__).parent / cfg["paths"]["models"]
