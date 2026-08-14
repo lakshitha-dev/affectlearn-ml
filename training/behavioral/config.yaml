@@ -31,6 +31,19 @@ data:
   phase_a_export: ../../data/phase_a/export.json
   label_propagate_ms: 0        # 0 = self-reports only (clean); >0 = propagate label back N ms
 
+  # How real windows get their labels.
+  #   selfreport -> phase_a.load_phase_a_windows: one self-report labels the single window that
+  #                 preceded it. Clean provenance, but a single-subject pass yields well under a
+  #                 dozen labels, which cannot train anything.
+  #   codebook   -> codebook_labels.load_codebook_windows: label every window by its section's
+  #                 DESIGNED affect (AFFECT_SECTION_CODEBOOK.md), keeping a section only where the
+  #                 learner's own report agrees. ~426 windows from one pass. Labels are WEAK
+  #                 (design-assigned) and the per-class agreement rate is itself a reportable
+  #                 manipulation check.
+  labelling: codebook
+  codebook: ../../data/codebook.json
+  require_agreement: true      # false = design labels only; higher yield, weaker claim
+
 # Realism knobs for the synthetic generator (so it behaves like messy real data,
 # not artificially-separable toy data). Higher = harder / more realistic.
 synthetic:

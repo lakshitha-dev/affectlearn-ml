@@ -27,7 +27,8 @@ from sklearn.metrics import f1_score
 from torch.utils.data import DataLoader
 
 sys.path.insert(0, str(Path(__file__).parent))
-from dataset import WindowDataset, windows_to_arrays, split_by_participant, fit_zscore, apply_zscore
+from dataset import (WindowDataset, windows_to_arrays, split_by_participant_stratified,
+                     fit_zscore, apply_zscore)
 from external_datasets import load_external_windows, PROXY_LABELS
 from feature_engineering import N_FEATURES
 from model import build_model
@@ -65,7 +66,11 @@ def main():
     X, y, pid = windows_to_arrays(windows)
     print("Feature tensor:", X.shape, "| proxy class counts:", np.bincount(y).tolist())
 
-    tr, va, te, groups = split_by_participant(pid, seed)
+    # Stratified even though the proxy task is binary: EmoSurv/DUX participant groups are uneven,
+    # and an empty class in val would break early stopping here exactly as it does downstream.
+    tr, va, te, groups, split_warnings = split_by_participant_stratified(pid, y, seed)
+    for w_msg in split_warnings:
+        print(f"  WARNING split: {w_msg}")
     mean, std = fit_zscore(X[tr])
     Xtr, Xva = apply_zscore(X[tr], mean, std), apply_zscore(X[va], mean, std)
     ytr, yva = y[tr], y[va]
@@ -94,12 +99,52 @@ def main():
             print(f"  epoch {epoch:2d}  loss={loss.item():.3f}  proxy val_macroF1={vf1:.3f}")
 
     model.load_state_dict(best_state)
+
+    # ---- HELD-OUT test fold -------------------------------------------------------------
+    # `best_f1` above is the VALIDATION score the checkpoint was SELECTED on, so it is
+    # optimistically biased and must not be quoted as the model's performance. The split already
+    # reserves a test fold of participants that were never trained on and never selected on; it
+    # was being discarded. Score it, because the difference between the two numbers is exactly the
+    # selection bias.
+    sys.path.insert(0, str(Path(__file__).parents[2] / "evaluation"))
+    from confusion_matrix import compute, summary          # noqa: E402
+    from predictions import Predictions                     # noqa: E402
+
+    test_metrics = None
+    if te.any():
+        Xte = apply_zscore(X[te], mean, std)
+        model.eval()
+        with torch.no_grad():
+            logits = model(torch.tensor(Xte, dtype=torch.float32, device=device))
+            prob = torch.softmax(logits, dim=1).cpu().numpy()
+        preds = Predictions(y[te], prob.argmax(axis=1), list(PROXY_LABELS), y_prob=prob,
+                            groups=pid[te])
+        test_metrics = compute(preds)
+        print(f"\n=== HELD-OUT TEST ({int(te.sum())} windows, "
+              f"{len(set(pid[te].tolist()))} participants never seen in training) ===")
+        print(summary(test_metrics))
+        print(f"\n  selection bias: val macro-F1 {best_f1:.3f} (selected on) vs test "
+              f"{test_metrics['macro_f1']:.3f} (honest)")
+    else:
+        print("\n  WARNING: no test fold — cannot report an unbiased score")
+
     out = Path(__file__).parent / pcfg["checkpoint"]
     out.parent.mkdir(parents=True, exist_ok=True)
     torch.save({"model_state": model.state_dict(), "proxy": pcfg.get("proxy", "arousal"),
-                "n_features": N_FEATURES, "note": "encoder pretrained on EmoSurv+DUX proxy task"},
+                "n_features": N_FEATURES, "note": "encoder pretrained on EmoSurv+DUX proxy task",
+                "provenance": {
+                    "trained_on": "real:EmoSurv+DUX (binary arousal proxy)",
+                    "reportable": False,      # DATASET_CARD honesty rule 3
+                    "n_windows": int(len(y)), "n_participants": int(len(set(pid.tolist()))),
+                    "val_macro_f1_selected_on": float(best_f1),
+                    "test_macro_f1": None if test_metrics is None else test_metrics["macro_f1"],
+                    "test_accuracy": None if test_metrics is None else test_metrics["accuracy"],
+                }},
                out)
-    print(f"saved pretrained encoder -> {out.resolve()}  (best proxy val macroF1={best_f1:.3f})")
+    print(f"\nsaved pretrained encoder -> {out.resolve()}")
+    print("  NOTE: this is a BINARY AROUSAL PROXY on non-learning tasks, not the four learning")
+    print("  states. Per DATASET_CARD honesty rule 3 it is a checkpoint-quality indicator and")
+    print("  must NEVER be cited as a finding. Its only job is to initialise the encoder.")
     print("PRETRAIN DONE")
 
 

@@ -21,11 +21,11 @@ from sklearn.metrics import f1_score, classification_report, confusion_matrix
 from torch.utils.data import DataLoader
 
 sys.path.insert(0, str(Path(__file__).parent))
-from feature_engineering import FEATURE_NAMES, N_FEATURES
+from feature_engineering import FEATURE_NAMES, FEATURE_SCHEMA_VERSION, N_FEATURES
 from synthetic_data import generate_dataset, LABELS
 from model import build_model, load_pretrained_lstm, freeze_lstm
-from dataset import (WindowDataset, windows_to_arrays, split_by_participant,
-                     fit_zscore, apply_zscore)
+from dataset import (WindowDataset, windows_to_arrays, split_by_participant_stratified,
+                     assert_all_classes_present, fit_zscore, apply_zscore)
 import data_quality
 
 
@@ -106,27 +106,82 @@ def main():
         noisy = sum(w["label"] != w["true_label"] for w in windows)
         print(f"  label noise: {noisy}/{len(windows)} windows have a wrong self-report")
     else:
-        from phase_a import load_phase_a_windows
         export_path = cfg["data"]["phase_a_export"]
-        print(f"=== PHASE A real data ({export_path}) ===")
+        labelling = str(cfg["data"].get("labelling", "selfreport")).lower()
+        print(f"=== PHASE A real data ({export_path}, labelling={labelling}) ===")
         raw = json.load(open(export_path))
-        export_events = raw["items"] if isinstance(raw, dict) and "items" in raw else raw
-        windows = load_phase_a_windows(
-            export_events, propagate_ms=int(cfg["data"].get("label_propagate_ms", 0)))
-        if not windows:
-            raise SystemExit(
-                f"No labeled windows in {export_path}: need behavioral_affect_detected events "
-                "with a `features` payload joined to self_report labels. Is Phase A data present?")
+
+        if labelling == "codebook":
+            # Label every window by its section's DESIGNED affect, with the learner's self-report
+            # demoted to a per-section manipulation check. Self-report-only labelling yields well
+            # under a dozen labels for a single-subject pass (a prompt every N section completions,
+            # a fraction omitted, neutral/skips dropped, one report labelling one window), which is
+            # unusable; the codebook scheme yields hundreds. The labels are consequently WEAK
+            # (design-assigned) and must be reported as such — see codebook_labels.py.
+            from codebook_labels import load_codebook, load_codebook_windows, summarise
+            book = load_codebook(cfg["data"].get("codebook", "../../data/codebook.json"))
+            result = load_codebook_windows(
+                raw, book,
+                require_agreement=bool(cfg["data"].get("require_agreement", True)),
+            )
+            print(summarise(result))
+            windows = result["windows"]
+            if not windows:
+                raise SystemExit(
+                    f"No labelled windows from {export_path} under codebook labelling. Check that "
+                    "the export contains section_completed events and that section titles match "
+                    "the codebook (join is by TITLE, not id)."
+                )
+        else:
+            from phase_a import load_phase_a_windows
+            export_events = raw["items"] if isinstance(raw, dict) and "items" in raw else raw
+            windows = load_phase_a_windows(
+                export_events, propagate_ms=int(cfg["data"].get("label_propagate_ms", 0)))
+            if not windows:
+                raise SystemExit(
+                    f"No labeled windows in {export_path}: need behavioral_affect_detected events "
+                    "with a `features` payload joined to self_report labels. Is Phase A data "
+                    "present? For a single-subject pass, try labelling: codebook.")
         print(f"  {len(windows)} labeled windows across "
-              f"{len({w['participant'] for w in windows})} participants")
+              f"{len({w['participant'] for w in windows})} groups")
 
     X, y, pid = windows_to_arrays(windows)
     print("Feature tensor:", X.shape, "(windows, timesteps, features)")
     print("Data quality:")
     data_quality.report(y, pid, labels)
 
-    tr, va, te, groups = split_by_participant(pid, seed)
-    print(f"Split by participant -> train {groups[0]} | val {groups[1]} | test {groups[2]}")
+    # STRATIFIED group split. A uniform group shuffle loses a whole class from a fold on most
+    # seeds when group counts per class are uneven — measured 17/20 seeds for the real codebook
+    # distribution (engaged 26 / confused 9 / bored 7 / frustrated 5 sections), and the default
+    # seed 42 leaves validation with no bored and no frustrated windows at all. An absent class
+    # caps macro-F1 at (k-1)/k and makes early stopping select on a class it cannot see.
+    tr, va, te, groups, split_warnings = split_by_participant_stratified(pid, y, seed)
+    for w_msg in split_warnings:
+        print(f"  WARNING split: {w_msg}")
+    print(f"Stratified group split -> train {groups[0]} | val {groups[1]} | test {groups[2]}")
+    try:
+        assert_all_classes_present(y, (tr, va, te), n_classes=len(labels))
+    except ValueError as exc:
+        # Refuse to train rather than report a capped macro-F1 from an early-stopping run that
+        # was blind to a class. Most often this means a class survived into too FEW GROUPS to
+        # support a three-way split — under codebook labelling with the strict manipulation check,
+        # Frustrated is the usual casualty (5 designed sections, and only those whose self-report
+        # agreed survive). The remedies below are ordered cheapest-first.
+        counts = {labels[c]: int((y == c).sum()) for c in range(len(labels))}
+        n_groups = {labels[c]: len(set(pid[y == c].tolist())) for c in range(len(labels))}
+        print("\nSPLIT REJECTED —", exc)
+        print(f"  windows per class: {counts}")
+        print(f"  GROUPS  per class: {n_groups}   <- a class needs >= 3 to reach all three folds")
+        print("\n  Remedies, cheapest first:")
+        print("    1. data.require_agreement: false  — design-assigned labels only. Keeps every")
+        print("       designed section, so the thin class regains its groups. Higher yield, weaker")
+        print("       claim; report the agreement rate separately as the manipulation check.")
+        print("    2. Use the two-stage head (compare_models.py): stage 1 is engaged-vs-help and")
+        print("       is near-balanced, so it does not depend on the thinnest class at all.")
+        print("    3. Collect more sessions — the real fix, and the only one that adds information.")
+        print("    4. Report leave-one-section-out CV instead of a single split")
+        print("       (evaluation/cross_validation.py), which does not need a val fold per class.")
+        raise SystemExit(2) from None
 
     mean, std = fit_zscore(X[tr])
     Xtr, Xva, Xte = (apply_zscore(X[m], mean, std) for m in (tr, va, te))
@@ -162,12 +217,38 @@ def main():
                               tag=("pretrained" if use_pre else "scratch"))
 
     # ---- save artifacts ----
+    # PROVENANCE. Every artifact records what it was trained on, because nothing else on disk
+    # does and the copies drift: a pipeline-validation run on synthetic or rehearsal data writes
+    # to exactly the same filenames as a real run, so a checkpoint from random features is
+    # indistinguishable from a reportable one by inspection. `trained_on` makes it checkable —
+    # and anything other than `real` must never be deployed or reported.
+    if cfg["data"]["use_synthetic"]:
+        source, reportable = "synthetic", False
+    elif "rehearsal" in str(cfg["data"].get("phase_a_export", "")):
+        source, reportable = "rehearsal (RANDOM features — plumbing only)", False
+    else:
+        source, reportable = f"real:{cfg['data'].get('labelling', 'selfreport')}", True
+
+    provenance = {
+        "trained_on": source,
+        "reportable": reportable,
+        "feature_schema_version": FEATURE_SCHEMA_VERSION,
+        "n_windows": int(len(y)),
+        "n_groups": int(len(set(pid.tolist()))),
+        "class_counts": {labels[c]: int((y == c).sum()) for c in range(len(labels))},
+        "seed": seed,
+    }
+
     out = Path(__file__).parent / cfg["paths"]["models"]
     out.mkdir(parents=True, exist_ok=True)
-    torch.save({"model_state": model.state_dict(), "cfg": cfg,
+    torch.save({"model_state": model.state_dict(), "cfg": cfg, "provenance": provenance,
                 "feature_names": FEATURE_NAMES, "labels": labels}, out / "behavioral_bilstm_best.pt")
-    json.dump({"feature_names": FEATURE_NAMES, "mean": mean.tolist(), "std": std.tolist()},
+    json.dump({"feature_names": FEATURE_NAMES, "mean": mean.tolist(), "std": std.tolist(),
+               "provenance": provenance},
               open(out / "behavioral_feature_stats.json", "w"), indent=2)
+    if not reportable:
+        print(f"\n  *** these artifacts were trained on {source} — NOT deployable and NOT "
+              f"reportable. Retrain on real data before shipping. ***")
     dummy = torch.zeros(1, X.shape[1], N_FEATURES, device=device)
     torch.onnx.export(model, dummy, str(out / "behavioral_bilstm.onnx"), dynamo=False,
                       input_names=["window"], output_names=["logits"],
