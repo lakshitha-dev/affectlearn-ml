@@ -1,24 +1,23 @@
-"""Live webcam multi-affect prediction.
+"""Live webcam multi-affect prediction with CSV logging.
 
 Loads every available DAiSEE affect model (Engagement / Boredom / Confusion /
-Frustration) from a models directory and overlays each affect's predicted level
-on the live webcam feed, with a face bounding box.
+Frustration), overlays predictions on the live webcam feed, and logs all
+predictions to a timestamped CSV file for analysis.
 
 Usage:
-    python predict_camera.py --models-dir "G:\\My Drive\\affectlearn-ml\\models"
-    python predict_camera.py --models-dir ./models --camera 0
+    python predict_camera_log.py --models-dir "G:\\My Drive\\affectlearn-ml\\models"
+    python predict_camera_log.py --models-dir ./models --camera 0 --output predictions.csv
 
+Logs: timestamp, engagement_level, engagement_conf, boredom_level, boredom_conf, ...
 Press 'q' in the video window to quit.
-Requires: torch, torchvision (for the resnet18 backbone), opencv-python, numpy.
-
-Note: affect is a slow-changing, clip-level signal — the models see a rolling
-window of recent frames, so labels update every ~half-second, not per-frame.
 """
 
 import sys
+import csv
 import argparse
 from collections import deque
 from pathlib import Path
+from datetime import datetime
 
 import cv2
 import numpy as np
@@ -32,7 +31,6 @@ from preprocess import crop_face, normalize, FRAMES_PER_CLIP, _get_detector  # n
 
 CLASS_NAMES = ["Very Low", "Low", "High", "Very High"]
 COLORS = [(0, 0, 255), (0, 165, 255), (0, 200, 0), (0, 255, 0)]  # BGR per level
-# affect -> candidate checkpoint filenames (first found wins)
 AFFECTS = {
     "Engagement":  ["cnn_lstm_engagement.pt", "cnn_lstm_best.pt"],
     "Boredom":     ["cnn_lstm_boredom.pt"],
@@ -57,8 +55,6 @@ def load_models(models_dir: str, device):
 
 
 def build_clip(frames_rgb, device):
-    # MediaPipe crop_face drops faceless frames (returns None) — keep only real faces,
-    # matching the training/serving pipeline. Returns None if too few faces this window.
     crops = [c for c in (crop_face(f) for f in frames_rgb) if c is not None]
     if len(crops) < FRAMES_PER_CLIP:
         return None
@@ -68,7 +64,7 @@ def build_clip(frames_rgb, device):
 
 
 def detect_box(frame_rgb):
-    """Top MediaPipe face detection as (x, y, w, h), or None. Same detector as training."""
+    """Top MediaPipe face detection as (x, y, w, h), or None."""
     res = _get_detector().detect(
         mp.Image(image_format=mp.ImageFormat.SRGB, data=np.ascontiguousarray(frame_rgb)))
     if not res.detections:
@@ -78,12 +74,14 @@ def detect_box(frame_rgb):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Live webcam multi-affect prediction")
+    ap = argparse.ArgumentParser(description="Live webcam multi-affect prediction with logging")
     ap.add_argument("--models-dir", default=str(DEFAULT_DIR),
                     help="dir containing cnn_lstm_<affect>.pt files")
     ap.add_argument("--camera", type=int, default=0)
     ap.add_argument("--window", type=int, default=48, help="rolling buffer size in frames")
     ap.add_argument("--every", type=int, default=12, help="re-predict every N frames")
+    ap.add_argument("--output", default="predictions.csv",
+                    help="CSV file to log predictions (timestamp, affect_level, affect_conf, ...)")
     args = ap.parse_args()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -92,10 +90,19 @@ def main():
         sys.exit(f"No affect models found in {args.models_dir}\n"
                  "Expected cnn_lstm_engagement.pt / _boredom / _confusion / _frustration.")
     print(f"Loaded affects: {', '.join(models)} on {device}. Press 'q' to quit.")
+    print(f"Logging to: {args.output}")
 
-    cap = cv2.VideoCapture(args.camera, cv2.CAP_DSHOW)   # CAP_DSHOW = fast open on Windows
+    cap = cv2.VideoCapture(args.camera, cv2.CAP_DSHOW)
     if not cap.isOpened():
         sys.exit(f"Could not open camera {args.camera} (try --camera 1).")
+
+    # CSV writer setup: timestamp + (level, conf) for each affect
+    csv_file = open(args.output, 'w', newline='')
+    fieldnames = ['timestamp']
+    for affect in models:
+        fieldnames.extend([f"{affect}_level", f"{affect}_confidence"])
+    writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+    writer.writeheader()
 
     buf = deque(maxlen=args.window)
     preds = {a: ("warming up", 0.0) for a in models}
@@ -116,13 +123,21 @@ def main():
                             p = F.softmax(m(x), 1)[0].cpu().numpy()
                             preds[a] = (CLASS_NAMES[int(p.argmax())], float(p.max()))
 
-            # face bounding box (MediaPipe — same detector as training/serving)
+                    # Log to CSV
+                    row = {'timestamp': datetime.now().isoformat()}
+                    for affect, (lbl, conf) in preds.items():
+                        row[f"{affect}_level"] = lbl
+                        row[f"{affect}_confidence"] = f"{conf:.4f}"
+                    writer.writerow(row)
+                    csv_file.flush()
+
+            # face bounding box
             box = detect_box(buf[-1])
             if box is not None:
                 fx, fy, fw, fh = box
                 cv2.rectangle(frame, (fx, fy), (fx + fw, fy + fh), (0, 255, 0), 2)
 
-            # affect panel (one line per loaded affect)
+            # affect panel
             cv2.rectangle(frame, (0, 0), (340, 18 + 26 * len(models)), (0, 0, 0), -1)
             for i, (a, (lbl, cf)) in enumerate(preds.items()):
                 col = COLORS[CLASS_NAMES.index(lbl)] if lbl in CLASS_NAMES else (220, 220, 220)
@@ -135,6 +150,8 @@ def main():
     finally:
         cap.release()
         cv2.destroyAllWindows()
+        csv_file.close()
+        print(f"Logged {n} frames. Results saved to: {args.output}")
 
 
 if __name__ == "__main__":
