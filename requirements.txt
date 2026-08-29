@@ -17,6 +17,13 @@ accelerate>=0.29
 bitsandbytes>=0.43
 datasets>=2.18
 
+# Pedagogical LLM fine-tune (training/pedagogical_llm/)
+# trl provides SFTTrainer + completion-only loss masking; openai is the TEACHER used to regenerate
+# the corpus and as the comparison system in evaluate_decisions.py — not a runtime dependency of
+# the platform.
+trl>=0.12
+openai>=1.40
+
 # Evaluation
 scipy>=1.12
 matplotlib>=3.8
