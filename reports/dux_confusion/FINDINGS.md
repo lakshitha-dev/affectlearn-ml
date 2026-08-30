@@ -186,7 +186,7 @@ subjects and famously identifying motor behaviour.
 | Arm | AUC | 95% CI | perm *p* | confused recall |
 |---|---|---|---|---|
 | **behavioural (per-learner z)** | **0.678** | [0.594, 0.758] | **0.0005** | 0.261 |
-| behavioural (raw) | 0.599 | [0.515, 0.685] | 0.0020 | 0.239 |
+| behavioural (raw) | 0.599 | [0.515, 0.685] | 0.0015 | 0.239 |
 | facial, 12 AFFDEX channels (raw) | 0.610 | [0.525, 0.692] | 0.0305 | 0.239 |
 | facial (per-learner z) | 0.562 | [0.467, 0.661] | 0.0175 | 0.348 |
 | fused (raw) | 0.619 | [0.537, 0.708] | 0.0025 | 0.174 |
@@ -253,8 +253,12 @@ rather than hide. Quoting 0.703 as the result would be selecting the maximum of 
 
 ## Consequences for the platform
 
-- **Adopt per-learner z-normalisation in Model B.** Biggest measured single win (+0.079 AUC), free,
-  and deployable from session history.
+- **Per-learner z-normalisation is optional, not a win.** ~~Biggest measured single win (+0.079
+  AUC)~~ — RETRACTED, see the normalisation audit above. That figure came from 10 participants;
+  at 46 the total transductive gain is +0.013, of which only +0.0067 survives being made causal
+  and +0.0065 was temporal leakage. Raw features already reach AUC 0.7341 subject-independently.
+  The deployable figure is 0.7408. This is the stronger conclusion: the result does not depend
+  on a preprocessing choice.
 - **Consider a binary needs-help head as the reportable output**, with the 4-class head retained for
   pedagogical routing. This mirrors the two-stage design already in `two_stage.py`.
 - **Do not claim a fusion gain.** It is not there in the only paired data available. If the thesis
