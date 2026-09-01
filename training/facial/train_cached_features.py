@@ -74,10 +74,39 @@ class TemporalHead(nn.Module):
         return self.head(self.dropout(h_n[-1]))
 
 
-def load_split(features_dir: Path, split: str):
+SPLIT_CSV = {"Train": "TrainLabels.csv", "Validation": "ValidationLabels.csv",
+             "Test": "TestLabels.csv"}
+
+
+def levels_from_csv(labels_dir: Path, split: str, target: str, clip_ids) -> np.ndarray:
+    """Attach any target's ordinal levels to the cached features, joining on clip id.
+
+    The features are a frozen CNN's output and carry no label at all, so one cache serves every
+    target -- the same reason `colab_train_confusion.py` reuses the Engagement run's .npy clips.
+    Reading the level here rather than trusting whatever was stamped at extraction time means a
+    cache built for one target cannot silently be scored against another's labels.
+    """
+    import csv
+    m = {}
+    with open(labels_dir / SPLIT_CSV[split], newline="") as f:
+        for row in csv.DictReader(f):
+            row = {k.strip(): v for k, v in row.items()}   # DAiSEE has a 'Frustration ' header
+            m[row["ClipID"].strip()] = int(row[target])
+    missing = [c for c in clip_ids if f"{c}.avi" not in m]
+    if missing:
+        raise SystemExit(f"{len(missing)} cached clips have no {target} label "
+                         f"(first: {missing[:3]}) -- wrong labels dir?")
+    return np.array([m[f"{c}.avi"] for c in clip_ids], dtype=np.int64)
+
+
+def load_split(features_dir: Path, split: str, labels_dir: Path | None = None,
+               target: str = "Engagement"):
     d = np.load(features_dir / f"{split}.npz", allow_pickle=False)
+    clip_id = d["clip_id"]
+    level = (levels_from_csv(labels_dir, split, target, clip_id) if labels_dir is not None
+             else d["level"].astype(np.int64))
     return (d["feats"].astype(np.float32), d["feats_flip"].astype(np.float32),
-            d["level"].astype(np.int64), d["clip_id"], d["subject"])
+            level, clip_id, d["subject"])
 
 
 def to_binary(levels: np.ndarray, cut: str) -> np.ndarray:
@@ -105,11 +134,12 @@ def subject_bootstrap(y, p, subjects, n_boot=2000, seed=0):
     return float(np.percentile(out, 2.5)), float(np.percentile(out, 97.5))
 
 
-def train_one(Xtr, ytr, Xva, yva, *, seed, epochs, lr, wd, gamma, patience, device, num_classes=2):
+def train_one(Xtr, ytr, Xva, yva, *, seed, epochs, lr, wd, gamma, patience, device,
+              num_classes=2, dropout=0.5, label_smoothing=0.0):
     """Train the head once. Returns (state_dict of the best epoch, best val AUC)."""
     torch.manual_seed(seed)
     np.random.seed(seed)
-    model = TemporalHead(num_classes=num_classes).to(device)
+    model = TemporalHead(num_classes=num_classes, dropout=dropout).to(device)
 
     # Balanced sampling handles the imbalance, so the loss must NOT also re-weight by class --
     # the double-correction guard train_cnn_lstm.py:131-136 enforces for the same reason.
@@ -119,7 +149,7 @@ def train_one(Xtr, ytr, Xva, yva, *, seed, epochs, lr, wd, gamma, patience, devi
     tr = DataLoader(TensorDataset(torch.from_numpy(Xtr), torch.from_numpy(ytr)),
                     batch_size=32, sampler=sampler, drop_last=False)
 
-    crit = FocalLoss(gamma=gamma, alpha=None)
+    crit = FocalLoss(gamma=gamma, alpha=None, label_smoothing=label_smoothing)
     opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=wd)
     Xva_t = torch.from_numpy(Xva).to(device)
 
@@ -144,8 +174,8 @@ def train_one(Xtr, ytr, Xva, yva, *, seed, epochs, lr, wd, gamma, patience, devi
     return best_state, best_auc
 
 
-def predict(state, X, device, num_classes=2):
-    m = TemporalHead(num_classes=num_classes).to(device)
+def predict(state, X, device, num_classes=2, dropout=0.5):
+    m = TemporalHead(num_classes=num_classes, dropout=dropout).to(device)
     m.load_state_dict(state)
     m.eval()
     with torch.no_grad():
@@ -180,9 +210,75 @@ def report(y, p, subjects, label, thresh=0.5):
     return m
 
 
+def run_grouped_cv(data, cut, positive, args, device):
+    """Pool all three official splits and cross-validate by SUBJECT.
+
+    The official test split holds 85 disengaged clips from 16 subjects, one of which supplies
+    28% of them -- too few people to separate a real effect from one person's face, whatever the
+    model does. Pooling gives ~485 disengaged clips across ~101 subjects, and every clip gets an
+    out-of-fold prediction, so the final interval is computed over five times as many subjects.
+
+    The official splits are subject-disjoint (verified), and `GroupKFold` on the 6-digit subject
+    prefix keeps it that way -- no subject ever appears in both the fitting and the scoring half
+    of a fold, which is the only thing that makes this comparable to the official protocol.
+
+    Reported as SECONDARY. It is better powered but it is not the published DAiSEE protocol, and
+    the headline must remain the split everyone else reports on.
+    """
+    from sklearn.model_selection import GroupKFold
+
+    feats = np.concatenate([data[s][0] for s in SPLITS])
+    flips = np.concatenate([data[s][1] for s in SPLITS])
+    levels = np.concatenate([data[s][2] for s in SPLITS])
+    clips = np.concatenate([data[s][3] for s in SPLITS])
+    subj = np.concatenate([data[s][4] for s in SPLITS])
+
+    y = to_binary(levels, cut)
+    if positive == "minority" and y.mean() > 0.5:
+        y = 1 - y
+
+    print(f"\nGROUPED CV: {len(y)} clips, {int(y.sum())} positives, "
+          f"{len(np.unique(subj))} subjects")
+
+    oof = np.full(len(y), np.nan)
+    gkf = GroupKFold(n_splits=5)
+    for fold, (tr_idx, te_idx) in enumerate(gkf.split(feats, y, groups=subj)):
+        # Carve an inner validation set out of the TRAINING subjects for early stopping, so the
+        # held-out fold is never touched during fitting.
+        tr_subj = np.unique(subj[tr_idx])
+        rng = np.random.default_rng(fold)
+        inner_val = set(rng.choice(tr_subj, max(2, len(tr_subj) // 5), replace=False).tolist())
+        va_mask = np.isin(subj[tr_idx], list(inner_val))
+        fit_idx, val_idx = tr_idx[~va_mask], tr_idx[va_mask]
+
+        Xfit = np.concatenate([feats[fit_idx], flips[fit_idx]]) if not args.no_flip else feats[fit_idx]
+        yfit = np.concatenate([y[fit_idx], y[fit_idx]]) if not args.no_flip else y[fit_idx]
+
+        if len(np.unique(y[val_idx])) < 2 or len(np.unique(y[te_idx])) < 2:
+            print(f"    fold {fold}: skipped (a split holds only one class)")
+            continue
+
+        state, vauc = train_one(Xfit, yfit, feats[val_idx], y[val_idx], seed=fold,
+                                epochs=args.epochs, lr=args.lr, wd=args.weight_decay,
+                                gamma=args.focal_gamma, patience=args.patience, device=device,
+                                dropout=args.dropout, label_smoothing=args.label_smoothing)
+        oof[te_idx] = predict(state, feats[te_idx], device, dropout=args.dropout)
+        print(f"    fold {fold}: {len(te_idx):5} clips, {int(y[te_idx].sum()):4} positives, "
+              f"{len(np.unique(subj[te_idx])):3} subjects  inner-val AUC {vauc:.4f}  "
+              f"fold AUC {roc_auc_score(y[te_idx], oof[te_idx]):.4f}")
+
+    ok = ~np.isnan(oof)
+    print("\nPOOLED OUT-OF-FOLD")
+    m = report(y[ok], oof[ok], subj[ok], f"grouped 5-fold CV, {cut}-cut")
+    return m, y[ok], oof[ok], subj[ok], clips[ok]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--features-dir", required=True)
+    ap.add_argument("--labels-dir", default=None,
+                    help="DAiSEE Labels dir. Given, the target's levels are joined from "
+                         "the CSVs by clip id, so one feature cache serves every target.")
     ap.add_argument("--target", default="Engagement")
     ap.add_argument("--cut", default="high", choices=tuple(CUTS))
     ap.add_argument("--positive", default="minority",
@@ -194,13 +290,18 @@ def main() -> int:
     ap.add_argument("--lr", type=float, default=2e-4)
     ap.add_argument("--weight-decay", type=float, default=1e-4)
     ap.add_argument("--focal-gamma", type=float, default=2.0)
+    ap.add_argument("--dropout", type=float, default=0.5)
+    ap.add_argument("--label-smoothing", type=float, default=0.0)
     ap.add_argument("--no-flip", action="store_true", help="drop the mirrored copies")
+    ap.add_argument("--cv", action="store_true",
+                    help="also run the subject-grouped 5-fold CV over all three splits")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
     fdir = Path(args.features_dir)
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    data = {s: load_split(fdir, s) for s in SPLITS}
+    ldir = Path(args.labels_dir) if args.labels_dir else None
+    data = {s: load_split(fdir, s, ldir, args.target) for s in SPLITS}
 
     def xy(split, augment):
         f, ff, lv, cid, subj = data[split]
@@ -226,8 +327,9 @@ def main() -> int:
     for s in range(args.seeds):
         state, vauc = train_one(Xtr, ytr, Xva, yva, seed=s, epochs=args.epochs, lr=args.lr,
                                 wd=args.weight_decay, gamma=args.focal_gamma,
-                                patience=args.patience, device=device)
-        p = predict(state, Xte, device)
+                                patience=args.patience, device=device,
+                                dropout=args.dropout, label_smoothing=args.label_smoothing)
+        p = predict(state, Xte, device, dropout=args.dropout)
         probs.append(p); val_aucs.append(vauc)
         print(f"  seed {s}: val AUC {vauc:.4f}  test AUC {roc_auc_score(yte, p):.4f}")
 
@@ -247,6 +349,12 @@ def main() -> int:
               f"{int(((ste == big) & (yte == 1)).sum())} of {int(yte.sum())} positives)")
         metrics["without_largest_subject"] = report(
             yte[keep], mean_p[keep], ste[keep], f"without subject {big}")
+
+    if args.cv:
+        cv_m, cv_y, cv_p, cv_s, cv_c = run_grouped_cv(data, args.cut, args.positive, args, device)
+        metrics["grouped_cv"] = cv_m
+        np.savez_compressed(Path(args.out).with_name(Path(args.out).stem + "_cv.npz"),
+                            y_true=cv_y, y_prob=cv_p, subject=cv_s, clip_id=cv_c)
 
     metrics.update({"target": args.target, "cut": args.cut, "seeds": args.seeds,
                     "per_seed_test_auc": per_seed, "val_auc_per_seed": val_aucs,
