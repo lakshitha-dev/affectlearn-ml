@@ -150,3 +150,49 @@ class TestSubjectExtraction:
         """Verified against the real label CSVs: zero overlap between all three pairs."""
         train, val, test = {"110001", "210060"}, {"400022", "410027"}, {"500044", "826412"}
         assert not (train & val) and not (train & test) and not (val & test)
+
+
+class TestBatchNormAdaptationAudit:
+    """The backbone's weights were frozen; its BatchNorm statistics were not.
+
+    `train_cnn_lstm.py` sets `requires_grad_(False)` on the backbone but never calls `.eval()`,
+    and the epoch loop calls `model.train()`, so every BN layer kept updating its running mean
+    and variance on DAiSEE. Measured against the ImageNet initialisation the statistics moved
+    24.7%, and holding the trained head and clips fixed while swapping only those statistics
+    moves test AUC by 0.0584 -- from the published 0.6414 down to 0.5830.
+
+    Pinned because it is the reason any faithfully-frozen re-implementation scores lower, and
+    because `models/cnn_lstm_confusion_anycut.json` describes the backbone as "FULLY FROZEN".
+    """
+
+    def test_the_audit_script_exposes_the_head_keys_it_needs(self):
+        from evaluation.verify_bn_adaptation import HEAD_KEYS
+        assert set(HEAD_KEYS) == {
+            "lstm.weight_ih_l0", "lstm.weight_hh_l0", "lstm.bias_ih_l0",
+            "lstm.bias_hh_l0", "head.weight", "head.bias",
+        }, "these are exactly the non-backbone tensors; a backbone key here would void the test"
+
+    def test_head_keys_load_into_the_temporal_head(self):
+        """The isolation only works if the deployed head transplants cleanly."""
+        import torch
+        from evaluation.verify_bn_adaptation import HEAD_KEYS
+        from training.facial.train_cached_features import TemporalHead
+        expected = dict(TemporalHead(num_classes=2).state_dict())
+        assert set(expected) == set(HEAD_KEYS)
+        for k in HEAD_KEYS:
+            assert isinstance(expected[k], torch.Tensor)
+
+    def test_recorded_result_is_internally_consistent(self):
+        """Guards the recorded finding against a silent edit."""
+        import json
+        from pathlib import Path
+        p = Path(__file__).resolve().parents[2] / "reports/facial_bn_audit/bn_adaptation.json"
+        if not p.exists():
+            pytest.skip("audit not run in this checkout")
+        d = json.loads(p.read_text())
+        assert d["labels_identical"] is True, "a label mismatch would void the comparison"
+        assert d["bn_drift"]["tensors"] == 40
+        assert d["gap_from_bn"] == pytest.approx(
+            d["auc_published"] - d["auc_imagenet_bn"], abs=1e-9)
+        assert d["gap_from_bn"] > 0.05, "the effect is large, not marginal"
+        assert d["pearson_r"] < 0.8, "the two feature sets are materially different"
