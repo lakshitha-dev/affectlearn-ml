@@ -29,11 +29,45 @@ class BehavioralBiLSTM(nn.Module):
         return self.fc(self.drop(pooled))
 
 
-def build_model(cfg: dict, n_features: int) -> "BehavioralBiLSTM":
+def build_model(cfg: dict, n_features: int, n_classes: int | None = None) -> "BehavioralBiLSTM":
+    """Build the Bi-LSTM. `n_classes` overrides cfg (used for the 2-class pretrain proxy head)."""
     return BehavioralBiLSTM(
         n_features=n_features,
         hidden_size=cfg.get("hidden_size", 64),
         n_layers=cfg.get("n_layers", 1),
-        n_classes=cfg.get("n_classes", 4),
+        n_classes=n_classes if n_classes is not None else cfg.get("n_classes", 4),
         dropout=cfg.get("dropout", 0.3),
     )
+
+
+def freeze_lstm(model: "BehavioralBiLSTM", frozen: bool = True) -> None:
+    """Freeze/unfreeze the shared LSTM encoder (the FC head always stays trainable).
+
+    Used for transfer learning: freeze the pretrained encoder for the first few fine-tune
+    epochs so the fresh head adapts without disturbing the transferred weights, then unfreeze.
+    """
+    for p in model.lstm.parameters():
+        p.requires_grad = not frozen
+
+
+def load_pretrained_lstm(model: "BehavioralBiLSTM", checkpoint_path: str) -> bool:
+    """Load ONLY the LSTM encoder weights from a pretrained checkpoint into `model`.
+
+    The FC head is left fresh (the pretrain proxy head has a different class count than the
+    4-class fine-tune head — see plan). Returns True on success, False if the file is absent
+    (so the caller can fall back to from-scratch). Checkpoint shape matches what
+    `pretrain_bilstm.py` saves: {"model_state": state_dict, ...}.
+    """
+    import os
+
+    import torch
+
+    if not os.path.exists(checkpoint_path):
+        return False
+    ckpt = torch.load(checkpoint_path, map_location="cpu")
+    state = ckpt.get("model_state", ckpt)
+    lstm_only = {k[len("lstm."):]: v for k, v in state.items() if k.startswith("lstm.")}
+    if not lstm_only:
+        return False
+    model.lstm.load_state_dict(lstm_only)   # strict — the encoder must match exactly
+    return True

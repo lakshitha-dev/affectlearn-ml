@@ -1,0 +1,323 @@
+{
+  "labels": [
+    "Happy",
+    "Sad",
+    "Angry",
+    "Calm"
+  ],
+  "n": 471,
+  "n_participants": 70,
+  "folds": 5,
+  "seed": 42,
+  "majority_baseline": 0.28450106157112526,
+  "class_counts": {
+    "Happy": 134,
+    "Sad": 127,
+    "Angry": 86,
+    "Calm": 124
+  },
+  "emotions_per_participant": {
+    "1": 42,
+    "2": 20,
+    "3": 2,
+    "4": 6
+  },
+  "varying_features": [
+    "keystroke_count",
+    "typing_rhythm_std",
+    "backspace_pct",
+    "pause_count",
+    "idle_time_pct"
+  ],
+  "arms": {
+    "bilstm": {
+      "n_splits": 5,
+      "seed": 42,
+      "n": 471,
+      "n_groups": 70,
+      "labels": [
+        "Happy",
+        "Sad",
+        "Angry",
+        "Calm"
+      ],
+      "folds": [
+        {
+          "fold": 0,
+          "n_train": 345,
+          "n_test": 126,
+          "n_groups_test": 16,
+          "accuracy": 0.3333333333333333,
+          "weighted_f1": 0.3407293464649542,
+          "macro_f1": 0.3401068072336729,
+          "cohen_kappa": 0.12195121951219512,
+          "per_class_recall": {
+            "Happy": 0.2777777777777778,
+            "Sad": 0.3023255813953488,
+            "Angry": 0.5909090909090909,
+            "Calm": 0.24
+          },
+          "classes_missing_from_fold": []
+        },
+        {
+          "fold": 1,
+          "n_train": 349,
+          "n_test": 122,
+          "n_groups_test": 15,
+          "accuracy": 0.36065573770491804,
+          "weighted_f1": 0.34421313933197334,
+          "macro_f1": 0.3393303348325837,
+          "cohen_kappa": 0.13647912885662417,
+          "per_class_recall": {
+            "Happy": 0.19444444444444445,
+            "Sad": 0.23333333333333334,
+            "Angry": 0.4444444444444444,
+            "Calm": 0.5789473684210527
+          },
+          "classes_missing_from_fold": []
+        },
+        {
+          "fold": 2,
+          "n_train": 381,
+          "n_test": 90,
+          "n_groups_test": 14,
+          "accuracy": 0.2777777777777778,
+          "weighted_f1": 0.23295460874408241,
+          "macro_f1": 0.2334586466165413,
+          "cohen_kappa": 0.0365612648221344,
+          "per_class_recall": {
+            "Happy": 0.07407407407407407,
+            "Sad": 0.6521739130434783,
+            "Angry": 0.3333333333333333,
+            "Calm": 0.05263157894736842
+          },
+          "classes_missing_from_fold": []
+        },
+        {
+          "fold": 3,
+          "n_train": 383,
+          "n_test": 88,
+          "n_groups_test": 13,
+          "accuracy": 0.3181818181818182,
+          "weighted_f1": 0.28662004026594456,
+          "macro_f1": 0.29987978038952556,
+          "cohen_kappa": 0.10508474576271187,
+          "per_class_recall": {
+            "Happy": 0.4230769230769231,
+            "Sad": 0.375,
+            "Angry": 0.5,
+            "Calm": 0.07142857142857142
+          },
+          "classes_missing_from_fold": []
+        },
+        {
+          "fold": 4,
+          "n_train": 426,
+          "n_test": 45,
+          "n_groups_test": 12,
+          "accuracy": 0.37777777777777777,
+          "weighted_f1": 0.2958730158730159,
+          "macro_f1": 0.29523809523809524,
+          "cohen_kappa": 0.16055962691538972,
+          "per_class_recall": {
+            "Happy": 0.7777777777777778,
+            "Sad": 0.6,
+            "Angry": 0.14285714285714285,
+            "Calm": 0.0
+          },
+          "classes_missing_from_fold": []
+        }
+      ],
+      "aggregate": {
+        "accuracy": {
+          "mean": 0.33354528895512503,
+          "sd": 0.03885095224432943,
+          "min": 0.2777777777777778,
+          "max": 0.37777777777777777
+        },
+        "weighted_f1": {
+          "mean": 0.3000780301359941,
+          "sd": 0.045565312241519156,
+          "min": 0.23295460874408241,
+          "max": 0.34421313933197334
+        },
+        "macro_f1": {
+          "mean": 0.3016027328620838,
+          "sd": 0.043568995172039056,
+          "min": 0.2334586466165413,
+          "max": 0.3401068072336729
+        },
+        "cohen_kappa": {
+          "mean": 0.11212719717381106,
+          "sd": 0.046890922619197535,
+          "min": 0.0365612648221344,
+          "max": 0.16055962691538972
+        },
+        "per_class_recall": {
+          "Happy": {
+            "mean": 0.3494301994301995,
+            "sd": 0.27105402474803375
+          },
+          "Sad": {
+            "mean": 0.43256656555443207,
+            "sd": 0.184547992597548
+          },
+          "Angry": {
+            "mean": 0.40230880230880234,
+            "sd": 0.17245421871995587
+          },
+          "Calm": {
+            "mean": 0.1886015037593985,
+            "sd": 0.23600823249356667
+          }
+        }
+      },
+      "folds_missing_a_class": []
+    },
+    "gbdt": {
+      "n_splits": 5,
+      "seed": 42,
+      "n": 471,
+      "n_groups": 70,
+      "labels": [
+        "Happy",
+        "Sad",
+        "Angry",
+        "Calm"
+      ],
+      "folds": [
+        {
+          "fold": 0,
+          "n_train": 345,
+          "n_test": 126,
+          "n_groups_test": 16,
+          "accuracy": 0.36507936507936506,
+          "weighted_f1": 0.3710913404790956,
+          "macro_f1": 0.36554040125468695,
+          "cohen_kappa": 0.15662650602409645,
+          "per_class_recall": {
+            "Happy": 0.2222222222222222,
+            "Sad": 0.4186046511627907,
+            "Angry": 0.5,
+            "Calm": 0.36
+          },
+          "classes_missing_from_fold": []
+        },
+        {
+          "fold": 1,
+          "n_train": 349,
+          "n_test": 122,
+          "n_groups_test": 15,
+          "accuracy": 0.36065573770491804,
+          "weighted_f1": 0.36676439481133544,
+          "macro_f1": 0.35454222011385195,
+          "cohen_kappa": 0.14944583482302465,
+          "per_class_recall": {
+            "Happy": 0.2777777777777778,
+            "Sad": 0.36666666666666664,
+            "Angry": 0.3888888888888889,
+            "Calm": 0.42105263157894735
+          },
+          "classes_missing_from_fold": []
+        },
+        {
+          "fold": 2,
+          "n_train": 381,
+          "n_test": 90,
+          "n_groups_test": 14,
+          "accuracy": 0.32222222222222224,
+          "weighted_f1": 0.3312997983844573,
+          "macro_f1": 0.321323052904442,
+          "cohen_kappa": 0.09970482125286984,
+          "per_class_recall": {
+            "Happy": 0.2962962962962963,
+            "Sad": 0.4782608695652174,
+            "Angry": 0.38095238095238093,
+            "Calm": 0.10526315789473684
+          },
+          "classes_missing_from_fold": []
+        },
+        {
+          "fold": 3,
+          "n_train": 383,
+          "n_test": 88,
+          "n_groups_test": 13,
+          "accuracy": 0.29545454545454547,
+          "weighted_f1": 0.29432598173984287,
+          "macro_f1": 0.30418526119938327,
+          "cohen_kappa": 0.05474705474705477,
+          "per_class_recall": {
+            "Happy": 0.2692307692307692,
+            "Sad": 0.3125,
+            "Angry": 0.4444444444444444,
+            "Calm": 0.21428571428571427
+          },
+          "classes_missing_from_fold": []
+        },
+        {
+          "fold": 4,
+          "n_train": 426,
+          "n_test": 45,
+          "n_groups_test": 12,
+          "accuracy": 0.37777777777777777,
+          "weighted_f1": 0.39070411070411065,
+          "macro_f1": 0.3465201465201465,
+          "cohen_kappa": 0.15999999999999992,
+          "per_class_recall": {
+            "Happy": 0.3333333333333333,
+            "Sad": 0.4666666666666667,
+            "Angry": 0.14285714285714285,
+            "Calm": 0.42857142857142855
+          },
+          "classes_missing_from_fold": []
+        }
+      ],
+      "aggregate": {
+        "accuracy": {
+          "mean": 0.3442379296477657,
+          "sd": 0.03425398229266838,
+          "min": 0.29545454545454547,
+          "max": 0.37777777777777777
+        },
+        "weighted_f1": {
+          "mean": 0.3508371252237684,
+          "sd": 0.038172320342431613,
+          "min": 0.29432598173984287,
+          "max": 0.39070411070411065
+        },
+        "macro_f1": {
+          "mean": 0.3384222163985021,
+          "sd": 0.02512656679410863,
+          "min": 0.30418526119938327,
+          "max": 0.36554040125468695
+        },
+        "cohen_kappa": {
+          "mean": 0.12410484336940912,
+          "sd": 0.04580979857269332,
+          "min": 0.05474705474705477,
+          "max": 0.15999999999999992
+        },
+        "per_class_recall": {
+          "Happy": {
+            "mean": 0.27977207977207974,
+            "sd": 0.0405244993404416
+          },
+          "Sad": {
+            "mean": 0.4085397708122683,
+            "sd": 0.06949471900424936
+          },
+          "Angry": {
+            "mean": 0.3714285714285714,
+            "sd": 0.13647563294413823
+          },
+          "Calm": {
+            "mean": 0.3058345864661654,
+            "sd": 0.1413183607228471
+          }
+        }
+      },
+      "folds_missing_a_class": []
+    }
+  },
+  "best_arm_by_macro_f1": "gbdt"
+}

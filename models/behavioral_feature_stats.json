@@ -1,0 +1,70 @@
+{
+  "feature_names": [
+    "mouse_entropy",
+    "mouse_velocity_mean",
+    "mouse_velocity_std",
+    "click_count",
+    "hover_dwell_mean",
+    "keystroke_count",
+    "typing_rhythm_std",
+    "backspace_pct",
+    "pause_count",
+    "scroll_velocity_mean",
+    "scroll_direction_changes",
+    "scroll_back_runs",
+    "scroll_inactivity_pct",
+    "idle_time_pct",
+    "blur_time_pct",
+    "tab_switch_count"
+  ],
+  "mean": [
+    1.1978245973587036,
+    0.6844397187232971,
+    0.4153997600078583,
+    0.26212120056152344,
+    0.011979813687503338,
+    1.4576514959335327,
+    0.005844128783792257,
+    0.1214413195848465,
+    0.026439394801855087,
+    15.009246826171875,
+    0.03136363625526428,
+    0.10196969658136368,
+    0.9506706595420837,
+    0.06359022855758667,
+    0.0,
+    0.0
+  ],
+  "std": [
+    0.7475737929344177,
+    0.4978971779346466,
+    0.4087132513523102,
+    0.5467950701713562,
+    0.03567621111869812,
+    1.5335196256637573,
+    0.031991858035326004,
+    0.27549639344215393,
+    0.16044411063194275,
+    20.44561004638672,
+    0.20131319761276245,
+    0.3095247149467468,
+    0.07367923855781555,
+    0.1579522043466568,
+    1.0,
+    1.0
+  ],
+  "provenance": {
+    "trained_on": "synthetic",
+    "reportable": false,
+    "feature_schema_version": 2,
+    "n_windows": 600,
+    "n_groups": 15,
+    "class_counts": {
+      "Engaged": 276,
+      "Bored": 115,
+      "Confused": 121,
+      "Frustrated": 88
+    },
+    "seed": 42
+  }
+}

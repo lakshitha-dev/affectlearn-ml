@@ -26,6 +26,23 @@ data:
   use_synthetic: true          # <- flip to false when Phase A data is available
   synthetic_participants: 15
   seed: 42
+  # Real Phase A source (used when use_synthetic: false). Path to the platform research
+  # export JSON — the phase-a-dataset API page, or its `items` list. See phase_a.py.
+  phase_a_export: ../../data/phase_a/export.json
+  label_propagate_ms: 0        # 0 = self-reports only (clean); >0 = propagate label back N ms
+
+  # How real windows get their labels.
+  #   selfreport -> phase_a.load_phase_a_windows: one self-report labels the single window that
+  #                 preceded it. Clean provenance, but a single-subject pass yields well under a
+  #                 dozen labels, which cannot train anything.
+  #   codebook   -> codebook_labels.load_codebook_windows: label every window by its section's
+  #                 DESIGNED affect (AFFECT_SECTION_CODEBOOK.md), keeping a section only where the
+  #                 learner's own report agrees. ~426 windows from one pass. Labels are WEAK
+  #                 (design-assigned) and the per-class agreement rate is itself a reportable
+  #                 manipulation check.
+  labelling: codebook
+  codebook: ../../data/codebook.json
+  require_agreement: true      # false = design labels only; higher yield, weaker claim
 
 # Realism knobs for the synthetic generator (so it behaves like messy real data,
 # not artificially-separable toy data). Higher = harder / more realistic.
@@ -36,6 +53,24 @@ synthetic:
   lazy_fraction: 0.13          # fraction of participants who mostly report "Engaged"
 
 labels: [Engaged, Bored, Confused, Frustrated]
+
+# Transfer learning (guide Stage 0): pretrain the Bi-LSTM encoder on PUBLIC human
+# interaction data (EmoSurv keystroke + DUX mouse/keyboard) on a binary proxy task, then
+# fine-tune the real 4-class head on Phase A data. Reported result = the fine-tuned model;
+# the ablation proves whether pretraining actually helped. See DATASET_CARD.md.
+pretrain:
+  enabled: true
+  checkpoint: ../../models/behavioral_bilstm_pretrained.pt
+  proxy: arousal               # binary proxy: high-arousal/emotion vs low-arousal/neutral
+  freeze_lstm_epochs: 5        # freeze the transferred encoder for the first N fine-tune epochs
+  epochs: 40
+  ablation: true               # on the real run, also train a from-scratch arm to compare
+
+external:
+  # Downloaded datasets (kept out of git). EmoSurv = keystroke-only (IEEE DataPort, manual
+  # download); DUX = mouse+keyboard (Zenodo). Neither has scroll — see DATASET_CARD.md.
+  emosurv_path: ../../data/external/emosurv
+  dux_path: ../../data/external/dux
 
 paths:
   models: ../../models

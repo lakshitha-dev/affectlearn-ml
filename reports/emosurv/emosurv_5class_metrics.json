@@ -1,0 +1,100 @@
+{
+  "n": 1061,
+  "labels": [
+    "Neutral",
+    "Happy",
+    "Sad",
+    "Angry",
+    "Calm"
+  ],
+  "confusion_matrix": [
+    [
+      218,
+      99,
+      94,
+      97,
+      82
+    ],
+    [
+      34,
+      29,
+      22,
+      25,
+      24
+    ],
+    [
+      37,
+      19,
+      42,
+      13,
+      16
+    ],
+    [
+      24,
+      14,
+      13,
+      28,
+      7
+    ],
+    [
+      35,
+      20,
+      23,
+      27,
+      19
+    ]
+  ],
+  "accuracy": 0.3166823751178134,
+  "weighted_f1": 0.34582708376002436,
+  "macro_f1": 0.25064648470428863,
+  "cohen_kappa": 0.08077273764753812,
+  "per_class": {
+    "Neutral": {
+      "precision": 0.6264367816091954,
+      "recall": 0.3694915254237288,
+      "f1": 0.464818763326226,
+      "support": 590
+    },
+    "Happy": {
+      "precision": 0.16022099447513813,
+      "recall": 0.21641791044776118,
+      "f1": 0.18412698412698414,
+      "support": 134
+    },
+    "Sad": {
+      "precision": 0.21649484536082475,
+      "recall": 0.33070866141732286,
+      "f1": 0.2616822429906542,
+      "support": 127
+    },
+    "Angry": {
+      "precision": 0.14736842105263157,
+      "recall": 0.32558139534883723,
+      "f1": 0.2028985507246377,
+      "support": 86
+    },
+    "Calm": {
+      "precision": 0.12837837837837837,
+      "recall": 0.1532258064516129,
+      "f1": 0.13970588235294118,
+      "support": 124
+    }
+  },
+  "zero_recall_classes": [],
+  "errors_total": 725,
+  "errors_between_adjacent_classes": 234,
+  "adjacent_error_share": 0.32275862068965516,
+  "worst_confused_pair": "Neutral<->Happy",
+  "confused_pairs": {
+    "Neutral<->Happy": 133,
+    "Neutral<->Sad": 131,
+    "Neutral<->Angry": 121,
+    "Neutral<->Calm": 117,
+    "Happy<->Calm": 44,
+    "Happy<->Sad": 41,
+    "Happy<->Angry": 39,
+    "Sad<->Calm": 39,
+    "Angry<->Calm": 34,
+    "Sad<->Angry": 26
+  }
+}

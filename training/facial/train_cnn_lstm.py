@@ -149,9 +149,21 @@ def train(cfg: dict):
     scaler = GradScaler(enabled=tcfg["mixed_precision"] and device.type == "cuda")
 
     # ── checkpoint directory ──────────────────────────────────────────────────
+    # Checkpoint names are keyed by TARGET AFFECT. They used to be the fixed
+    # "cnn_lstm_best.pt"/".onnx", which meant training any non-Engagement target silently
+    # OVERWROTE the deployed Engagement model on Drive — including the 47 MB ONNX the backend
+    # serves. Engagement keeps the historic filenames so existing artifacts and
+    # `behavioral_inference`/`predict.py` paths still resolve; every other target gets its own
+    # name, matching the convention `predict_camera.py` already expects
+    # (cnn_lstm_confusion.pt, cnn_lstm_boredom.pt, cnn_lstm_frustration.pt).
     ckpt_dir = Path(paths["checkpoints"])
     ckpt_dir.mkdir(parents=True, exist_ok=True)
-    best_ckpt = ckpt_dir / "cnn_lstm_best.pt"
+    stem = "cnn_lstm_best" if target == "Engagement" else f"cnn_lstm_{target.lower()}"
+    best_ckpt = ckpt_dir / f"{stem}.pt"
+    if best_ckpt.exists():
+        log.warning("checkpoint %s already exists and WILL be overwritten if this run beats "
+                    "val_f1=0; move it aside first if you need to keep it", best_ckpt)
+    log.info("target_affect=%s -> checkpoint %s", target, best_ckpt.name)
 
     best_f1      = 0.0
     patience_cnt = 0
@@ -199,6 +211,11 @@ def train(cfg: dict):
                 "optim_state": optimiser.state_dict(),
                 "val_f1":      val_f1,
                 "cfg":         cfg,
+                # Stamped so a loaded checkpoint can never be mistaken for a different target.
+                # `val_f1` is the score the checkpoint was SELECTED on and is optimistically
+                # biased; the reportable number comes from the held-out Test split.
+                "target_affect": target,
+                "provenance": {"selected_on": "Validation weighted-F1", "reportable": False},
             }, best_ckpt)
             log.info("  ✓ New best saved (val_f1=%.4f)", best_f1)
         else:
@@ -213,7 +230,7 @@ def train(cfg: dict):
     # ── ONNX export ───────────────────────────────────────────────────────────
     ckpt = torch.load(best_ckpt, map_location=device)
     model.load_state_dict(ckpt["model_state"])
-    onnx_path = str(ckpt_dir / "cnn_lstm_best.onnx")
+    onnx_path = str(ckpt_dir / f"{stem}.onnx")
     export_onnx(model, cfg, onnx_path, device)
 
     return best_f1

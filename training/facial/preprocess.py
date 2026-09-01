@@ -1,3 +1,23 @@
+"""
+!! GEOMETRY WARNING -- READ BEFORE TRUSTING THIS FILE FOR THE DEPLOYED MODEL !!
+
+This module crops the RAW detection box with NO padding and DROPS frames with no face. The
+facial model actually in production (`cnn_lstm_confusion_anycut.onnx`) was NOT trained that
+way: it was trained by `crops_mp.py` using 10% box padding, largest-face selection, and a
+centre-crop fallback. See `crops_mp.py` (now committed) and the model card
+`backend/models/cnn_lstm_confusion_anycut.json`.
+
+Serving this file's geometry against those weights collapsed live P(confused) into a ~0.05 band
+around 0.5 -- a face filled ~100% of the input where training had it fill ~69%, and the frozen
+ResNet18 backbone had no adapted response to the shift.
+
+The "byte-identical to the browser" claim below therefore describes THIS FILE and the browser as
+they once were, not this file and the deployed artifact. The browser now follows `crops_mp.py`
+geometry, pinned by `frontend/src/lib/preprocess.parity.test.ts`.
+
+Use `crops_mp.py` for anything touching the deployed confusion model.
+"""
+
 """Shared preprocessing pipeline.
 
 CRITICAL — TRAIN/SERVE PREPROCESSING CONTRACT (three files, one behaviour):

@@ -24,10 +24,11 @@ import cv2
 import numpy as np
 import torch
 import torch.nn.functional as F
+import mediapipe as mp
 
 sys.path.insert(0, str(Path(__file__).parent))
-from model      import build_model                                         # noqa: E402
-from preprocess import crop_face, normalize, FRAMES_PER_CLIP, _get_cascade  # noqa: E402
+from model      import build_model                                          # noqa: E402
+from preprocess import crop_face, normalize, FRAMES_PER_CLIP, _get_detector  # noqa: E402
 
 CLASS_NAMES = ["Very Low", "Low", "High", "Very High"]
 COLORS = [(0, 0, 255), (0, 165, 255), (0, 200, 0), (0, 255, 0)]  # BGR per level
@@ -56,9 +57,24 @@ def load_models(models_dir: str, device):
 
 
 def build_clip(frames_rgb, device):
-    idx = np.linspace(0, len(frames_rgb) - 1, FRAMES_PER_CLIP, dtype=int)
-    clip = np.stack([normalize(crop_face(frames_rgb[i])) for i in idx])
+    # MediaPipe crop_face drops faceless frames (returns None) — keep only real faces,
+    # matching the training/serving pipeline. Returns None if too few faces this window.
+    crops = [c for c in (crop_face(f) for f in frames_rgb) if c is not None]
+    if len(crops) < FRAMES_PER_CLIP:
+        return None
+    idx = np.linspace(0, len(crops) - 1, FRAMES_PER_CLIP, dtype=int)
+    clip = np.stack([normalize(crops[i]) for i in idx])
     return torch.from_numpy(clip).unsqueeze(0).to(device)
+
+
+def detect_box(frame_rgb):
+    """Top MediaPipe face detection as (x, y, w, h), or None. Same detector as training."""
+    res = _get_detector().detect(
+        mp.Image(image_format=mp.ImageFormat.SRGB, data=np.ascontiguousarray(frame_rgb)))
+    if not res.detections:
+        return None
+    b = res.detections[0].bounding_box
+    return int(b.origin_x), int(b.origin_y), int(b.width), int(b.height)
 
 
 def main():
@@ -94,17 +110,16 @@ def main():
 
             if len(buf) >= FRAMES_PER_CLIP and n % args.every == 0:
                 x = build_clip(list(buf), device)
-                with torch.no_grad():
-                    for a, m in models.items():
-                        p = F.softmax(m(x), 1)[0].cpu().numpy()
-                        preds[a] = (CLASS_NAMES[int(p.argmax())], float(p.max()))
+                if x is not None:
+                    with torch.no_grad():
+                        for a, m in models.items():
+                            p = F.softmax(m(x), 1)[0].cpu().numpy()
+                            preds[a] = (CLASS_NAMES[int(p.argmax())], float(p.max()))
 
-            # face bounding box
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            faces = _get_cascade().detectMultiScale(gray, scaleFactor=1.1,
-                                                    minNeighbors=4, minSize=(48, 48))
-            if len(faces):
-                fx, fy, fw, fh = max(faces, key=lambda f: f[2] * f[3])
+            # face bounding box (MediaPipe — same detector as training/serving)
+            box = detect_box(buf[-1])
+            if box is not None:
+                fx, fy, fw, fh = box
                 cv2.rectangle(frame, (fx, fy), (fx + fw, fy + fh), (0, 255, 0), 2)
 
             # affect panel (one line per loaded affect)

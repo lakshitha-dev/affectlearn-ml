@@ -9,7 +9,22 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset
 
-from feature_engineering import extract_features, FEATURE_NAMES
+from feature_engineering import (
+    FEATURE_NAMES,
+    FEATURE_SCHEMA_VERSION,
+    N_FEATURES,
+    extract_features,
+)
+
+# Splits live in a torch-free module so they can be unit-tested without the GPU stack.
+# Re-exported here so existing `from dataset import split_by_participant` call sites are
+# unaffected. Prefer the stratified variant under codebook labelling — see splits.py.
+from splits import (  # noqa: F401
+    assert_all_classes_present,
+    group_labels,
+    split_by_participant,
+    split_by_participant_stratified,
+)
 
 
 class WindowDataset(Dataset):
@@ -25,24 +40,45 @@ class WindowDataset(Dataset):
 
 
 def windows_to_arrays(windows):
-    X = np.stack([extract_features(w["events"], 0) for w in windows])   # (N, T, F)
+    if windows and "features" in windows[0]:
+        # Real Phase A windows already carry the backend-computed aggregate feature window
+        # (train/serve parity by construction — see phase_a.py). Do NOT re-extract.
+        X = np.stack([np.asarray(w["features"], dtype=np.float32) for w in windows])
+        _check_feature_schema(X, windows)
+    else:
+        X = np.stack([extract_features(w["events"], 0) for w in windows])   # (N, T, F)
     y = np.array([w["label_idx"] for w in windows], dtype=np.int64)
     pid = np.array([w["participant"] for w in windows])
     return X, y, pid
 
 
-def split_by_participant(pid: np.ndarray, seed: int = 42, ratios=(0.7, 0.15, 0.15)):
-    rng = np.random.default_rng(seed)
-    users = np.array(sorted(set(pid.tolist())))
-    rng.shuffle(users)
-    n = len(users)
-    n_tr = max(1, int(round(ratios[0] * n)))
-    n_va = max(1, int(round(ratios[1] * n)))
-    tr, va, te = users[:n_tr], users[n_tr:n_tr + n_va], users[n_tr + n_va:]
-    if len(te) == 0:                       # tiny-N safety: borrow one from train
-        te = tr[-1:]; tr = tr[:-1]
-    sel = lambda group: np.isin(pid, group)
-    return sel(tr), sel(va), sel(te), (tr.tolist(), va.tolist(), te.tolist())
+def _check_feature_schema(X: np.ndarray, windows) -> None:
+    """Reject persisted windows whose feature width does not match the current extractor.
+
+    Persisted `features` are passed through un-re-extracted, so a window captured under an older
+    FEATURE_SCHEMA_VERSION flows straight into the model and fails ~200 frames deep inside torch
+    with `input.size(-1) must be equal to input_size`. That error names neither the cause nor the
+    file, and it is the exact "two schemas silently mixed in one training set" hazard the schema
+    stamp exists to prevent — but the stamp is only useful if something CHECKS it.
+
+    Mixing widths is unrecoverable: the columns mean different things, so there is no padding or
+    truncation that would be honest. Re-export from the platform, or re-run the rehearsal
+    generator, so every window carries the current schema.
+    """
+    width = int(X.shape[-1])
+    if width == N_FEATURES:
+        return
+    seen = {int(w.get("feature_schema_version", 0)) for w in windows}
+    raise SystemExit(
+        f"FEATURE SCHEMA MISMATCH: persisted windows are {width} features wide but this "
+        f"extractor produces {N_FEATURES} (schema v{FEATURE_SCHEMA_VERSION}).\n"
+        f"  schema versions stamped on these windows: {sorted(seen) or 'none (pre-versioning)'}\n"
+        f"  current feature order: {', '.join(FEATURE_NAMES)}\n"
+        "  These windows predate the current feature schema. Padding or truncating would silently\n"
+        "  misalign columns, so re-generate the data instead:\n"
+        "    - platform export -> re-run scripts/export_research.py after redeploying the backend\n"
+        "    - rehearsal        -> re-run scripts/rehearse_codebook_export.py"
+    )
 
 
 def fit_zscore(X_train: np.ndarray):
