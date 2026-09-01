@@ -188,3 +188,42 @@ def test_label_mapping_applies_the_cut_when_reading_the_csv(tmp_path: Path):
     assert read(None) == {"a.avi": 0, "b.avi": 1, "c.avi": 2, "d.avi": 3}
     assert read("any") == {"a.avi": 0, "b.avi": 1, "c.avi": 1, "d.avi": 1}
     assert read("high") == {"a.avi": 0, "b.avi": 0, "c.avi": 1, "d.avi": 1}
+
+
+class TestEngagementRunnerAuditGate:
+    """The audit gate must refuse the ANY cut and allow the HIGH cut.
+
+    A 4-hour GPU run producing a number that cannot be interpreted is the expensive mistake
+    here, and it is avoidable in 30 seconds of label counting. The ANY cut is exactly that
+    situation: 4 minority clips, from which the disowned AUC of 0.7942 was computed.
+    """
+
+    @staticmethod
+    def _minority_and_precision(n: int, engaged: int):
+        import sys
+        from pathlib import Path
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import colab_train_engagement_binary as R
+        frac = engaged / n
+        minority = int(round(min(frac, 1 - frac) * n))
+        return minority, R.recall_half_width(minority), R.MIN_MINORITY_TEST_N
+
+    def test_the_high_cut_is_allowed(self):
+        """1,553 engaged of 1,638 scored clips -> 85 disengaged."""
+        minority, half, threshold = self._minority_and_precision(1638, 1553)
+        assert minority == 85
+        assert minority >= threshold, "the HIGH cut must proceed"
+        assert half < 0.11
+
+    def test_the_any_cut_is_refused(self):
+        """1,634 engaged of 1,638 -> 4 disengaged, +/-49 points."""
+        minority, half, threshold = self._minority_and_precision(1638, 1634)
+        assert minority == 4
+        assert minority < threshold, "the ANY cut must be refused before spending GPU time"
+        assert half > 0.40
+
+    def test_the_threshold_sits_where_precision_becomes_usable(self):
+        """25 examples is where the worst-case half-width drops under 20 points."""
+        _, half_at_25, threshold = self._minority_and_precision(100, 75)
+        assert threshold == 25
+        assert half_at_25 < 0.20
