@@ -36,3 +36,12 @@ training:
   num_workers: 2
 
 target_affect: Engagement  # Boredom | Engagement | Confusion | Frustration
+
+# Binary collapse of the ordinal label. null keeps 4 levels.
+#   any   {1,2,3} vs {0}   -- "was the state present at all"
+#   high  {2,3}   vs {0,1} -- "was it present at intensity"
+# `model.num_classes` is derived from this at runtime, so it does not need editing here.
+# The cut is NOT cosmetic and must be reported with every metric: on Engagement the ANY cut
+# leaves 4 negatives in the entire test split (accuracy 0.9969 against a 0.9976 baseline, and
+# a negative kappa), while the HIGH cut leaves 85. See reports/facial_confusion/FINDINGS.md.
+binary_cut: null
