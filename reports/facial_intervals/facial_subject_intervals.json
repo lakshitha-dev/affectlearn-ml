@@ -1,0 +1,326 @@
+{
+  "predictions_dir": "G:\\My Drive\\affectlearn-ml\\reports\\facial_confusion",
+  "n_boot": 3000,
+  "n_perm": 1000,
+  "results": [
+    {
+      "label": "cnn_lstm_boredom [any cut, rare class positive]",
+      "n": 1638,
+      "positives": 747,
+      "subjects": 19,
+      "subjects_with_positives": 19,
+      "auc": 0.5607570574103372,
+      "auc_ci_subject": [
+        0.4754129127171238,
+        0.6481959193239134
+      ],
+      "auc_ci_clip": [
+        0.5321171046560347,
+        0.587794657180683
+      ],
+      "ci_width_subject": 0.17278300660678958,
+      "ci_width_clip": 0.055677552524648344,
+      "subject_ci_excludes_chance": false,
+      "clip_ci_excludes_chance": true,
+      "permutation_p_within_subject": 0.000999000999000999,
+      "accuracy": 0.5506715506715507,
+      "majority_baseline": 0.5439560439560439,
+      "beats_baseline": true,
+      "kappa": 0.035275477133597355,
+      "positive_recall": 0.1285140562248996,
+      "largest_positive_subject": "510038",
+      "largest_subject_positive_share": 0.12583668005354753,
+      "auc_without_largest_subject": 0.5954968847435138
+    },
+    {
+      "label": "cnn_lstm_boredom [high cut, rare class positive]",
+      "n": 1638,
+      "positives": 372,
+      "subjects": 19,
+      "subjects_with_positives": 17,
+      "auc": 0.5527166250488372,
+      "auc_ci_subject": [
+        0.4627449141719204,
+        0.6458312482293166
+      ],
+      "auc_ci_clip": [
+        0.5185681588430412,
+        0.5863233758199651
+      ],
+      "ci_width_subject": 0.18308633405739622,
+      "ci_width_clip": 0.06775521697692388,
+      "subject_ci_excludes_chance": false,
+      "clip_ci_excludes_chance": true,
+      "permutation_p_within_subject": 0.000999000999000999,
+      "accuracy": 0.6239316239316239,
+      "majority_baseline": 0.7728937728937729,
+      "beats_baseline": false,
+      "kappa": 0.06999070919789407,
+      "positive_recall": 0.3870967741935484,
+      "largest_positive_subject": "510034",
+      "largest_subject_positive_share": 0.12096774193548387,
+      "auc_without_largest_subject": 0.568625842221725
+    },
+    {
+      "label": "cnn_lstm_confusion_anycut_ft [any]",
+      "n": 1638,
+      "positives": 503,
+      "subjects": 19,
+      "subjects_with_positives": 18,
+      "auc": 0.5734842049027421,
+      "auc_ci_subject": [
+        0.47196042510001174,
+        0.6604117626759224
+      ],
+      "auc_ci_clip": [
+        0.5413474105878833,
+        0.603926378406162
+      ],
+      "ci_width_subject": 0.18845133757591065,
+      "ci_width_clip": 0.06257896781827876,
+      "subject_ci_excludes_chance": false,
+      "clip_ci_excludes_chance": true,
+      "permutation_p_within_subject": 0.25674325674325676,
+      "accuracy": 0.6636141636141636,
+      "majority_baseline": 0.6929181929181929,
+      "beats_baseline": false,
+      "kappa": 0.16762919418831346,
+      "positive_recall": 0.36182902584493043,
+      "largest_positive_subject": "510046",
+      "largest_subject_positive_share": 0.11928429423459244,
+      "auc_without_largest_subject": 0.6108293239140908
+    },
+    {
+      "label": "cnn_lstm_confusion_anycut [any]",
+      "n": 1638,
+      "positives": 503,
+      "subjects": 19,
+      "subjects_with_positives": 18,
+      "auc": 0.641420201259404,
+      "auc_ci_subject": [
+        0.564919186635847,
+        0.6873721156180186
+      ],
+      "auc_ci_clip": [
+        0.6109307664850558,
+        0.6696505748280186
+      ],
+      "ci_width_subject": 0.12245292898217164,
+      "ci_width_clip": 0.058719808342962754,
+      "subject_ci_excludes_chance": true,
+      "clip_ci_excludes_chance": true,
+      "permutation_p_within_subject": 0.03996003996003996,
+      "accuracy": 0.6813186813186813,
+      "majority_baseline": 0.6929181929181929,
+      "beats_baseline": false,
+      "kappa": 0.2118975417768888,
+      "positive_recall": 0.39165009940357853,
+      "largest_positive_subject": "510046",
+      "largest_subject_positive_share": 0.11928429423459244,
+      "auc_without_largest_subject": 0.6340758911008775
+    },
+    {
+      "label": "cnn_lstm_confusion [any cut, rare class positive]",
+      "n": 1638,
+      "positives": 503,
+      "subjects": 19,
+      "subjects_with_positives": 18,
+      "auc": 0.5892679167287026,
+      "auc_ci_subject": [
+        0.49786945201868643,
+        0.6517066143660422
+      ],
+      "auc_ci_clip": [
+        0.5587290964372174,
+        0.6196149882049541
+      ],
+      "ci_width_subject": 0.15383716234735573,
+      "ci_width_clip": 0.06088589176773673,
+      "subject_ci_excludes_chance": false,
+      "clip_ci_excludes_chance": true,
+      "permutation_p_within_subject": 0.027972027972027972,
+      "accuracy": 0.4444444444444444,
+      "majority_baseline": 0.6929181929181929,
+      "beats_baseline": false,
+      "kappa": 0.06949596293415472,
+      "positive_recall": 0.8190854870775348,
+      "largest_positive_subject": "510046",
+      "largest_subject_positive_share": 0.11928429423459244,
+      "auc_without_largest_subject": 0.6010005490818131
+    },
+    {
+      "label": "cnn_lstm_confusion [high cut, rare class positive]",
+      "n": 1638,
+      "positives": 135,
+      "subjects": 19,
+      "subjects_with_positives": 17,
+      "auc": 0.5690791256992188,
+      "auc_ci_subject": [
+        0.44343343512990774,
+        0.686693596595279
+      ],
+      "auc_ci_clip": [
+        0.517570975784932,
+        0.6188073977065484
+      ],
+      "ci_width_subject": 0.24326016146537122,
+      "ci_width_clip": 0.1012364219216163,
+      "subject_ci_excludes_chance": false,
+      "clip_ci_excludes_chance": true,
+      "permutation_p_within_subject": 0.02197802197802198,
+      "accuracy": 0.8485958485958486,
+      "majority_baseline": 0.9175824175824175,
+      "beats_baseline": false,
+      "kappa": 0.025266704098820925,
+      "positive_recall": 0.1111111111111111,
+      "largest_positive_subject": "510046",
+      "largest_subject_positive_share": 0.26666666666666666,
+      "auc_without_largest_subject": 0.5898719017985072
+    },
+    {
+      "label": "cnn_lstm_engagement [any cut, rare class positive]",
+      "n": 1638,
+      "positives": 4,
+      "subjects": 19,
+      "subjects_with_positives": 4,
+      "auc": 0.7942166462668299,
+      "auc_ci_subject": [
+        0.6103000037411066,
+        0.9444259416179626
+      ],
+      "auc_ci_clip": [
+        0.591424993241558,
+        0.9329957083892803
+      ],
+      "ci_width_subject": 0.33412593787685596,
+      "ci_width_clip": 0.3415707151477223,
+      "subject_ci_excludes_chance": true,
+      "clip_ci_excludes_chance": true,
+      "permutation_p_within_subject": 0.12187812187812187,
+      "accuracy": 0.996947496947497,
+      "majority_baseline": 0.9975579975579976,
+      "beats_baseline": false,
+      "kappa": -0.000977756049865608,
+      "positive_recall": 0.0,
+      "largest_positive_subject": "510034",
+      "largest_subject_positive_share": 0.25,
+      "auc_without_largest_subject": 0.802016302016302
+    },
+    {
+      "label": "cnn_lstm_engagement [high cut, rare class positive]",
+      "n": 1638,
+      "positives": 85,
+      "subjects": 19,
+      "subjects_with_positives": 14,
+      "auc": 0.6279383356691034,
+      "auc_ci_subject": [
+        0.4640399740874921,
+        0.746131975152158
+      ],
+      "auc_ci_clip": [
+        0.5654642870124427,
+        0.6833278032493995
+      ],
+      "ci_width_subject": 0.2820920010646659,
+      "ci_width_clip": 0.11786351623695679,
+      "subject_ci_excludes_chance": false,
+      "clip_ci_excludes_chance": true,
+      "permutation_p_within_subject": 0.007992007992007992,
+      "accuracy": 0.9468864468864469,
+      "majority_baseline": 0.9481074481074481,
+      "beats_baseline": false,
+      "kappa": 0.03736878369067398,
+      "positive_recall": 0.023529411764705882,
+      "largest_positive_subject": "826412",
+      "largest_subject_positive_share": 0.29411764705882354,
+      "auc_without_largest_subject": 0.5487170905845604
+    },
+    {
+      "label": "cnn_lstm_frustration_anycut [any]",
+      "n": 1638,
+      "positives": 359,
+      "subjects": 19,
+      "subjects_with_positives": 18,
+      "auc": 0.5899390409899795,
+      "auc_ci_subject": [
+        0.5184005985240543,
+        0.642299717360837
+      ],
+      "auc_ci_clip": [
+        0.5567584309143053,
+        0.6231718378291576
+      ],
+      "ci_width_subject": 0.12389911883678273,
+      "ci_width_clip": 0.06641340691485231,
+      "subject_ci_excludes_chance": true,
+      "clip_ci_excludes_chance": true,
+      "permutation_p_within_subject": 0.15484515484515485,
+      "accuracy": 0.7692307692307693,
+      "majority_baseline": 0.7808302808302808,
+      "beats_baseline": false,
+      "kappa": 0.06550028525632312,
+      "positive_recall": 0.08635097493036212,
+      "largest_positive_subject": "510046",
+      "largest_subject_positive_share": 0.1392757660167131,
+      "auc_without_largest_subject": 0.5817199025104367
+    },
+    {
+      "label": "cnn_lstm_frustration [any cut, rare class positive]",
+      "n": 1638,
+      "positives": 359,
+      "subjects": 19,
+      "subjects_with_positives": 18,
+      "auc": 0.5596098100666215,
+      "auc_ci_subject": [
+        0.49780853936339525,
+        0.6064973772269253
+      ],
+      "auc_ci_clip": [
+        0.5244946235536407,
+        0.5946543977382598
+      ],
+      "ci_width_subject": 0.10868883786353006,
+      "ci_width_clip": 0.07015977418461905,
+      "subject_ci_excludes_chance": false,
+      "clip_ci_excludes_chance": true,
+      "permutation_p_within_subject": 0.07292707292707293,
+      "accuracy": 0.7496947496947497,
+      "majority_baseline": 0.7808302808302808,
+      "beats_baseline": false,
+      "kappa": 0.08314470526238182,
+      "positive_recall": 0.14763231197771587,
+      "largest_positive_subject": "510046",
+      "largest_subject_positive_share": 0.1392757660167131,
+      "auc_without_largest_subject": 0.5728986521451189
+    },
+    {
+      "label": "cnn_lstm_frustration [high cut, rare class positive]",
+      "n": 1638,
+      "positives": 79,
+      "subjects": 19,
+      "subjects_with_positives": 17,
+      "auc": 0.6008720292949878,
+      "auc_ci_subject": [
+        0.48076247703376546,
+        0.7191276194060479
+      ],
+      "auc_ci_clip": [
+        0.5373364843995742,
+        0.6602028063672701
+      ],
+      "ci_width_subject": 0.2383651423722824,
+      "ci_width_clip": 0.12286632196769598,
+      "subject_ci_excludes_chance": false,
+      "clip_ci_excludes_chance": true,
+      "permutation_p_within_subject": 0.005994005994005994,
+      "accuracy": 0.9511599511599511,
+      "majority_baseline": 0.9517704517704517,
+      "beats_baseline": false,
+      "kappa": 0.08185143145415574,
+      "positive_recall": 0.05063291139240506,
+      "largest_positive_subject": "510046",
+      "largest_subject_positive_share": 0.26582278481012656,
+      "auc_without_largest_subject": 0.6092308783879665
+    }
+  ]
+}
