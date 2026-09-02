@@ -77,7 +77,7 @@ predictions, with `ADAPT_MIN_CONSECUTIVE = 2` and `ADAPT_COOLDOWN_CYCLES = 3`:
 | **0.70 (adopted)** | **0.500** | **1.5** | **39 min** |
 
 **`ADAPT_MIN_CONFIDENCE` was changed 0.55 → 0.70** (`app/agents/edges.py`), which is a **2.76×
-precision improvement over intervening unconditionally**. 564 backend tests pass unchanged.
+precision improvement over intervening unconditionally**. the backend suite passes unchanged (772 tests across 80 files at time of writing).
 
 `ADAPT_MIN_CONSECUTIVE` stays at 2. Raising it to 3 does not reliably help — precision wobbles
 0.447 / 0.273 / 0.385 across thresholds, which is noise on single-digit counts, not signal.
