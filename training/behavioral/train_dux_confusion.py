@@ -58,7 +58,7 @@ from sklearn.metrics import roc_auc_score  # noqa: E402
 LABELS = ["not_confused", "confused"]
 
 
-def load(dux_dir: str, threshold: float):
+def load(dux_dir: str, threshold: float, facial_aggregate: bool = False):
     windows = load_dux_confusion(dux_dir, threshold=threshold)
     if not windows:
         raise SystemExit(
@@ -66,9 +66,16 @@ def load(dux_dir: str, threshold: float):
             "(10.5281/zenodo.7778612, CC BY) and is gitignored - place it there first."
         )
     # Behavioural: the SHARED extractor, so these are the same 16 features the platform computes
-    # at serve time. Facial: the 12 AFFDEX channels bin-averaged over the same window.
+    # at serve time. Facial: either the 12 AFFDEX channels averaged over the window (the default,
+    # and what the published ablation used) or, under --facial-aggregate, the same five statistics
+    # per channel the behavioural arm receives. The second is the like-for-like comparison: the
+    # default gives the behavioural arm every within-window dynamic and the facial arm none, so a
+    # gap measured under it is confounded with temporal aggregation.
     Xb = np.stack([extract_features(w["events"], 0) for w in windows])
-    Xf = np.stack([w["affectiva"] for w in windows])
+    if facial_aggregate:
+        Xf = aggregate(np.stack([w["affectiva_seq"] for w in windows]))
+    else:
+        Xf = np.stack([w["affectiva"] for w in windows])
     y = np.array([w["label"] for w in windows], dtype=np.int64)
     groups = np.array([w["participant"] for w in windows])
     ok = ~np.isnan(Xf).any(axis=1)
@@ -125,12 +132,22 @@ def _permutation_p(y, prob, groups, seed: int, n: int = 2000) -> float:
     return (hits + 1) / (n + 1)
 
 
-def _bootstrap_auc(y, prob, seed: int, n: int = 2000) -> tuple[float, float]:
+def _bootstrap_auc(y, prob, groups, seed: int, n: int = 2000) -> tuple[float, float]:
+    """Cluster bootstrap: resample PARTICIPANTS with replacement, not windows.
+
+    Resampling windows treats 1,419 correlated observations as 1,419 independent ones and
+    understates the interval, which is precisely the error this project criticises in the DAiSEE
+    literature — it cannot be committed here while that criticism stands. A participant's windows
+    are drawn together, so the interval reflects uncertainty over which people were sampled rather
+    than over which moments of a fixed set of people were sampled.
+    """
     rng = np.random.default_rng(seed)
+    ids = np.unique(groups)
+    idx_by = {g: np.flatnonzero(groups == g) for g in ids}
     out = []
-    idx = np.arange(len(y))
     for _ in range(n):
-        b = rng.choice(idx, size=len(idx), replace=True)
+        pick = rng.choice(ids, size=len(ids), replace=True)
+        b = np.concatenate([idx_by[g] for g in pick])
         if len(np.unique(y[b])) > 1:
             out.append(roc_auc_score(y[b], prob[b]))
     return (float(np.percentile(out, 2.5)), float(np.percentile(out, 97.5))) if out else (np.nan,) * 2
@@ -143,7 +160,7 @@ def run_arm(name: str, X, y, groups, seed: int, out_dir: Path | None) -> dict:
     pred = (pk >= 0.5).astype(np.int64)
 
     auc = roc_auc_score(yk, pk)
-    lo, hi = _bootstrap_auc(yk, pk, seed)
+    lo, hi = _bootstrap_auc(yk, pk, gk, seed)
     perm = _permutation_p(yk, pk, gk, seed)
 
     two_col = np.column_stack([1.0 - pk, pk])
@@ -174,13 +191,17 @@ def main() -> int:
     ap.add_argument("--per-learner-z", action="store_true",
                     help="z-score each feature within the participant's own windows before "
                          "classifying (see dux_sensitivity.py: worth +0.079 AUC at 30 s)")
+    ap.add_argument("--facial-aggregate", action="store_true",
+                    help="give the facial arm the same five statistics per channel the "
+                         "behavioural arm gets (12x5=60 features) instead of a per-window mean, "
+                         "so the modality comparison is not confounded with temporal aggregation")
     a = ap.parse_args()
 
     out_dir = Path(a.out_dir) if a.out_dir else None
     if out_dir:
         out_dir.mkdir(parents=True, exist_ok=True)
 
-    Xb, Xf, y, groups = load(a.dux, a.threshold)
+    Xb, Xf, y, groups = load(a.dux, a.threshold, a.facial_aggregate)
     pos = int(y.sum())
     majority = 1.0 - pos / len(y)
     print(f"windows {len(y)}  participants {len(set(groups.tolist()))}  "

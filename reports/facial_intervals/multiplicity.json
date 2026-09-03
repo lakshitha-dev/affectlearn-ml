@@ -1,0 +1,199 @@
+{
+  "alpha": 0.05,
+  "method": "benjamini-hochberg",
+  "n_views": 11,
+  "views": [
+    {
+      "label": "cnn_lstm_boredom [any cut, rare class positive]",
+      "construct": "boredom",
+      "auc": 0.5607570574103372,
+      "auc_ci_subject": [
+        0.4754129127171238,
+        0.6481959193239134
+      ],
+      "subject_ci_excludes_chance": false,
+      "permutation_p": 0.000999000999000999,
+      "bh_q": 0.005494505494505494,
+      "survives_bh": true,
+      "survives_both": false
+    },
+    {
+      "label": "cnn_lstm_boredom [high cut, rare class positive]",
+      "construct": "boredom",
+      "auc": 0.5527166250488372,
+      "auc_ci_subject": [
+        0.4627449141719204,
+        0.6458312482293166
+      ],
+      "subject_ci_excludes_chance": false,
+      "permutation_p": 0.000999000999000999,
+      "bh_q": 0.005494505494505494,
+      "survives_bh": true,
+      "survives_both": false
+    },
+    {
+      "label": "cnn_lstm_frustration [high cut, rare class positive]",
+      "construct": "frustration",
+      "auc": 0.6008720292949878,
+      "auc_ci_subject": [
+        0.48076247703376546,
+        0.7191276194060479
+      ],
+      "subject_ci_excludes_chance": false,
+      "permutation_p": 0.005994005994005994,
+      "bh_q": 0.021978021978021976,
+      "survives_bh": true,
+      "survives_both": false
+    },
+    {
+      "label": "cnn_lstm_engagement [high cut, rare class positive]",
+      "construct": "engagement",
+      "auc": 0.6279383356691034,
+      "auc_ci_subject": [
+        0.4640399740874921,
+        0.746131975152158
+      ],
+      "subject_ci_excludes_chance": false,
+      "permutation_p": 0.007992007992007992,
+      "bh_q": 0.021978021978021976,
+      "survives_bh": true,
+      "survives_both": false
+    },
+    {
+      "label": "cnn_lstm_confusion [high cut, rare class positive]",
+      "construct": "confusion",
+      "auc": 0.5690791256992188,
+      "auc_ci_subject": [
+        0.44343343512990774,
+        0.686693596595279
+      ],
+      "subject_ci_excludes_chance": false,
+      "permutation_p": 0.02197802197802198,
+      "bh_q": 0.04835164835164836,
+      "survives_bh": true,
+      "survives_both": false
+    },
+    {
+      "label": "cnn_lstm_confusion [any cut, rare class positive]",
+      "construct": "confusion",
+      "auc": 0.5892679167287026,
+      "auc_ci_subject": [
+        0.49786945201868643,
+        0.6517066143660422
+      ],
+      "subject_ci_excludes_chance": false,
+      "permutation_p": 0.027972027972027972,
+      "bh_q": 0.05128205128205129,
+      "survives_bh": false,
+      "survives_both": false
+    },
+    {
+      "label": "cnn_lstm_confusion_anycut [any]",
+      "construct": "confusion",
+      "auc": 0.641420201259404,
+      "auc_ci_subject": [
+        0.564919186635847,
+        0.6873721156180186
+      ],
+      "subject_ci_excludes_chance": true,
+      "permutation_p": 0.03996003996003996,
+      "bh_q": 0.06279434850863422,
+      "survives_bh": false,
+      "survives_both": false
+    },
+    {
+      "label": "cnn_lstm_frustration [any cut, rare class positive]",
+      "construct": "frustration",
+      "auc": 0.5596098100666215,
+      "auc_ci_subject": [
+        0.49780853936339525,
+        0.6064973772269253
+      ],
+      "subject_ci_excludes_chance": false,
+      "permutation_p": 0.07292707292707293,
+      "bh_q": 0.10027472527472528,
+      "survives_bh": false,
+      "survives_both": false
+    },
+    {
+      "label": "cnn_lstm_engagement [any cut, rare class positive]",
+      "construct": "engagement",
+      "auc": 0.7942166462668299,
+      "auc_ci_subject": [
+        0.6103000037411066,
+        0.9444259416179626
+      ],
+      "subject_ci_excludes_chance": true,
+      "permutation_p": 0.12187812187812187,
+      "bh_q": 0.14896214896214896,
+      "survives_bh": false,
+      "survives_both": false
+    },
+    {
+      "label": "cnn_lstm_frustration_anycut [any]",
+      "construct": "frustration",
+      "auc": 0.5899390409899795,
+      "auc_ci_subject": [
+        0.5184005985240543,
+        0.642299717360837
+      ],
+      "subject_ci_excludes_chance": true,
+      "permutation_p": 0.15484515484515485,
+      "bh_q": 0.17032967032967034,
+      "survives_bh": false,
+      "survives_both": false
+    },
+    {
+      "label": "cnn_lstm_confusion_anycut_ft [any]",
+      "construct": "confusion",
+      "auc": 0.5734842049027421,
+      "auc_ci_subject": [
+        0.47196042510001174,
+        0.6604117626759224
+      ],
+      "subject_ci_excludes_chance": false,
+      "permutation_p": 0.25674325674325676,
+      "bh_q": 0.25674325674325676,
+      "survives_bh": false,
+      "survives_both": false
+    }
+  ],
+  "n_survive_bh": 5,
+  "n_survive_both": 0,
+  "n_subject_ci_excludes_chance": 3,
+  "family_of_constructs": [
+    {
+      "construct": "boredom",
+      "label": "cnn_lstm_boredom [any cut, rare class positive]",
+      "permutation_p": 0.000999000999000999,
+      "bh_q": 0.003996003996003996,
+      "survives_bh": true,
+      "survives_both": false
+    },
+    {
+      "construct": "frustration",
+      "label": "cnn_lstm_frustration [high cut, rare class positive]",
+      "permutation_p": 0.005994005994005994,
+      "bh_q": 0.010656010656010656,
+      "survives_bh": true,
+      "survives_both": false
+    },
+    {
+      "construct": "engagement",
+      "label": "cnn_lstm_engagement [high cut, rare class positive]",
+      "permutation_p": 0.007992007992007992,
+      "bh_q": 0.010656010656010656,
+      "survives_bh": true,
+      "survives_both": false
+    },
+    {
+      "construct": "confusion",
+      "label": "cnn_lstm_confusion [high cut, rare class positive]",
+      "permutation_p": 0.02197802197802198,
+      "bh_q": 0.02197802197802198,
+      "survives_bh": true,
+      "survives_both": false
+    }
+  ],
+  "n_constructs_survive_both": 0
+}
