@@ -60,7 +60,23 @@ class FrameCNN(nn.Module):
 
 
 class CNNLSTMModel(nn.Module):
-    """CNN feature extractor + LSTM temporal aggregator."""
+    """CNN feature extractor + LSTM temporal aggregator.
+
+    TEMPORAL POOLING
+
+    `pooling="last"` classifies from the final hidden state alone, which is what this model did
+    originally and what every checkpoint before this change was trained with. It is retained as the
+    default so existing artefacts stay reproducible, but it is the wrong choice for a distributed
+    behaviour and should be set to "meanmax" for new work.
+
+    The reason is the label. Disengagement on EngageNet is defined as a subject who *frequently
+    glances away from the screen* — the evidence is spread across the window, not concentrated at
+    its end. Reading only the last hidden state means a learner who looked away four times and then
+    back scores the same as one who never looked away, because the recurrence has already been
+    summarised into whatever state the final frame left behind. Mean pooling keeps how much of the
+    window was spent away; max pooling keeps whether it happened strongly at all; concatenating both
+    keeps the two facts separable, at the cost of doubling the head's input width and nothing else.
+    """
 
     def __init__(
         self,
@@ -70,21 +86,29 @@ class CNNLSTMModel(nn.Module):
         num_layers: int = 1,
         dropout: float = 0.5,
         backbone: str = "scratch",
+        pooling: str = "last",
     ):
         super().__init__()
+        if pooling not in ("last", "meanmax"):
+            raise ValueError(f"unknown pooling: {pooling!r} (expected 'last' or 'meanmax')")
+        self.pooling = pooling
         self.cnn     = FrameCNN(out_dim=cnn_out_dim, backbone=backbone)
         self.lstm    = nn.LSTM(cnn_out_dim, hidden_size,
                                num_layers=num_layers, batch_first=True)
         self.dropout = nn.Dropout(dropout)
-        self.head    = nn.Linear(hidden_size, num_classes)
+        head_in      = hidden_size * (2 if pooling == "meanmax" else 1)
+        self.head    = nn.Linear(head_in, num_classes)
 
     def forward(self, x):                          # x: (B, T, 3, 96, 96)
         B, T, C, H, W = x.shape
         feats = self.cnn(x.view(B * T, C, H, W))   # (B*T, out_dim)
         feats = feats.view(B, T, -1)               # (B, T, out_dim)
-        _, (h_n, _) = self.lstm(feats)             # h_n: (num_layers, B, hidden)
-        out = self.dropout(h_n[-1])                # (B, hidden)
-        return self.head(out)                      # (B, num_classes)
+        seq, (h_n, _) = self.lstm(feats)           # seq: (B, T, hidden)
+        if self.pooling == "meanmax":
+            pooled = torch.cat([seq.mean(dim=1), seq.max(dim=1).values], dim=1)
+        else:
+            pooled = h_n[-1]                       # (B, hidden)
+        return self.head(self.dropout(pooled))     # (B, num_classes)
 
 
 def build_model(cfg: dict) -> CNNLSTMModel:
@@ -96,4 +120,5 @@ def build_model(cfg: dict) -> CNNLSTMModel:
         num_layers=cfg.get("num_layers", 1),
         dropout=cfg.get("dropout", 0.5),
         backbone=cfg.get("backbone", "scratch"),
+        pooling=cfg.get("pooling", "last"),
     )
