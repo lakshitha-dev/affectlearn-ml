@@ -55,7 +55,28 @@ CUTS = {"any": (1, 2, 3), "high": (2, 3)}
 
 
 def subject_of(clip_id) -> str:
+    """DAiSEE encodes the subject in the first six digits of the ClipID.
+
+    This is a fallback, not the contract. A corpus that names its participants differently should
+    supply them explicitly through the `groups` array — see `subjects_from`.
+    """
     return str(clip_id)[:6]
+
+
+def subjects_from(d) -> np.ndarray:
+    """Participant id per row, preferring an explicit `groups` array over the DAiSEE convention.
+
+    Every interval and permutation null in this file resamples participants, so this is the single
+    most load-bearing derivation in the script: get it wrong and the intervals silently describe
+    the wrong population. DAiSEE-era dumps carry only `ids`, from which the subject has to be
+    parsed; `Predictions` has always been able to persist `groups`, but no facial dump ever wrote
+    it, which is why the six-character parse existed as the only path. Preferring `groups` when it
+    is present makes the script work on any corpus without touching it again, and leaves the DAiSEE
+    results bit-identical because those files have no `groups` key to prefer.
+    """
+    if "groups" in getattr(d, "files", []):
+        return np.asarray([str(g) for g in d["groups"]])
+    return np.asarray([subject_of(c) for c in d["ids"]])
 
 
 def bootstrap_auc(y, p, groups, n_boot=4000, seed=0):
@@ -164,7 +185,7 @@ def main() -> int:
     for f in files:
         d = np.load(f, allow_pickle=False)
         y_raw, prob = d["y_true"], d["y_prob"]
-        subjects = np.array([subject_of(c) for c in d["ids"]])
+        subjects = subjects_from(d)
         stem = f.stem.replace("_test_predictions", "")
         n_classes = prob.shape[1] if prob.ndim == 2 else 2
 
