@@ -1,0 +1,23 @@
+{
+  "n": 7919,
+  "n_participants": 101,
+  "positives_a": 485,
+  "positives_b": 2511,
+  "auc_a": 0.5866902972966226,
+  "auc_b": 0.582046097761565,
+  "difference": 0.004644199535057569,
+  "difference_ci95_participant": [
+    -0.06472164883128174,
+    0.07053578701817423
+  ],
+  "ci_contains_zero": true,
+  "bootstrap_mean_difference": 0.0046439570787599254,
+  "n_boot": 4000,
+  "n_boot_used": 4000,
+  "n_boot_skipped": 0,
+  "seed": 0,
+  "target_a": "Engagement, HIGH cut",
+  "target_b": "Confusion, ANY cut",
+  "source_a": "../.features/engagement_high_cv.npz",
+  "source_b": "../.features/confusion_any_cv_cv.npz"
+}

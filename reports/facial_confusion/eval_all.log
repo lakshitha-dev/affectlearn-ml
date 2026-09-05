@@ -1,0 +1,33 @@
+2026-08-13 18:12:54,888 INFO NumExpr defaulting to 2 threads.
+2026-08-13 18:13:01,178 INFO === cnn_lstm_frustration.pt  target=Frustration  num_classes=4  epoch=31  val_f1=0.6354 ===
+2026-08-13 18:13:20,128 INFO   n=1638 acc=0.7436 wF1=0.6988 macroF1=0.2808 kappa=0.0740 baseline=0.7808
+2026-08-13 18:13:20,129 INFO   per-class recall: [0.92, 0.136, 0.054, 0.0]
+2026-08-13 18:13:20,129 INFO   FAILS TO BEAT baseline
+2026-08-13 18:13:20,139 INFO   binary any  cut: AUC 0.5596 acc 0.7497 baseline 0.7808 kappa 0.0831 pos-recall 0.1476
+2026-08-13 18:13:20,144 INFO   binary high cut: AUC 0.6009 acc 0.9512 baseline 0.9518 kappa 0.0819 pos-recall 0.0506
+2026-08-13 18:13:26,921 INFO === cnn_lstm_boredom.pt  target=Boredom  num_classes=4  epoch=5  val_f1=0.3469 ===
+2026-08-13 18:13:42,286 INFO   n=1638 acc=0.3407 wF1=0.3497 macroF1=0.2624 kappa=0.0617 baseline=0.4560
+2026-08-13 18:13:42,287 INFO   per-class recall: [0.455, 0.148, 0.4, 0.189]
+2026-08-13 18:13:42,288 INFO   FAILS TO BEAT baseline
+2026-08-13 18:13:42,292 INFO   binary any  cut: AUC 0.5608 acc 0.5507 baseline 0.5440 kappa 0.0353 pos-recall 0.9046
+2026-08-13 18:13:42,295 INFO   binary high cut: AUC 0.5527 acc 0.6239 baseline 0.7729 kappa 0.0700 pos-recall 0.3871
+2026-08-13 18:13:50,515 INFO === cnn_lstm_confusion.pt  target=Confusion  num_classes=4  epoch=2  val_f1=0.5551 ===
+2026-08-13 18:13:57,570 INFO   n=1638 acc=0.5904 wF1=0.5971 macroF1=0.3002 kappa=0.1388 baseline=0.6929
+2026-08-13 18:13:57,571 INFO   per-class recall: [0.743, 0.269, 0.216, 0.0]
+2026-08-13 18:13:57,571 INFO   FAILS TO BEAT baseline
+2026-08-13 18:13:57,575 INFO   binary any  cut: AUC 0.5893 acc 0.4444 baseline 0.6929 kappa 0.0695 pos-recall 0.8191
+2026-08-13 18:13:57,578 INFO   binary high cut: AUC 0.5691 acc 0.8486 baseline 0.9176 kappa 0.0253 pos-recall 0.1111
+2026-08-13 18:14:01,438 INFO === cnn_lstm_engagement.pt  target=Engagement  num_classes=4  epoch=2  val_f1=0.5195 ===
+2026-08-13 18:14:08,848 INFO   n=1638 acc=0.5543 wF1=0.5355 macroF1=0.2791 kappa=0.1387 baseline=0.5183
+2026-08-13 18:14:08,849 INFO   per-class recall: [0.0, 0.0, 0.697, 0.449]
+2026-08-13 18:14:08,849 INFO   BEATS baseline
+2026-08-13 18:14:08,856 INFO   binary any  cut: AUC 0.7942 acc 0.9969 baseline 0.9976 kappa -0.0010 pos-recall 0.9994
+2026-08-13 18:14:08,862 INFO   binary high cut: AUC 0.6279 acc 0.9469 baseline 0.9481 kappa 0.0374 pos-recall 0.9974
+2026-08-13 18:14:08,874 INFO wrote all_facial_checkpoints_test.json
+2026-08-13 18:14:08,874 INFO 
+2026-08-13 18:14:08,874 INFO checkpoint                   target         AUCany    kappa      acc     base
+2026-08-13 18:14:08,875 INFO cnn_lstm_frustration.pt      Frustration    0.5596   0.0831   0.7497   0.7808
+2026-08-13 18:14:08,875 INFO cnn_lstm_boredom.pt          Boredom        0.5608   0.0353   0.5507   0.5440
+2026-08-13 18:14:08,875 INFO cnn_lstm_confusion.pt        Confusion      0.5893   0.0695   0.4444   0.6929
+2026-08-13 18:14:08,875 INFO cnn_lstm_engagement.pt       Engagement     0.7942  -0.0010   0.9969   0.9976
+2026-08-13 18:14:08,875 INFO EXTRA_EVAL_DONE
