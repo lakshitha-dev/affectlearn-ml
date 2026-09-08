@@ -1,0 +1,28 @@
+{
+  "rung": "4_lean",
+  "n": 2177,
+  "n_features": 20,
+  "subjects": 91,
+  "positive_rate": 0.31327514928801103,
+  "auc": 0.8920639668886514,
+  "auc_ci95_subject": [
+    0.8617306186452424,
+    0.9196337142925687
+  ],
+  "ci_excludes_chance": true,
+  "perm_p_within_subject": 0.0004997501249375312,
+  "accuracy": 0.8300413412953606,
+  "majority_baseline": 0.686724850711989,
+  "beats_baseline": true,
+  "average_precision": 0.825869864015472,
+  "ap_over_base_rate": 2.636244419298655,
+  "kappa": 0.6145217282275053,
+  "score_min": 0.0213358966886255,
+  "score_max": 0.9969795339063118,
+  "score_mean": 0.39613129281674836,
+  "score_spread": 0.9756436372176863,
+  "split": "Train",
+  "stage": "confirm",
+  "_source": "results/Train_4_lean.json, as scored on 2026-09-05",
+  "_note": "Stage 2 of the three-stage protocol: the screening winner confirmed on Train, 91 participants disjoint from both other splits. Copied from the run directory, not recomputed."
+}
