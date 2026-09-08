@@ -79,5 +79,42 @@
   "adaptMinConfidence": 0.5,
   "_source": "GET /api/v1/monitor/aggregates?hours=720 on the deployed instance",
   "_captured": "2026-09-08",
-  "_note": "Aggregate deployment record. Recruitment has not opened, so none of these sessions is a recruited participant; they are the researcher's own use of the deployed instance. Aggregates only: no learner identifier, session identifier or content reaches this file."
+  "_note": "Aggregate deployment record. Recruitment has not opened, so none of these sessions is a recruited participant; they are the researcher's own use of the deployed instance. Aggregates only: no learner identifier, session identifier or content reaches this file. The window spans a configuration change: the reasoning node fell back on almost every call before 2026-09-05 and on none since, so the window's aggregate fallback rate describes the period rather than the current system.",
+  "interventionsByDay": [
+    {
+      "date": "2026-08-24",
+      "delivered": 4,
+      "generated": 0,
+      "fallback": 4
+    },
+    {
+      "date": "2026-08-29",
+      "delivered": 292,
+      "generated": 28,
+      "fallback": 264
+    },
+    {
+      "date": "2026-09-05",
+      "delivered": 52,
+      "generated": 52,
+      "fallback": 0
+    },
+    {
+      "date": "2026-09-07",
+      "delivered": 6,
+      "generated": 6,
+      "fallback": 0
+    }
+  ],
+  "interventionsSince": {
+    "from": "2026-09-05",
+    "delivered": 58,
+    "generated": 58,
+    "fallback": 0
+  },
+  "interventionsBefore": {
+    "delivered": 296,
+    "generated": 28,
+    "fallback": 268
+  }
 }

@@ -35,7 +35,7 @@ Stable across an 8× change in subject count, and the interval tightened as subj
 `motion`, each aggregated by five statistics (mean/std/min/max/trend) over 10 frames at 1 fps.
 `HistGradientBoostingClassifier`, depth 3, 120 iterations, lr 0.06, balanced class weights.
 
-* ONNX 60 KB, **0.110 ms per clip on CPU**, parity with sklearn to 2.1e-07
+* ONNX 60 KB, **0.037 ms per clip on CPU** (`fit_report.json`, steady-state single clip)
 * ~600 bytes per serving cycle against ~3.3 MB of face crops — **no pixels leave the browser**
 * max-F1 threshold 0.501, so the 0.5 default is already near-optimal (P 0.759, R 0.821)
 
@@ -59,9 +59,8 @@ extractors and overstated both findings; the numbers here supersede it.
 1. **Head pose is net harmful — CONFIRMED.** Removing yaw/pitch/roll raises AUC by **+0.023**
    (0.8640 -> 0.8865), and head pose alone is the weakest rung tested. The label says "frequently
    glances away from the screen" and the plan was built on head geometry, but the discrimination
-   comes from **gaze**. `mean_gaze_y` is the strongest single feature by 5x in permutation
-   importance, and its AUC computed WITHIN each subject averages 0.755 - so it is behaviour, not
-   camera placement.
+   comes from **gaze**. `mean_gaze_y` is the strongest single feature, and its AUC computed WITHIN each subject
+   averages 0.755 on Validation - so it is behaviour, not camera placement.
 
 2. **The away block has no detectable effect — NOT the negative result previously claimed.** Across
    its three pairings the deltas are +0.0088 (on head pose), +0.0002 (on all geometry) and -0.0057
@@ -94,3 +93,22 @@ mouth openness and motion do carry complementary signal.
 
 Every figure traces to a committed JSON here. Nothing derived from EngageNet video is committed:
 the EULA forbids redistribution in source or binary form. Cite doi 10.1145/3577190.3614164.
+
+## Corrections, 2026-09-09
+
+Three figures in the text above were superseded when `make_artefacts.py` computed them from the
+committed dumps rather than from a chat transcript. They are corrected in place; this note records
+what changed so a reader of an older copy can reconcile.
+
+| Figure | Was | Is | Source |
+|---|---|---|---|
+| `mean_gaze_y` permutation importance | 5x the next feature | **1.9x**, on Test | `STAGE3_DIAGNOSTICS.json` |
+| Serving latency | 0.110 ms per clip | **0.037 ms** | `fit_report.json` |
+| sklearn parity | 2.1e-07 | **not reported** | the pickled estimator no longer loads under the installed scikit-learn; the ONNX is checked against the committed predictions instead, at a maximum drift of 1.3e-07 |
+
+The within-subject gaze AUC of 0.755 is a **Validation** figure and is now labelled as one. The
+corresponding Test figure is 0.6551.
+
+Stage 2 and the Test diagnostics, quoted here as prose when this file was written, now exist as
+`STAGE2_TRAIN.json` and `STAGE3_DIAGNOSTICS.json` beside it. Every figure in this file is checked
+against those artefacts by `docs/thesis/verify_numbers.py`, which fails the thesis build on a drift.
