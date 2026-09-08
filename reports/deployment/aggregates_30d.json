@@ -1,0 +1,83 @@
+{
+  "windowHours": 720,
+  "sessions": 24,
+  "cycles": 624,
+  "gatedCycles": 8943,
+  "totalEvents": 21309,
+  "eventsByType": {
+    "ws_connected": 204,
+    "learner_profile_updated": 8992,
+    "facial_affect_detected": 4434,
+    "ws_disconnected": 240,
+    "behavioral_affect_detected": 4454,
+    "multimodal_affect_detected": 1538,
+    "strategy_decided": 354,
+    "adaptation_triggered": 354,
+    "adaptation_delivered": 354,
+    "adaptation_interaction": 38,
+    "quiz_submitted": 53,
+    "ws_session_restored": 3,
+    "section_started": 97,
+    "section_completed": 97,
+    "section_features": 67,
+    "self_report": 8,
+    "ws_reconnected": 19,
+    "questionnaire_submitted": 1,
+    "phase_transition": 2
+  },
+  "interventions": {
+    "delivered": 354,
+    "perHour": 0.492,
+    "fallback": 268,
+    "fallbackRate": 0.757
+  },
+  "gateReasons": {
+    "state_not_actionable": 5976,
+    "low_confidence": 22,
+    "not_sustained": 161,
+    "cooldown": 90,
+    "channel_advisory": 0
+  },
+  "affectCounts": {
+    "bored": 311,
+    "engaged": 7807,
+    "confused": 487
+  },
+  "modalityStats": {
+    "behavioral": {
+      "n": 4165,
+      "min": 0.0076,
+      "max": 0.6333,
+      "mean": 0.0766,
+      "threshold": 0.5,
+      "sources": [
+        "aggregate_confusion_gbdt",
+        "behavioral_model",
+        "fusion"
+      ],
+      "overThreshold": 61,
+      "reachedThreshold": true
+    },
+    "facial": {
+      "n": 2658,
+      "min": 0.0544,
+      "max": 0.9927,
+      "mean": 0.5269,
+      "threshold": 0.5,
+      "sources": [
+        "category_model",
+        "facial_geometry",
+        "fusion"
+      ],
+      "overThreshold": 1188,
+      "reachedThreshold": true
+    },
+    "multimodal": {
+      "n": 0
+    }
+  },
+  "adaptMinConfidence": 0.5,
+  "_source": "GET /api/v1/monitor/aggregates?hours=720 on the deployed instance",
+  "_captured": "2026-09-08",
+  "_note": "Aggregate deployment record. Recruitment has not opened, so none of these sessions is a recruited participant; they are the researcher's own use of the deployed instance. Aggregates only: no learner identifier, session identifier or content reaches this file."
+}
