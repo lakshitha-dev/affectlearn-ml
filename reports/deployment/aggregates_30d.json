@@ -1,85 +1,90 @@
 {
+  "_note": "Aggregate deployment record over the 720-hour window ending at capture. Recruitment has not opened, so none of these sessions is a recruited participant; they are the researcher's own use of the deployed instance. Aggregates only: no learner identifier, session identifier or content reaches this file. The window slides, so a later capture drops early sessions and adds recent ones; the date below is the reading Table 4.22 and Figure 4.15 both quote.",
+  "_source": "GET /api/v1/monitor/aggregates?hours=720 on the deployed instance",
+  "_generator": "scripts/capture_deployment_record.py",
+  "_captured": "2026-09-10",
   "windowHours": 720,
-  "sessions": 24,
-  "cycles": 624,
-  "gatedCycles": 8943,
-  "totalEvents": 21309,
-  "eventsByType": {
-    "ws_connected": 204,
-    "learner_profile_updated": 8992,
-    "facial_affect_detected": 4434,
-    "ws_disconnected": 240,
-    "behavioral_affect_detected": 4454,
-    "multimodal_affect_detected": 1538,
-    "strategy_decided": 354,
-    "adaptation_triggered": 354,
-    "adaptation_delivered": 354,
-    "adaptation_interaction": 38,
-    "quiz_submitted": 53,
-    "ws_session_restored": 3,
-    "section_started": 97,
-    "section_completed": 97,
-    "section_features": 67,
-    "self_report": 8,
-    "ws_reconnected": 19,
-    "questionnaire_submitted": 1,
-    "phase_transition": 2
-  },
+  "totalEvents": 23192,
+  "sessions": 23,
+  "cycles": 597,
+  "gatedCycles": 9468,
+  "gatePassed": 390,
+  "adaptMinConfidence": 0.5,
   "interventions": {
-    "delivered": 354,
-    "perHour": 0.492,
+    "delivered": 390,
+    "perHour": 0.542,
     "fallback": 268,
-    "fallbackRate": 0.757
+    "fallbackRate": 0.687
   },
   "gateReasons": {
-    "state_not_actionable": 5976,
-    "low_confidence": 22,
-    "not_sustained": 161,
-    "cooldown": 90,
+    "no_affect": 2359,
+    "not_eligible": 427,
+    "state_not_actionable": 6153,
+    "low_confidence": 58,
+    "not_sustained": 190,
+    "cooldown": 281,
+    "session_cap": 0,
+    "withheld_random": 0,
     "channel_advisory": 0
   },
   "affectCounts": {
-    "bored": 311,
-    "engaged": 7807,
-    "confused": 487
+    "bored": 670,
+    "engaged": 8162,
+    "confused": 503
   },
   "modalityStats": {
     "behavioral": {
-      "n": 4165,
+      "n": 4484,
       "min": 0.0076,
       "max": 0.6333,
-      "mean": 0.0766,
+      "mean": 0.0807,
       "threshold": 0.5,
       "sources": [
         "aggregate_confusion_gbdt",
         "behavioral_model",
         "fusion"
       ],
-      "overThreshold": 61,
+      "overThreshold": 78,
       "reachedThreshold": true
     },
     "facial": {
-      "n": 2658,
+      "n": 2986,
       "min": 0.0544,
-      "max": 0.9927,
-      "mean": 0.5269,
+      "max": 0.9955,
+      "mean": 0.5607,
       "threshold": 0.5,
       "sources": [
         "category_model",
         "facial_geometry",
         "fusion"
       ],
-      "overThreshold": 1188,
+      "overThreshold": 1484,
       "reachedThreshold": true
     },
     "multimodal": {
       "n": 0
     }
   },
-  "adaptMinConfidence": 0.5,
-  "_source": "GET /api/v1/monitor/aggregates?hours=720 on the deployed instance",
-  "_captured": "2026-09-08",
-  "_note": "Aggregate deployment record. Recruitment has not opened, so none of these sessions is a recruited participant; they are the researcher's own use of the deployed instance. Aggregates only: no learner identifier, session identifier or content reaches this file. The window spans a configuration change: the reasoning node fell back on almost every call before 2026-09-05 and on none since, so the window's aggregate fallback rate describes the period rather than the current system.",
+  "eventsByType": {
+    "ws_connected": 237,
+    "learner_profile_updated": 9858,
+    "facial_affect_detected": 4744,
+    "ws_disconnected": 281,
+    "behavioral_affect_detected": 4751,
+    "multimodal_affect_detected": 1670,
+    "strategy_decided": 390,
+    "adaptation_triggered": 390,
+    "adaptation_delivered": 390,
+    "adaptation_interaction": 59,
+    "quiz_submitted": 64,
+    "ws_session_restored": 16,
+    "section_started": 114,
+    "section_completed": 114,
+    "section_features": 86,
+    "self_report": 8,
+    "ws_reconnected": 18,
+    "phase_transition": 2
+  },
   "interventionsByDay": [
     {
       "date": "2026-08-24",
@@ -95,21 +100,21 @@
     },
     {
       "date": "2026-09-05",
-      "delivered": 52,
-      "generated": 52,
+      "delivered": 70,
+      "generated": 70,
       "fallback": 0
     },
     {
       "date": "2026-09-07",
-      "delivered": 6,
-      "generated": 6,
+      "delivered": 24,
+      "generated": 24,
       "fallback": 0
     }
   ],
   "interventionsSince": {
     "from": "2026-09-05",
-    "delivered": 58,
-    "generated": 58,
+    "delivered": 94,
+    "generated": 94,
     "fallback": 0
   },
   "interventionsBefore": {
