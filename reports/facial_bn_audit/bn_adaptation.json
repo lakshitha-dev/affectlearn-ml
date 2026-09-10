@@ -1,0 +1,22 @@
+{
+  "checkpoint": "G:/My Drive/affectlearn-ml/models/cnn_lstm_confusion_anycut.pt",
+  "bn_drift": {
+    "tensors": 40,
+    "mean_abs_delta": 0.07475565912318416,
+    "mean_abs_imagenet": 0.30230553133878857,
+    "relative_drift": 0.24728511844332346
+  },
+  "auc_imagenet_bn": 0.5829901647384416,
+  "auc_ci": [
+    0.4964172378532352,
+    0.6612469944627677
+  ],
+  "auc_published": 0.6414,
+  "gap_from_bn": 0.05840983526155841,
+  "n": 1638,
+  "positives": 503,
+  "subjects": 19,
+  "labels_identical": true,
+  "pearson_r": 0.5235844890775702,
+  "mean_abs_prob_diff": 0.04230087623000145
+}

@@ -1,0 +1,135 @@
+{
+  "channel": "facial_geometry",
+  "model": "4_lean",
+  "source_predictions": "C:/engagenet/results/test_predictions.npz",
+  "n_clips": 2256,
+  "n_participants": 26,
+  "base_rate": 0.311613475177305,
+  "clips_reordered": 2179,
+  "clip_seconds": 10.0,
+  "cycle_seconds": 30.0,
+  "min_consecutive": 2,
+  "cooldown_cycles": 3,
+  "seed": 42,
+  "recommended_threshold": 0.9,
+  "note": "Precision and counts are properties of the sequence; the per-hour columns depend on whether a window is read as a 10 s EngageNet clip or a 30 s serving cycle, so both are reported. Aggregates only - no per-clip EngageNet data is committed.",
+  "sweep": [
+    {
+      "threshold": null,
+      "interventions": 2256,
+      "correct": 703,
+      "precision": 0.311613475177305,
+      "ci95": null,
+      "as_10s_clip": {
+        "hours_of_sequence": 6.266666666666667,
+        "interventions_per_hour": 360.0,
+        "minutes_between": 0.16666666666666666
+      },
+      "as_30s_cycle": {
+        "hours_of_sequence": 18.8,
+        "interventions_per_hour": 120.0,
+        "minutes_between": 0.5
+      }
+    },
+    {
+      "threshold": 0.5,
+      "interventions": 194,
+      "correct": 148,
+      "precision": 0.7628865979381443,
+      "ci95": [
+        0.6349171842650103,
+        0.8531158679135008
+      ],
+      "as_10s_clip": {
+        "hours_of_sequence": 6.266666666666667,
+        "interventions_per_hour": 30.95744680851064,
+        "minutes_between": 1.9381443298969072
+      },
+      "as_30s_cycle": {
+        "hours_of_sequence": 18.8,
+        "interventions_per_hour": 10.319148936170212,
+        "minutes_between": 5.814432989690721
+      }
+    },
+    {
+      "threshold": 0.6,
+      "interventions": 165,
+      "correct": 132,
+      "precision": 0.8,
+      "ci95": [
+        0.6827531472359059,
+        0.8819455227743271
+      ],
+      "as_10s_clip": {
+        "hours_of_sequence": 6.266666666666667,
+        "interventions_per_hour": 26.329787234042552,
+        "minutes_between": 2.278787878787879
+      },
+      "as_30s_cycle": {
+        "hours_of_sequence": 18.8,
+        "interventions_per_hour": 8.77659574468085,
+        "minutes_between": 6.836363636363636
+      }
+    },
+    {
+      "threshold": 0.7,
+      "interventions": 133,
+      "correct": 116,
+      "precision": 0.8721804511278195,
+      "ci95": [
+        0.7834958390262079,
+        0.9367854923889407
+      ],
+      "as_10s_clip": {
+        "hours_of_sequence": 6.266666666666667,
+        "interventions_per_hour": 21.22340425531915,
+        "minutes_between": 2.827067669172932
+      },
+      "as_30s_cycle": {
+        "hours_of_sequence": 18.8,
+        "interventions_per_hour": 7.074468085106383,
+        "minutes_between": 8.481203007518797
+      }
+    },
+    {
+      "threshold": 0.8,
+      "interventions": 103,
+      "correct": 92,
+      "precision": 0.8932038834951457,
+      "ci95": [
+        0.8073835125448029,
+        0.9811408106219427
+      ],
+      "as_10s_clip": {
+        "hours_of_sequence": 6.266666666666667,
+        "interventions_per_hour": 16.43617021276596,
+        "minutes_between": 3.650485436893204
+      },
+      "as_30s_cycle": {
+        "hours_of_sequence": 18.8,
+        "interventions_per_hour": 5.478723404255319,
+        "minutes_between": 10.951456310679612
+      }
+    },
+    {
+      "threshold": 0.9,
+      "interventions": 69,
+      "correct": 64,
+      "precision": 0.927536231884058,
+      "ci95": [
+        0.788694935570872,
+        1.0
+      ],
+      "as_10s_clip": {
+        "hours_of_sequence": 6.266666666666667,
+        "interventions_per_hour": 11.01063829787234,
+        "minutes_between": 5.449275362318841
+      },
+      "as_30s_cycle": {
+        "hours_of_sequence": 18.8,
+        "interventions_per_hour": 3.6702127659574466,
+        "minutes_between": 16.347826086956523
+      }
+    }
+  ]
+}

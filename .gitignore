@@ -26,3 +26,11 @@ venv/
 
 # Colab / Drive sync artifacts
 *.tmp
+.features/
+
+# MediaPipe FaceLandmarker weights (3.8 MB). Google-hosted and re-downloadable, so it is
+# fetched rather than committed -- same treatment as the large ONNX checkpoints above.
+# Pin the version: a different landmarker revision shifts landmark positions slightly, which
+# moves every derived measurement the geometry model was fitted on.
+#   https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task
+training/engagenet/face_landmarker.task

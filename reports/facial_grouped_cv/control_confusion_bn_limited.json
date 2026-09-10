@@ -1,0 +1,50 @@
+{
+  "label": "Confusion any-cut, official test split",
+  "n": 1638,
+  "positives": 503,
+  "subjects": 19,
+  "auc": 0.5858417775286606,
+  "auc_ci_lo": 0.46929600307665403,
+  "auc_ci_hi": 0.6835337903224225,
+  "accuracy": 0.7051282051282052,
+  "majority_baseline": 0.6929181929181929,
+  "kappa": 0.16969025294854756,
+  "weighted_f1": 0.6599352662157852,
+  "positive_recall": 0.22266401590457258,
+  "positive_precision": 0.5490196078431373,
+  "prob_min": 0.32436493039131165,
+  "prob_max": 0.627026379108429,
+  "prob_mean": 0.4242134094238281,
+  "without_largest_subject": {
+    "label": "without subject 510046",
+    "n": 1516,
+    "positives": 443,
+    "subjects": 18,
+    "auc": 0.6361964829311291,
+    "auc_ci_lo": 0.5504524782480968,
+    "auc_ci_hi": 0.6911413135434739,
+    "accuracy": 0.7209762532981531,
+    "majority_baseline": 0.7077836411609498,
+    "kappa": 0.19852319936808527,
+    "weighted_f1": 0.6834213905215558,
+    "positive_recall": 0.2528216704288939,
+    "positive_precision": 0.5490196078431373,
+    "prob_min": 0.32789573073387146,
+    "prob_max": 0.627026379108429,
+    "prob_mean": 0.43000227212905884
+  },
+  "target": "Confusion",
+  "cut": "any",
+  "seeds": 3,
+  "per_seed_test_auc": [
+    0.5921072682845657,
+    0.58043807638749,
+    0.5858260130844887
+  ],
+  "val_auc_per_seed": [
+    0.5987435531897269,
+    0.5980481914054154,
+    0.5961495703579696
+  ],
+  "flip_augmentation": true
+}

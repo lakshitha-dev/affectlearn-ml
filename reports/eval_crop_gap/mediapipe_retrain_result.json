@@ -1,0 +1,90 @@
+{
+  "refs": {
+    "haar_train_haar_serve": 0.509,
+    "haar_train_mp_serve": 0.48
+  },
+  "mp_focal": {
+    "best_val_wf1": 0.5074,
+    "test": {
+      "n": 1638,
+      "weighted_f1": 0.4731,
+      "macro_f1": 0.2712,
+      "accuracy": 0.4921,
+      "per_class_f1": [
+        0.0,
+        0.1186,
+        0.5871,
+        0.379
+      ],
+      "confusion": [
+        [
+          0,
+          1,
+          3,
+          0
+        ],
+        [
+          0,
+          7,
+          51,
+          23
+        ],
+        [
+          0,
+          20,
+          568,
+          261
+        ],
+        [
+          0,
+          9,
+          464,
+          231
+        ]
+      ]
+    },
+    "ckpt": "/content/drive/MyDrive/affectlearn-ml/models/cnn_lstm_mp_focal_best.pt"
+  },
+  "mp_corn": {
+    "best_val_wf1": 0.5049,
+    "test": {
+      "n": 1638,
+      "weighted_f1": 0.4714,
+      "macro_f1": 0.2622,
+      "accuracy": 0.4902,
+      "per_class_f1": [
+        0.0,
+        0.0808,
+        0.5812,
+        0.3867
+      ],
+      "confusion": [
+        [
+          0,
+          1,
+          2,
+          1
+        ],
+        [
+          1,
+          4,
+          50,
+          26
+        ],
+        [
+          0,
+          7,
+          555,
+          287
+        ],
+        [
+          0,
+          6,
+          454,
+          244
+        ]
+      ]
+    },
+    "ckpt": "/content/drive/MyDrive/affectlearn-ml/models/cnn_lstm_mp_corn_best.pt"
+  }
+}

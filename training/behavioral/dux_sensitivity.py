@@ -145,7 +145,11 @@ def main() -> int:
                 print(f"{ws:6d}s {norm:>12s}  single-class pool, skipped")
                 continue
             auc = roc_auc_score(yk, pk)
-            lo, hi = _bootstrap_auc(yk, pk, a.seed)
+            # Cluster bootstrap over PARTICIPANTS. This call previously omitted `gk` and so
+            # resampled windows, which understated every interval in the grid; the signature
+            # changed when `train_dux_confusion` moved to the cluster form and this call site
+            # was not updated with it.
+            lo, hi = _bootstrap_auc(yk, pk, gk, a.seed)
             p = _permutation_p(yk, pk, gk, a.seed, n=1000)
             star = " *" if p < 0.05 else ""
             print(f"{ws:6d}s {norm:>12s} {len(yk):5d} {int(yk.sum()):4d} {auc:6.3f} "

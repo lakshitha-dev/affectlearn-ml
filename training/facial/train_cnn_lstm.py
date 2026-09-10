@@ -307,11 +307,41 @@ def train(cfg: dict):
 
 # ── entry point ───────────────────────────────────────────────────────────────
 
+def set_seed(seed: int) -> None:
+    """Make a run repeatable, which until now it was not.
+
+    Every checkpoint this script has produced came from an unseeded run: no `manual_seed`, no numpy
+    seed, and a `WeightedRandomSampler` feeding multiple loader workers on top. That is why the
+    thesis has to state that the served facial models are not bit-reproducible, and it is worth
+    fixing before a new corpus inherits the same defect rather than after.
+
+    `cudnn.benchmark` is turned off alongside: left on, it picks convolution algorithms by timing
+    them, so two runs of identical code can take different numerical paths.
+    """
+    import random
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train CNN-LSTM on DAiSEE")
     parser.add_argument("--config", default="config.yaml",
                         help="Path to config.yaml")
+    parser.add_argument("--seed", type=int, default=None,
+                        help="Seed everything for a repeatable run. Overrides training.seed in the "
+                             "config. Omit both and the run is unseeded, as all prior runs were.")
     args = parser.parse_args()
 
     cfg = yaml.safe_load(open(args.config))
+    seed = args.seed if args.seed is not None else cfg.get("training", {}).get("seed")
+    if seed is not None:
+        set_seed(int(seed))
+        logging.info("seeded run: seed=%d, cudnn deterministic", int(seed))
+    else:
+        logging.warning("UNSEEDED run - this checkpoint will not be bit-reproducible. "
+                        "Pass --seed or set training.seed in the config.")
     train(cfg)

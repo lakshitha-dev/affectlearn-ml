@@ -13,6 +13,8 @@ Emitted window: {participant, proxy_label (0/1), events(DataFrame[ts,type,x,y,ke
 
 from pathlib import Path
 
+import warnings
+
 import numpy as np
 import pandas as pd
 
@@ -147,6 +149,38 @@ DUX_AFFECTIVA = ["Anger", "Confusion", "Contempt", "Disgust", "Engagement", "Fea
 DUX_MANUAL_CONFUSION = "emotion_manual_Confusion"
 
 
+def _bin_per_second(sub: pd.DataFrame, aff_cols: list[str], t0: int, w: int,
+                    window_ms: int) -> np.ndarray:
+    """The window's AFFDEX rows as (n_bins, n_channels), one bin per second.
+
+    This exists so the facial arm can be given the SAME treatment as the behavioural one. The
+    behavioural extractor emits (30, 16) and `aggregate` then takes five statistics per channel;
+    reducing the facial channels to a single per-window mean instead — as `affectiva` does — hands
+    the behavioural arm every within-window dynamic and denies the facial arm all of them. A
+    modality comparison built on that asymmetry is confounded with temporal aggregation, so the
+    binned form is offered alongside and `train_dux_confusion.py --facial-aggregate` uses it.
+
+    Seconds with no rows are forward-filled, then back-filled: an expression channel is a
+    continuous quantity that persists between samples, so carrying the last observation is the
+    honest interpolation. A window with no usable rows at all returns zeros.
+    """
+    n_bins = max(1, window_ms // 1000)
+    A = sub[aff_cols].to_numpy(dtype=np.float64)
+    off = (sub["ts"].to_numpy() - t0) - w * window_ms
+    b = np.clip((off // 1000).astype(int), 0, n_bins - 1)
+
+    seq = np.full((n_bins, len(aff_cols)), np.nan, dtype=np.float64)
+    for i in range(n_bins):
+        m = b == i
+        if m.any():
+            with warnings.catch_warnings():           # all-NaN channel in a bin is expected
+                warnings.simplefilter("ignore", RuntimeWarning)
+                seq[i] = np.nanmean(A[m], axis=0)
+
+    df = pd.DataFrame(seq).ffill().bfill()
+    return df.to_numpy(dtype=np.float64) if not df.isna().all().all() else np.zeros_like(seq)
+
+
 def load_dux_confusion(dux_dir: str, threshold: float = 1.0,
                        window_ms: int = WINDOW_MS) -> list[dict]:
     """DUX windows labelled by the HUMAN Confusion annotation, with the facial channels alongside.
@@ -199,6 +233,8 @@ def load_dux_confusion(dux_dir: str, threshold: float = 1.0,
                    for w, sub in g_all.groupby(widx_all)}
             facial = {int(w): sub[aff_cols].mean().to_numpy(dtype=np.float64)
                       for w, sub in g_all.groupby(widx_all)}
+            facial_seq = {int(w): _bin_per_second(sub, aff_cols, t0, int(w), window_ms)
+                          for w, sub in g_all.groupby(widx_all)}
 
             g = g_all[g_all["type"].isin(_DUX_TYPE)].copy()
             if g.empty:
@@ -226,6 +262,7 @@ def load_dux_confusion(dux_dir: str, threshold: float = 1.0,
                     "window_index": int(w),
                     "label": int(lab.get(int(w), 0.0)),
                     "affectiva": facial.get(int(w)),
+                    "affectiva_seq": facial_seq.get(int(w)),
                     "events": ev.reset_index(drop=True),
                 })
     return windows

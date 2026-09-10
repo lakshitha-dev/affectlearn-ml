@@ -1,0 +1,209 @@
+{
+  "corpus": "EngageNet (EmotiW 2023)",
+  "stage": "1 - screen",
+  "split": "Validation",
+  "n_clips": 1071,
+  "n_subjects": 11,
+  "positive_rate": 0.2138,
+  "majority_baseline": 0.7862,
+  "positive_class": "low engagement = {Not-Engaged, Barely-engaged}; SNP dropped",
+  "protocol": {
+    "folds": "GroupKFold on subject, 5 splits, out-of-fold probabilities",
+    "classifier": "HistGradientBoostingClassifier depth 3, 120 iters, lr 0.06, min_samples_leaf 8, l2 1.0, class_weight balanced, seed 42",
+    "aggregation": "five statistics (mean/std/min/max/trend) per channel, matching the DUX behavioural branch",
+    "frames": "10 frames at 1 fps, matching the serving cadence",
+    "interval": "subject-level cluster bootstrap, 2000 resamples",
+    "null": "within-subject label permutation, 2000 draws, add-one p",
+    "n_variants_screened": 8,
+    "test_split": "SEALED - not touched at any point during screening"
+  },
+  "results": [
+    {
+      "rung": "4_lean",
+      "n_features": 20,
+      "auc": 0.8887448267277951,
+      "auc_ci95_subject": [
+        0.8217066941405011,
+        0.9322010002117939
+      ],
+      "ci_excludes_chance": true,
+      "perm_p_within_subject": 0.0004997501249375312,
+      "accuracy": 0.8562091503267973,
+      "majority_baseline": 0.7861811391223156,
+      "beats_baseline": true,
+      "ap_over_base_rate": 3.32,
+      "score_spread": 0.989
+    },
+    {
+      "rung": "6_no_headpose",
+      "n_features": 35,
+      "auc": 0.8864888132850667,
+      "auc_ci95_subject": [
+        0.814039089367957,
+        0.9323513016179737
+      ],
+      "ci_excludes_chance": true,
+      "perm_p_within_subject": 0.0004997501249375312,
+      "accuracy": 0.8580765639589168,
+      "majority_baseline": 0.7861811391223156,
+      "beats_baseline": true,
+      "ap_over_base_rate": 3.36,
+      "score_spread": 0.98
+    },
+    {
+      "rung": "5_lean_away",
+      "n_features": 44,
+      "auc": 0.8829984752460871,
+      "auc_ci95_subject": [
+        0.807371692974904,
+        0.9297788139870385
+      ],
+      "ci_excludes_chance": true,
+      "perm_p_within_subject": 0.0004997501249375312,
+      "accuracy": 0.8468720821661998,
+      "majority_baseline": 0.7861811391223156,
+      "beats_baseline": true,
+      "ap_over_base_rate": 3.27,
+      "score_spread": 0.991
+    },
+    {
+      "rung": "3b_all_away",
+      "n_features": 74,
+      "auc": 0.8641568733209555,
+      "auc_ci95_subject": [
+        0.806376915864586,
+        0.9096107811518958
+      ],
+      "ci_excludes_chance": true,
+      "perm_p_within_subject": 0.0004997501249375312,
+      "accuracy": 0.8253968253968254,
+      "majority_baseline": 0.7861811391223156,
+      "beats_baseline": true,
+      "ap_over_base_rate": 3.16,
+      "score_spread": 0.977
+    },
+    {
+      "rung": "3_all_geometry",
+      "n_features": 50,
+      "auc": 0.8639649825223785,
+      "auc_ci95_subject": [
+        0.8097364824839955,
+        0.9081888227994241
+      ],
+      "ci_excludes_chance": true,
+      "perm_p_within_subject": 0.0004997501249375312,
+      "accuracy": 0.8244631185807656,
+      "majority_baseline": 0.7861811391223156,
+      "beats_baseline": true,
+      "ap_over_base_rate": 3.15,
+      "score_spread": 0.979
+    },
+    {
+      "rung": "7_gaze_only",
+      "n_features": 10,
+      "auc": 0.7977548776566502,
+      "auc_ci95_subject": [
+        0.6749226908810878,
+        0.8839750822095449
+      ],
+      "ci_excludes_chance": true,
+      "perm_p_within_subject": 0.0004997501249375312,
+      "accuracy": 0.7973856209150327,
+      "majority_baseline": 0.7861811391223156,
+      "beats_baseline": true,
+      "ap_over_base_rate": 2.85,
+      "score_spread": 0.979
+    },
+    {
+      "rung": "2_headpose_away",
+      "n_features": 39,
+      "auc": 0.7391633561182047,
+      "auc_ci95_subject": [
+        0.6665013905411586,
+        0.821431947858812
+      ],
+      "ci_excludes_chance": true,
+      "perm_p_within_subject": 0.0004997501249375312,
+      "accuracy": 0.7563025210084033,
+      "majority_baseline": 0.7861811391223156,
+      "beats_baseline": false,
+      "ap_over_base_rate": 2.12,
+      "score_spread": 0.974
+    },
+    {
+      "rung": "1_headpose",
+      "n_features": 15,
+      "auc": 0.7303415656214669,
+      "auc_ci95_subject": [
+        0.6586412977068291,
+        0.8085178063778402
+      ],
+      "ci_excludes_chance": true,
+      "perm_p_within_subject": 0.0004997501249375312,
+      "accuracy": 0.7329598506069094,
+      "majority_baseline": 0.7861811391223156,
+      "beats_baseline": false,
+      "ap_over_base_rate": 1.99,
+      "score_spread": 0.974
+    }
+  ],
+  "diagnostics": {
+    "yaw_distribution_pooled": {
+      "median": 2.7,
+      "p75": 5.7,
+      "p90": 10.2,
+      "p99": 20.2,
+      "max": 45.5
+    },
+    "pitch_distribution_pooled": {
+      "median": 2.8,
+      "p75": 5.7,
+      "p90": 7.9,
+      "p99": 19.3,
+      "max": 65.9
+    },
+    "subject_median_yaw_range": [
+      1.2,
+      9.1
+    ],
+    "face_detection_is_label_proxy": {
+      "corr_face_found_share_with_label": -0.4293,
+      "low_engagement_rate_when_no_face_found": 1.0,
+      "low_engagement_rate_partial_detection": 0.9649,
+      "low_engagement_rate_full_detection": 0.1625,
+      "auc_all_clips": 0.8344,
+      "auc_fully_detected_only": 0.8384,
+      "reading": "Real confound and a corpus property worth reporting, but the headline does not rest on it: dropping all 68 affected clips leaves AUC marginally HIGHER."
+    },
+    "leave_one_subject_out_auc_range": [
+      0.823,
+      0.8496
+    ],
+    "best_single_feature": {
+      "name": "mean_gaze_y",
+      "univariate_auc": 0.7002,
+      "within_subject_auc_mean": 0.7547,
+      "within_subject_auc_range": [
+        0.5035,
+        0.9324
+      ],
+      "reading": "Discriminates INSIDE each person, so it is behaviour rather than camera placement. Model adds +0.13 over it, so this is not a one-feature model."
+    },
+    "channel_ablation_vs_rung3": {
+      "without_gaze": -0.0257,
+      "without_head_pose": 0.0256,
+      "without_eyes": 0.0257,
+      "without_mouth": -0.005,
+      "without_motion": -0.0111
+    }
+  },
+  "findings": [
+    "Head pose is NET HARMFUL: removing yaw/pitch/roll RAISED AUC by +0.026. The label says 'frequently glances away from the screen' and the plan was built on head geometry, but the discrimination comes from gaze, not the neck.",
+    "The away-transition features failed three times independently (rung 2 vs 1, 3b vs 3, 5 vs 4), all slightly negative. The argument that 'frequently glances away is a transition count that no mean expresses' is not supported.",
+    "Performance improved monotonically as channels were REMOVED: 50 features 0.834, 35 features 0.860, 20 features 0.884. Gaze alone (10 features) falls to 0.784, so rung 4 is the optimum.",
+    "For scale: the DAiSEE facial models in this project reach 0.553-0.641 and the DUX behavioural branch that the thesis rests on reaches 0.747."
+  ],
+  "status": "SCREENING ONLY - NOT a reportable result. 8 variants were screened on Validation, so the winner carries a selection effect. Stage 2 (confirm on Train, 91 independent subjects) and Stage 3 (Test, scored once) had not run when the Colab runtime was lost.",
+  "licence_note": "EngageNet EULA forbids redistribution in source or binary form. This file records derived aggregate metrics only - no clips, no frames, no per-clip features, no subject-identifying data.",
+  "extractor": "All rungs re-run on the REBUILT extractor after the original Colab runtime was lost. An earlier version of this file mixed values from the two pipelines; RESULTS.md and the thesis quote these. Regenerated 2026-09-06."
+}

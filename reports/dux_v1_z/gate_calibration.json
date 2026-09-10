@@ -1,0 +1,82 @@
+{
+  "arm": "behavioural",
+  "n_windows": 1419,
+  "n_participants": 46,
+  "hours_of_sequence": 11.825,
+  "base_rate": 0.18111346018322763,
+  "window_seconds": 30.0,
+  "min_consecutive": 2,
+  "cooldown_cycles": 3,
+  "seed": 42,
+  "sweep": [
+    {
+      "threshold": null,
+      "interventions": 1419,
+      "correct": 257,
+      "precision": 0.18111346018322763,
+      "interventions_per_hour": 120.00000000000001,
+      "minutes_between": 0.5,
+      "ci95": null
+    },
+    {
+      "threshold": 0.55,
+      "interventions": 68,
+      "correct": 25,
+      "precision": 0.36764705882352944,
+      "interventions_per_hour": 5.750528541226216,
+      "minutes_between": 10.433823529411764,
+      "ci95": [
+        0.23880597014925373,
+        0.5
+      ]
+    },
+    {
+      "threshold": 0.6,
+      "interventions": 51,
+      "correct": 21,
+      "precision": 0.4117647058823529,
+      "interventions_per_hour": 4.312896405919662,
+      "minutes_between": 13.911764705882353,
+      "ci95": [
+        0.26663265306122447,
+        0.559322033898305
+      ]
+    },
+    {
+      "threshold": 0.65,
+      "interventions": 30,
+      "correct": 11,
+      "precision": 0.36666666666666664,
+      "interventions_per_hour": 2.5369978858350954,
+      "minutes_between": 23.65,
+      "ci95": [
+        0.1875,
+        0.5555555555555556
+      ]
+    },
+    {
+      "threshold": 0.7,
+      "interventions": 18,
+      "correct": 9,
+      "precision": 0.5,
+      "interventions_per_hour": 1.5221987315010572,
+      "minutes_between": 39.416666666666664,
+      "ci95": [
+        0.27263986013986014,
+        0.7368993135011438
+      ]
+    },
+    {
+      "threshold": 0.75,
+      "interventions": 6,
+      "correct": 3,
+      "precision": 0.5,
+      "interventions_per_hour": 0.5073995771670191,
+      "minutes_between": 118.25,
+      "ci95": [
+        0.0,
+        1.0
+      ]
+    }
+  ]
+}

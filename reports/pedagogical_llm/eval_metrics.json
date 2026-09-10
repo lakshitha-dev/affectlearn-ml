@@ -1,0 +1,7 @@
+{
+  "n_decision": 255,
+  "json_valid_rate": 1.0,
+  "action_accuracy": 0.8196,
+  "urgency_accuracy": 0.902,
+  "cohen_kappa_action": 0.7862
+}

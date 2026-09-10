@@ -1,0 +1,42 @@
+{
+  "target": "Frustration",
+  "binary_cut": "any",
+  "crops": "mediapipe_blazeface",
+  "n_test": 1638,
+  "auc": 0.5899390409899795,
+  "accuracy": 0.7692307692307693,
+  "majority_baseline": 0.7808302808302808,
+  "weighted_f1": 0.7076392930060066,
+  "macro_f1": 0.5038113860751379,
+  "cohen_kappa": 0.06550028525632372,
+  "matrix": [
+    [
+      1229,
+      50
+    ],
+    [
+      328,
+      31
+    ]
+  ],
+  "per_class": {
+    "not_confused": {
+      "recall": 0.9609069585613761,
+      "precision": 0.7893384714193963,
+      "f1": 0.8667136812411848,
+      "n": 1279
+    },
+    "confused": {
+      "recall": 0.08635097493036212,
+      "precision": 0.38271604938271603,
+      "f1": 0.1409090909090909,
+      "n": 359
+    }
+  },
+  "val_wf1_selected_on": 0.6514505758743974,
+  "model_b_comparison": {
+    "dux_behavioural_auc": 0.747,
+    "dux_n_participants": 46,
+    "note": "different corpus and people - NOT a paired fusion result"
+  }
+}
