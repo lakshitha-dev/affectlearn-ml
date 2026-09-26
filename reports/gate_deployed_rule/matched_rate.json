@@ -1,0 +1,4429 @@
+{
+  "_note": "Gate variants compared at a matched offer rate, and how evenly each spaces its offers.",
+  "grid": [
+    0.5,
+    0.99,
+    0.01
+  ],
+  "reference": {
+    "variant": "deployed_rule",
+    "floor": 0.7
+  },
+  "n_bootstrap": 2000,
+  "seed": 42,
+  "channels": {
+    "geometry_scorable": {
+      "windows": 2256,
+      "hours": 18.8,
+      "base_rate": 0.288159111933395,
+      "curves": {
+        "floor_only": [
+          {
+            "floor": 0.5,
+            "offers": 681,
+            "correct": 500,
+            "precision": 0.7342143906020558,
+            "offers_per_hour": 36.223404255319146
+          },
+          {
+            "floor": 0.51,
+            "offers": 674,
+            "correct": 495,
+            "precision": 0.7344213649851632,
+            "offers_per_hour": 35.851063829787236
+          },
+          {
+            "floor": 0.52,
+            "offers": 669,
+            "correct": 492,
+            "precision": 0.7354260089686099,
+            "offers_per_hour": 35.58510638297872
+          },
+          {
+            "floor": 0.53,
+            "offers": 659,
+            "correct": 487,
+            "precision": 0.7389984825493171,
+            "offers_per_hour": 35.0531914893617
+          },
+          {
+            "floor": 0.54,
+            "offers": 649,
+            "correct": 485,
+            "precision": 0.7473035439137135,
+            "offers_per_hour": 34.52127659574468
+          },
+          {
+            "floor": 0.55,
+            "offers": 634,
+            "correct": 477,
+            "precision": 0.7523659305993691,
+            "offers_per_hour": 33.723404255319146
+          },
+          {
+            "floor": 0.56,
+            "offers": 617,
+            "correct": 470,
+            "precision": 0.7617504051863857,
+            "offers_per_hour": 32.81914893617021
+          },
+          {
+            "floor": 0.57,
+            "offers": 606,
+            "correct": 464,
+            "precision": 0.7656765676567657,
+            "offers_per_hour": 32.234042553191486
+          },
+          {
+            "floor": 0.58,
+            "offers": 589,
+            "correct": 454,
+            "precision": 0.7707979626485568,
+            "offers_per_hour": 31.329787234042552
+          },
+          {
+            "floor": 0.59,
+            "offers": 584,
+            "correct": 450,
+            "precision": 0.7705479452054794,
+            "offers_per_hour": 31.06382978723404
+          },
+          {
+            "floor": 0.6,
+            "offers": 573,
+            "correct": 444,
+            "precision": 0.774869109947644,
+            "offers_per_hour": 30.47872340425532
+          },
+          {
+            "floor": 0.61,
+            "offers": 558,
+            "correct": 435,
+            "precision": 0.7795698924731183,
+            "offers_per_hour": 29.680851063829785
+          },
+          {
+            "floor": 0.62,
+            "offers": 543,
+            "correct": 428,
+            "precision": 0.7882136279926335,
+            "offers_per_hour": 28.882978723404253
+          },
+          {
+            "floor": 0.63,
+            "offers": 537,
+            "correct": 426,
+            "precision": 0.7932960893854749,
+            "offers_per_hour": 28.56382978723404
+          },
+          {
+            "floor": 0.64,
+            "offers": 522,
+            "correct": 417,
+            "precision": 0.7988505747126436,
+            "offers_per_hour": 27.76595744680851
+          },
+          {
+            "floor": 0.65,
+            "offers": 514,
+            "correct": 413,
+            "precision": 0.8035019455252919,
+            "offers_per_hour": 27.340425531914892
+          },
+          {
+            "floor": 0.66,
+            "offers": 503,
+            "correct": 408,
+            "precision": 0.8111332007952287,
+            "offers_per_hour": 26.75531914893617
+          },
+          {
+            "floor": 0.67,
+            "offers": 492,
+            "correct": 402,
+            "precision": 0.8170731707317073,
+            "offers_per_hour": 26.170212765957444
+          },
+          {
+            "floor": 0.68,
+            "offers": 487,
+            "correct": 399,
+            "precision": 0.8193018480492813,
+            "offers_per_hour": 25.904255319148934
+          },
+          {
+            "floor": 0.69,
+            "offers": 477,
+            "correct": 392,
+            "precision": 0.8218029350104822,
+            "offers_per_hour": 25.372340425531913
+          },
+          {
+            "floor": 0.7,
+            "offers": 465,
+            "correct": 386,
+            "precision": 0.8301075268817204,
+            "offers_per_hour": 24.73404255319149
+          },
+          {
+            "floor": 0.71,
+            "offers": 452,
+            "correct": 377,
+            "precision": 0.834070796460177,
+            "offers_per_hour": 24.04255319148936
+          },
+          {
+            "floor": 0.72,
+            "offers": 443,
+            "correct": 371,
+            "precision": 0.837471783295711,
+            "offers_per_hour": 23.56382978723404
+          },
+          {
+            "floor": 0.73,
+            "offers": 430,
+            "correct": 362,
+            "precision": 0.8418604651162791,
+            "offers_per_hour": 22.872340425531913
+          },
+          {
+            "floor": 0.74,
+            "offers": 416,
+            "correct": 352,
+            "precision": 0.8461538461538461,
+            "offers_per_hour": 22.127659574468083
+          },
+          {
+            "floor": 0.75,
+            "offers": 406,
+            "correct": 346,
+            "precision": 0.8522167487684729,
+            "offers_per_hour": 21.595744680851062
+          },
+          {
+            "floor": 0.76,
+            "offers": 392,
+            "correct": 336,
+            "precision": 0.8571428571428571,
+            "offers_per_hour": 20.851063829787233
+          },
+          {
+            "floor": 0.77,
+            "offers": 379,
+            "correct": 326,
+            "precision": 0.8601583113456465,
+            "offers_per_hour": 20.159574468085104
+          },
+          {
+            "floor": 0.78,
+            "offers": 366,
+            "correct": 315,
+            "precision": 0.860655737704918,
+            "offers_per_hour": 19.46808510638298
+          },
+          {
+            "floor": 0.79,
+            "offers": 357,
+            "correct": 308,
+            "precision": 0.8627450980392157,
+            "offers_per_hour": 18.98936170212766
+          },
+          {
+            "floor": 0.8,
+            "offers": 348,
+            "correct": 303,
+            "precision": 0.8706896551724138,
+            "offers_per_hour": 18.51063829787234
+          },
+          {
+            "floor": 0.81,
+            "offers": 339,
+            "correct": 296,
+            "precision": 0.8731563421828908,
+            "offers_per_hour": 18.03191489361702
+          },
+          {
+            "floor": 0.82,
+            "offers": 330,
+            "correct": 291,
+            "precision": 0.8818181818181818,
+            "offers_per_hour": 17.5531914893617
+          },
+          {
+            "floor": 0.83,
+            "offers": 318,
+            "correct": 280,
+            "precision": 0.8805031446540881,
+            "offers_per_hour": 16.914893617021274
+          },
+          {
+            "floor": 0.84,
+            "offers": 302,
+            "correct": 265,
+            "precision": 0.8774834437086093,
+            "offers_per_hour": 16.06382978723404
+          },
+          {
+            "floor": 0.85,
+            "offers": 288,
+            "correct": 252,
+            "precision": 0.875,
+            "offers_per_hour": 15.319148936170212
+          },
+          {
+            "floor": 0.86,
+            "offers": 265,
+            "correct": 231,
+            "precision": 0.8716981132075472,
+            "offers_per_hour": 14.095744680851062
+          },
+          {
+            "floor": 0.87,
+            "offers": 256,
+            "correct": 224,
+            "precision": 0.875,
+            "offers_per_hour": 13.617021276595745
+          },
+          {
+            "floor": 0.88,
+            "offers": 245,
+            "correct": 216,
+            "precision": 0.8816326530612245,
+            "offers_per_hour": 13.03191489361702
+          },
+          {
+            "floor": 0.89,
+            "offers": 231,
+            "correct": 205,
+            "precision": 0.8874458874458875,
+            "offers_per_hour": 12.287234042553191
+          },
+          {
+            "floor": 0.9,
+            "offers": 219,
+            "correct": 196,
+            "precision": 0.8949771689497716,
+            "offers_per_hour": 11.648936170212766
+          },
+          {
+            "floor": 0.91,
+            "offers": 204,
+            "correct": 181,
+            "precision": 0.8872549019607843,
+            "offers_per_hour": 10.851063829787234
+          },
+          {
+            "floor": 0.92,
+            "offers": 184,
+            "correct": 162,
+            "precision": 0.8804347826086957,
+            "offers_per_hour": 9.787234042553191
+          },
+          {
+            "floor": 0.93,
+            "offers": 171,
+            "correct": 149,
+            "precision": 0.8713450292397661,
+            "offers_per_hour": 9.095744680851064
+          },
+          {
+            "floor": 0.94,
+            "offers": 158,
+            "correct": 138,
+            "precision": 0.8734177215189873,
+            "offers_per_hour": 8.404255319148936
+          },
+          {
+            "floor": 0.95,
+            "offers": 140,
+            "correct": 120,
+            "precision": 0.8571428571428571,
+            "offers_per_hour": 7.446808510638298
+          },
+          {
+            "floor": 0.96,
+            "offers": 119,
+            "correct": 99,
+            "precision": 0.8319327731092437,
+            "offers_per_hour": 6.329787234042553
+          },
+          {
+            "floor": 0.97,
+            "offers": 83,
+            "correct": 66,
+            "precision": 0.7951807228915663,
+            "offers_per_hour": 4.414893617021276
+          },
+          {
+            "floor": 0.98,
+            "offers": 33,
+            "correct": 32,
+            "precision": 0.9696969696969697,
+            "offers_per_hour": 1.7553191489361701
+          },
+          {
+            "floor": 0.99,
+            "offers": 6,
+            "correct": 6,
+            "precision": 1.0,
+            "offers_per_hour": 0.3191489361702127
+          }
+        ],
+        "floor_persistence": [
+          {
+            "floor": 0.5,
+            "offers": 450,
+            "correct": 350,
+            "precision": 0.7777777777777778,
+            "offers_per_hour": 23.936170212765955
+          },
+          {
+            "floor": 0.51,
+            "offers": 448,
+            "correct": 348,
+            "precision": 0.7767857142857143,
+            "offers_per_hour": 23.829787234042552
+          },
+          {
+            "floor": 0.52,
+            "offers": 445,
+            "correct": 346,
+            "precision": 0.7775280898876404,
+            "offers_per_hour": 23.670212765957444
+          },
+          {
+            "floor": 0.53,
+            "offers": 443,
+            "correct": 345,
+            "precision": 0.7787810383747178,
+            "offers_per_hour": 23.56382978723404
+          },
+          {
+            "floor": 0.54,
+            "offers": 442,
+            "correct": 344,
+            "precision": 0.7782805429864253,
+            "offers_per_hour": 23.51063829787234
+          },
+          {
+            "floor": 0.55,
+            "offers": 434,
+            "correct": 339,
+            "precision": 0.7811059907834101,
+            "offers_per_hour": 23.085106382978722
+          },
+          {
+            "floor": 0.56,
+            "offers": 425,
+            "correct": 336,
+            "precision": 0.7905882352941176,
+            "offers_per_hour": 22.606382978723403
+          },
+          {
+            "floor": 0.57,
+            "offers": 419,
+            "correct": 332,
+            "precision": 0.7923627684964201,
+            "offers_per_hour": 22.28723404255319
+          },
+          {
+            "floor": 0.58,
+            "offers": 412,
+            "correct": 327,
+            "precision": 0.7936893203883495,
+            "offers_per_hour": 21.914893617021274
+          },
+          {
+            "floor": 0.59,
+            "offers": 409,
+            "correct": 324,
+            "precision": 0.7921760391198044,
+            "offers_per_hour": 21.75531914893617
+          },
+          {
+            "floor": 0.6,
+            "offers": 402,
+            "correct": 320,
+            "precision": 0.7960199004975125,
+            "offers_per_hour": 21.382978723404253
+          },
+          {
+            "floor": 0.61,
+            "offers": 397,
+            "correct": 316,
+            "precision": 0.7959697732997482,
+            "offers_per_hour": 21.117021276595743
+          },
+          {
+            "floor": 0.62,
+            "offers": 389,
+            "correct": 313,
+            "precision": 0.8046272493573264,
+            "offers_per_hour": 20.69148936170213
+          },
+          {
+            "floor": 0.63,
+            "offers": 386,
+            "correct": 312,
+            "precision": 0.8082901554404145,
+            "offers_per_hour": 20.53191489361702
+          },
+          {
+            "floor": 0.64,
+            "offers": 377,
+            "correct": 307,
+            "precision": 0.8143236074270557,
+            "offers_per_hour": 20.0531914893617
+          },
+          {
+            "floor": 0.65,
+            "offers": 374,
+            "correct": 305,
+            "precision": 0.8155080213903744,
+            "offers_per_hour": 19.893617021276594
+          },
+          {
+            "floor": 0.66,
+            "offers": 367,
+            "correct": 302,
+            "precision": 0.8228882833787466,
+            "offers_per_hour": 19.52127659574468
+          },
+          {
+            "floor": 0.67,
+            "offers": 361,
+            "correct": 298,
+            "precision": 0.8254847645429363,
+            "offers_per_hour": 19.20212765957447
+          },
+          {
+            "floor": 0.68,
+            "offers": 359,
+            "correct": 297,
+            "precision": 0.8272980501392758,
+            "offers_per_hour": 19.095744680851062
+          },
+          {
+            "floor": 0.69,
+            "offers": 352,
+            "correct": 293,
+            "precision": 0.8323863636363636,
+            "offers_per_hour": 18.72340425531915
+          },
+          {
+            "floor": 0.7,
+            "offers": 346,
+            "correct": 291,
+            "precision": 0.8410404624277457,
+            "offers_per_hour": 18.404255319148934
+          },
+          {
+            "floor": 0.71,
+            "offers": 337,
+            "correct": 285,
+            "precision": 0.8456973293768546,
+            "offers_per_hour": 17.925531914893618
+          },
+          {
+            "floor": 0.72,
+            "offers": 332,
+            "correct": 281,
+            "precision": 0.8463855421686747,
+            "offers_per_hour": 17.659574468085104
+          },
+          {
+            "floor": 0.73,
+            "offers": 324,
+            "correct": 274,
+            "precision": 0.845679012345679,
+            "offers_per_hour": 17.23404255319149
+          },
+          {
+            "floor": 0.74,
+            "offers": 316,
+            "correct": 268,
+            "precision": 0.8481012658227848,
+            "offers_per_hour": 16.80851063829787
+          },
+          {
+            "floor": 0.75,
+            "offers": 311,
+            "correct": 265,
+            "precision": 0.8520900321543409,
+            "offers_per_hour": 16.54255319148936
+          },
+          {
+            "floor": 0.76,
+            "offers": 302,
+            "correct": 260,
+            "precision": 0.8609271523178808,
+            "offers_per_hour": 16.06382978723404
+          },
+          {
+            "floor": 0.77,
+            "offers": 296,
+            "correct": 256,
+            "precision": 0.8648648648648649,
+            "offers_per_hour": 15.74468085106383
+          },
+          {
+            "floor": 0.78,
+            "offers": 285,
+            "correct": 247,
+            "precision": 0.8666666666666667,
+            "offers_per_hour": 15.159574468085106
+          },
+          {
+            "floor": 0.79,
+            "offers": 277,
+            "correct": 241,
+            "precision": 0.8700361010830325,
+            "offers_per_hour": 14.73404255319149
+          },
+          {
+            "floor": 0.8,
+            "offers": 273,
+            "correct": 238,
+            "precision": 0.8717948717948718,
+            "offers_per_hour": 14.52127659574468
+          },
+          {
+            "floor": 0.81,
+            "offers": 267,
+            "correct": 233,
+            "precision": 0.8726591760299626,
+            "offers_per_hour": 14.202127659574467
+          },
+          {
+            "floor": 0.82,
+            "offers": 260,
+            "correct": 229,
+            "precision": 0.8807692307692307,
+            "offers_per_hour": 13.829787234042552
+          },
+          {
+            "floor": 0.83,
+            "offers": 252,
+            "correct": 222,
+            "precision": 0.8809523809523809,
+            "offers_per_hour": 13.404255319148936
+          },
+          {
+            "floor": 0.84,
+            "offers": 241,
+            "correct": 212,
+            "precision": 0.8796680497925311,
+            "offers_per_hour": 12.819148936170212
+          },
+          {
+            "floor": 0.85,
+            "offers": 230,
+            "correct": 202,
+            "precision": 0.8782608695652174,
+            "offers_per_hour": 12.23404255319149
+          },
+          {
+            "floor": 0.86,
+            "offers": 213,
+            "correct": 187,
+            "precision": 0.8779342723004695,
+            "offers_per_hour": 11.329787234042552
+          },
+          {
+            "floor": 0.87,
+            "offers": 208,
+            "correct": 183,
+            "precision": 0.8798076923076923,
+            "offers_per_hour": 11.063829787234042
+          },
+          {
+            "floor": 0.88,
+            "offers": 198,
+            "correct": 175,
+            "precision": 0.8838383838383839,
+            "offers_per_hour": 10.53191489361702
+          },
+          {
+            "floor": 0.89,
+            "offers": 187,
+            "correct": 166,
+            "precision": 0.8877005347593583,
+            "offers_per_hour": 9.946808510638297
+          },
+          {
+            "floor": 0.9,
+            "offers": 179,
+            "correct": 160,
+            "precision": 0.8938547486033519,
+            "offers_per_hour": 9.52127659574468
+          },
+          {
+            "floor": 0.91,
+            "offers": 166,
+            "correct": 147,
+            "precision": 0.8855421686746988,
+            "offers_per_hour": 8.829787234042552
+          },
+          {
+            "floor": 0.92,
+            "offers": 148,
+            "correct": 130,
+            "precision": 0.8783783783783784,
+            "offers_per_hour": 7.872340425531915
+          },
+          {
+            "floor": 0.93,
+            "offers": 140,
+            "correct": 122,
+            "precision": 0.8714285714285714,
+            "offers_per_hour": 7.446808510638298
+          },
+          {
+            "floor": 0.94,
+            "offers": 131,
+            "correct": 113,
+            "precision": 0.8625954198473282,
+            "offers_per_hour": 6.968085106382978
+          },
+          {
+            "floor": 0.95,
+            "offers": 117,
+            "correct": 99,
+            "precision": 0.8461538461538461,
+            "offers_per_hour": 6.223404255319148
+          },
+          {
+            "floor": 0.96,
+            "offers": 101,
+            "correct": 83,
+            "precision": 0.8217821782178217,
+            "offers_per_hour": 5.372340425531915
+          },
+          {
+            "floor": 0.97,
+            "offers": 73,
+            "correct": 57,
+            "precision": 0.7808219178082192,
+            "offers_per_hour": 3.882978723404255
+          },
+          {
+            "floor": 0.98,
+            "offers": 30,
+            "correct": 29,
+            "precision": 0.9666666666666667,
+            "offers_per_hour": 1.5957446808510638
+          },
+          {
+            "floor": 0.99,
+            "offers": 5,
+            "correct": 5,
+            "precision": 1.0,
+            "offers_per_hour": 0.26595744680851063
+          }
+        ],
+        "floor_cooldown": [
+          {
+            "floor": 0.5,
+            "offers": 324,
+            "correct": 227,
+            "precision": 0.7006172839506173,
+            "offers_per_hour": 17.23404255319149
+          },
+          {
+            "floor": 0.51,
+            "offers": 322,
+            "correct": 224,
+            "precision": 0.6956521739130435,
+            "offers_per_hour": 17.127659574468083
+          },
+          {
+            "floor": 0.52,
+            "offers": 320,
+            "correct": 221,
+            "precision": 0.690625,
+            "offers_per_hour": 17.02127659574468
+          },
+          {
+            "floor": 0.53,
+            "offers": 316,
+            "correct": 222,
+            "precision": 0.7025316455696202,
+            "offers_per_hour": 16.80851063829787
+          },
+          {
+            "floor": 0.54,
+            "offers": 311,
+            "correct": 222,
+            "precision": 0.7138263665594855,
+            "offers_per_hour": 16.54255319148936
+          },
+          {
+            "floor": 0.55,
+            "offers": 305,
+            "correct": 220,
+            "precision": 0.7213114754098361,
+            "offers_per_hour": 16.22340425531915
+          },
+          {
+            "floor": 0.56,
+            "offers": 298,
+            "correct": 217,
+            "precision": 0.7281879194630873,
+            "offers_per_hour": 15.851063829787233
+          },
+          {
+            "floor": 0.57,
+            "offers": 294,
+            "correct": 217,
+            "precision": 0.7380952380952381,
+            "offers_per_hour": 15.638297872340425
+          },
+          {
+            "floor": 0.58,
+            "offers": 286,
+            "correct": 213,
+            "precision": 0.7447552447552448,
+            "offers_per_hour": 15.212765957446807
+          },
+          {
+            "floor": 0.59,
+            "offers": 284,
+            "correct": 212,
+            "precision": 0.7464788732394366,
+            "offers_per_hour": 15.106382978723405
+          },
+          {
+            "floor": 0.6,
+            "offers": 279,
+            "correct": 211,
+            "precision": 0.7562724014336918,
+            "offers_per_hour": 14.840425531914892
+          },
+          {
+            "floor": 0.61,
+            "offers": 272,
+            "correct": 208,
+            "precision": 0.7647058823529411,
+            "offers_per_hour": 14.468085106382977
+          },
+          {
+            "floor": 0.62,
+            "offers": 269,
+            "correct": 208,
+            "precision": 0.7732342007434945,
+            "offers_per_hour": 14.308510638297872
+          },
+          {
+            "floor": 0.63,
+            "offers": 267,
+            "correct": 209,
+            "precision": 0.7827715355805244,
+            "offers_per_hour": 14.202127659574467
+          },
+          {
+            "floor": 0.64,
+            "offers": 263,
+            "correct": 208,
+            "precision": 0.7908745247148289,
+            "offers_per_hour": 13.98936170212766
+          },
+          {
+            "floor": 0.65,
+            "offers": 258,
+            "correct": 206,
+            "precision": 0.7984496124031008,
+            "offers_per_hour": 13.723404255319148
+          },
+          {
+            "floor": 0.66,
+            "offers": 254,
+            "correct": 205,
+            "precision": 0.8070866141732284,
+            "offers_per_hour": 13.51063829787234
+          },
+          {
+            "floor": 0.67,
+            "offers": 250,
+            "correct": 202,
+            "precision": 0.808,
+            "offers_per_hour": 13.297872340425531
+          },
+          {
+            "floor": 0.68,
+            "offers": 246,
+            "correct": 199,
+            "precision": 0.8089430894308943,
+            "offers_per_hour": 13.085106382978722
+          },
+          {
+            "floor": 0.69,
+            "offers": 242,
+            "correct": 196,
+            "precision": 0.8099173553719008,
+            "offers_per_hour": 12.872340425531915
+          },
+          {
+            "floor": 0.7,
+            "offers": 236,
+            "correct": 192,
+            "precision": 0.8135593220338984,
+            "offers_per_hour": 12.553191489361701
+          },
+          {
+            "floor": 0.71,
+            "offers": 231,
+            "correct": 189,
+            "precision": 0.8181818181818182,
+            "offers_per_hour": 12.287234042553191
+          },
+          {
+            "floor": 0.72,
+            "offers": 226,
+            "correct": 185,
+            "precision": 0.8185840707964602,
+            "offers_per_hour": 12.02127659574468
+          },
+          {
+            "floor": 0.73,
+            "offers": 220,
+            "correct": 181,
+            "precision": 0.8227272727272728,
+            "offers_per_hour": 11.702127659574467
+          },
+          {
+            "floor": 0.74,
+            "offers": 216,
+            "correct": 179,
+            "precision": 0.8287037037037037,
+            "offers_per_hour": 11.48936170212766
+          },
+          {
+            "floor": 0.75,
+            "offers": 211,
+            "correct": 177,
+            "precision": 0.8388625592417062,
+            "offers_per_hour": 11.22340425531915
+          },
+          {
+            "floor": 0.76,
+            "offers": 205,
+            "correct": 173,
+            "precision": 0.8439024390243902,
+            "offers_per_hour": 10.904255319148936
+          },
+          {
+            "floor": 0.77,
+            "offers": 198,
+            "correct": 168,
+            "precision": 0.8484848484848485,
+            "offers_per_hour": 10.53191489361702
+          },
+          {
+            "floor": 0.78,
+            "offers": 190,
+            "correct": 162,
+            "precision": 0.8526315789473684,
+            "offers_per_hour": 10.106382978723405
+          },
+          {
+            "floor": 0.79,
+            "offers": 186,
+            "correct": 160,
+            "precision": 0.8602150537634409,
+            "offers_per_hour": 9.893617021276595
+          },
+          {
+            "floor": 0.8,
+            "offers": 180,
+            "correct": 159,
+            "precision": 0.8833333333333333,
+            "offers_per_hour": 9.574468085106382
+          },
+          {
+            "floor": 0.81,
+            "offers": 176,
+            "correct": 156,
+            "precision": 0.8863636363636364,
+            "offers_per_hour": 9.361702127659575
+          },
+          {
+            "floor": 0.82,
+            "offers": 175,
+            "correct": 155,
+            "precision": 0.8857142857142857,
+            "offers_per_hour": 9.308510638297872
+          },
+          {
+            "floor": 0.83,
+            "offers": 170,
+            "correct": 150,
+            "precision": 0.8823529411764706,
+            "offers_per_hour": 9.042553191489361
+          },
+          {
+            "floor": 0.84,
+            "offers": 164,
+            "correct": 145,
+            "precision": 0.8841463414634146,
+            "offers_per_hour": 8.72340425531915
+          },
+          {
+            "floor": 0.85,
+            "offers": 154,
+            "correct": 135,
+            "precision": 0.8766233766233766,
+            "offers_per_hour": 8.191489361702127
+          },
+          {
+            "floor": 0.86,
+            "offers": 146,
+            "correct": 128,
+            "precision": 0.8767123287671232,
+            "offers_per_hour": 7.76595744680851
+          },
+          {
+            "floor": 0.87,
+            "offers": 142,
+            "correct": 126,
+            "precision": 0.8873239436619719,
+            "offers_per_hour": 7.553191489361702
+          },
+          {
+            "floor": 0.88,
+            "offers": 135,
+            "correct": 121,
+            "precision": 0.8962962962962963,
+            "offers_per_hour": 7.180851063829787
+          },
+          {
+            "floor": 0.89,
+            "offers": 129,
+            "correct": 116,
+            "precision": 0.8992248062015504,
+            "offers_per_hour": 6.861702127659574
+          },
+          {
+            "floor": 0.9,
+            "offers": 124,
+            "correct": 112,
+            "precision": 0.9032258064516129,
+            "offers_per_hour": 6.595744680851063
+          },
+          {
+            "floor": 0.91,
+            "offers": 114,
+            "correct": 102,
+            "precision": 0.8947368421052632,
+            "offers_per_hour": 6.0638297872340425
+          },
+          {
+            "floor": 0.92,
+            "offers": 104,
+            "correct": 93,
+            "precision": 0.8942307692307693,
+            "offers_per_hour": 5.531914893617021
+          },
+          {
+            "floor": 0.93,
+            "offers": 98,
+            "correct": 87,
+            "precision": 0.8877551020408163,
+            "offers_per_hour": 5.212765957446808
+          },
+          {
+            "floor": 0.94,
+            "offers": 90,
+            "correct": 81,
+            "precision": 0.9,
+            "offers_per_hour": 4.787234042553191
+          },
+          {
+            "floor": 0.95,
+            "offers": 79,
+            "correct": 70,
+            "precision": 0.8860759493670886,
+            "offers_per_hour": 4.202127659574468
+          },
+          {
+            "floor": 0.96,
+            "offers": 71,
+            "correct": 62,
+            "precision": 0.8732394366197183,
+            "offers_per_hour": 3.776595744680851
+          },
+          {
+            "floor": 0.97,
+            "offers": 53,
+            "correct": 44,
+            "precision": 0.8301886792452831,
+            "offers_per_hour": 2.8191489361702127
+          },
+          {
+            "floor": 0.98,
+            "offers": 24,
+            "correct": 23,
+            "precision": 0.9583333333333334,
+            "offers_per_hour": 1.276595744680851
+          },
+          {
+            "floor": 0.99,
+            "offers": 6,
+            "correct": 6,
+            "precision": 1.0,
+            "offers_per_hour": 0.3191489361702127
+          }
+        ],
+        "deployed_rule": [
+          {
+            "floor": 0.5,
+            "offers": 211,
+            "correct": 158,
+            "precision": 0.7488151658767772,
+            "offers_per_hour": 11.22340425531915
+          },
+          {
+            "floor": 0.51,
+            "offers": 211,
+            "correct": 157,
+            "precision": 0.7440758293838863,
+            "offers_per_hour": 11.22340425531915
+          },
+          {
+            "floor": 0.52,
+            "offers": 209,
+            "correct": 156,
+            "precision": 0.7464114832535885,
+            "offers_per_hour": 11.117021276595745
+          },
+          {
+            "floor": 0.53,
+            "offers": 208,
+            "correct": 156,
+            "precision": 0.75,
+            "offers_per_hour": 11.063829787234042
+          },
+          {
+            "floor": 0.54,
+            "offers": 207,
+            "correct": 155,
+            "precision": 0.748792270531401,
+            "offers_per_hour": 11.01063829787234
+          },
+          {
+            "floor": 0.55,
+            "offers": 204,
+            "correct": 153,
+            "precision": 0.75,
+            "offers_per_hour": 10.851063829787234
+          },
+          {
+            "floor": 0.56,
+            "offers": 202,
+            "correct": 153,
+            "precision": 0.7574257425742574,
+            "offers_per_hour": 10.74468085106383
+          },
+          {
+            "floor": 0.57,
+            "offers": 199,
+            "correct": 152,
+            "precision": 0.7638190954773869,
+            "offers_per_hour": 10.585106382978722
+          },
+          {
+            "floor": 0.58,
+            "offers": 197,
+            "correct": 151,
+            "precision": 0.766497461928934,
+            "offers_per_hour": 10.47872340425532
+          },
+          {
+            "floor": 0.59,
+            "offers": 197,
+            "correct": 151,
+            "precision": 0.766497461928934,
+            "offers_per_hour": 10.47872340425532
+          },
+          {
+            "floor": 0.6,
+            "offers": 192,
+            "correct": 149,
+            "precision": 0.7760416666666666,
+            "offers_per_hour": 10.212765957446807
+          },
+          {
+            "floor": 0.61,
+            "offers": 192,
+            "correct": 149,
+            "precision": 0.7760416666666666,
+            "offers_per_hour": 10.212765957446807
+          },
+          {
+            "floor": 0.62,
+            "offers": 190,
+            "correct": 150,
+            "precision": 0.7894736842105263,
+            "offers_per_hour": 10.106382978723405
+          },
+          {
+            "floor": 0.63,
+            "offers": 190,
+            "correct": 150,
+            "precision": 0.7894736842105263,
+            "offers_per_hour": 10.106382978723405
+          },
+          {
+            "floor": 0.64,
+            "offers": 184,
+            "correct": 147,
+            "precision": 0.7989130434782609,
+            "offers_per_hour": 9.787234042553191
+          },
+          {
+            "floor": 0.65,
+            "offers": 183,
+            "correct": 146,
+            "precision": 0.7978142076502732,
+            "offers_per_hour": 9.73404255319149
+          },
+          {
+            "floor": 0.66,
+            "offers": 181,
+            "correct": 146,
+            "precision": 0.8066298342541437,
+            "offers_per_hour": 9.627659574468085
+          },
+          {
+            "floor": 0.67,
+            "offers": 179,
+            "correct": 143,
+            "precision": 0.7988826815642458,
+            "offers_per_hour": 9.52127659574468
+          },
+          {
+            "floor": 0.68,
+            "offers": 177,
+            "correct": 142,
+            "precision": 0.8022598870056498,
+            "offers_per_hour": 9.414893617021276
+          },
+          {
+            "floor": 0.69,
+            "offers": 173,
+            "correct": 141,
+            "precision": 0.815028901734104,
+            "offers_per_hour": 9.202127659574467
+          },
+          {
+            "floor": 0.7,
+            "offers": 170,
+            "correct": 141,
+            "precision": 0.8294117647058824,
+            "offers_per_hour": 9.042553191489361
+          },
+          {
+            "floor": 0.71,
+            "offers": 163,
+            "correct": 136,
+            "precision": 0.8343558282208589,
+            "offers_per_hour": 8.670212765957446
+          },
+          {
+            "floor": 0.72,
+            "offers": 161,
+            "correct": 135,
+            "precision": 0.8385093167701864,
+            "offers_per_hour": 8.563829787234042
+          },
+          {
+            "floor": 0.73,
+            "offers": 157,
+            "correct": 132,
+            "precision": 0.8407643312101911,
+            "offers_per_hour": 8.351063829787234
+          },
+          {
+            "floor": 0.74,
+            "offers": 154,
+            "correct": 131,
+            "precision": 0.8506493506493507,
+            "offers_per_hour": 8.191489361702127
+          },
+          {
+            "floor": 0.75,
+            "offers": 153,
+            "correct": 131,
+            "precision": 0.8562091503267973,
+            "offers_per_hour": 8.138297872340425
+          },
+          {
+            "floor": 0.76,
+            "offers": 149,
+            "correct": 129,
+            "precision": 0.8657718120805369,
+            "offers_per_hour": 7.925531914893616
+          },
+          {
+            "floor": 0.77,
+            "offers": 146,
+            "correct": 128,
+            "precision": 0.8767123287671232,
+            "offers_per_hour": 7.76595744680851
+          },
+          {
+            "floor": 0.78,
+            "offers": 140,
+            "correct": 124,
+            "precision": 0.8857142857142857,
+            "offers_per_hour": 7.446808510638298
+          },
+          {
+            "floor": 0.79,
+            "offers": 137,
+            "correct": 123,
+            "precision": 0.8978102189781022,
+            "offers_per_hour": 7.287234042553191
+          },
+          {
+            "floor": 0.8,
+            "offers": 134,
+            "correct": 121,
+            "precision": 0.9029850746268657,
+            "offers_per_hour": 7.127659574468085
+          },
+          {
+            "floor": 0.81,
+            "offers": 130,
+            "correct": 118,
+            "precision": 0.9076923076923077,
+            "offers_per_hour": 6.914893617021276
+          },
+          {
+            "floor": 0.82,
+            "offers": 130,
+            "correct": 117,
+            "precision": 0.9,
+            "offers_per_hour": 6.914893617021276
+          },
+          {
+            "floor": 0.83,
+            "offers": 127,
+            "correct": 114,
+            "precision": 0.8976377952755905,
+            "offers_per_hour": 6.75531914893617
+          },
+          {
+            "floor": 0.84,
+            "offers": 122,
+            "correct": 110,
+            "precision": 0.9016393442622951,
+            "offers_per_hour": 6.48936170212766
+          },
+          {
+            "floor": 0.85,
+            "offers": 116,
+            "correct": 104,
+            "precision": 0.896551724137931,
+            "offers_per_hour": 6.170212765957446
+          },
+          {
+            "floor": 0.86,
+            "offers": 110,
+            "correct": 99,
+            "precision": 0.9,
+            "offers_per_hour": 5.8510638297872335
+          },
+          {
+            "floor": 0.87,
+            "offers": 109,
+            "correct": 99,
+            "precision": 0.908256880733945,
+            "offers_per_hour": 5.797872340425532
+          },
+          {
+            "floor": 0.88,
+            "offers": 102,
+            "correct": 93,
+            "precision": 0.9117647058823529,
+            "offers_per_hour": 5.425531914893617
+          },
+          {
+            "floor": 0.89,
+            "offers": 99,
+            "correct": 90,
+            "precision": 0.9090909090909091,
+            "offers_per_hour": 5.26595744680851
+          },
+          {
+            "floor": 0.9,
+            "offers": 96,
+            "correct": 88,
+            "precision": 0.9166666666666666,
+            "offers_per_hour": 5.106382978723404
+          },
+          {
+            "floor": 0.91,
+            "offers": 88,
+            "correct": 80,
+            "precision": 0.9090909090909091,
+            "offers_per_hour": 4.680851063829787
+          },
+          {
+            "floor": 0.92,
+            "offers": 79,
+            "correct": 72,
+            "precision": 0.9113924050632911,
+            "offers_per_hour": 4.202127659574468
+          },
+          {
+            "floor": 0.93,
+            "offers": 76,
+            "correct": 69,
+            "precision": 0.9078947368421053,
+            "offers_per_hour": 4.042553191489362
+          },
+          {
+            "floor": 0.94,
+            "offers": 72,
+            "correct": 65,
+            "precision": 0.9027777777777778,
+            "offers_per_hour": 3.829787234042553
+          },
+          {
+            "floor": 0.95,
+            "offers": 65,
+            "correct": 58,
+            "precision": 0.8923076923076924,
+            "offers_per_hour": 3.457446808510638
+          },
+          {
+            "floor": 0.96,
+            "offers": 60,
+            "correct": 53,
+            "precision": 0.8833333333333333,
+            "offers_per_hour": 3.1914893617021276
+          },
+          {
+            "floor": 0.97,
+            "offers": 47,
+            "correct": 39,
+            "precision": 0.8297872340425532,
+            "offers_per_hour": 2.5
+          },
+          {
+            "floor": 0.98,
+            "offers": 22,
+            "correct": 21,
+            "precision": 0.9545454545454546,
+            "offers_per_hour": 1.1702127659574468
+          },
+          {
+            "floor": 0.99,
+            "offers": 5,
+            "correct": 5,
+            "precision": 1.0,
+            "offers_per_hour": 0.26595744680851063
+          }
+        ]
+      },
+      "reference": {
+        "floor": 0.7,
+        "offers": 170,
+        "correct": 141,
+        "precision": 0.8294117647058824,
+        "offers_per_hour": 9.042553191489361,
+        "spacing": {
+          "offers": 170,
+          "share_within_90s": 0.0,
+          "longest_consecutive_run": 1
+        }
+      },
+      "matched": {
+        "floor_only": {
+          "floor": 0.93,
+          "offers": 171,
+          "correct": 149,
+          "precision": 0.8713450292397661,
+          "offers_per_hour": 9.095744680851064,
+          "spacing": {
+            "offers": 171,
+            "share_within_90s": 0.5730994152046783,
+            "longest_consecutive_run": 15
+          },
+          "precision_minus_deployed": {
+            "difference": 0.041933264533883685,
+            "ci95": [
+              -0.0927840510757072,
+              0.20139725591297114
+            ],
+            "share_of_draws_above_zero": 0.72,
+            "n_draws_used": 2000
+          }
+        },
+        "floor_cooldown": {
+          "floor": 0.83,
+          "offers": 170,
+          "correct": 150,
+          "precision": 0.8823529411764706,
+          "offers_per_hour": 9.042553191489361,
+          "spacing": {
+            "offers": 170,
+            "share_within_90s": 0.0,
+            "longest_consecutive_run": 1
+          },
+          "precision_minus_deployed": {
+            "difference": 0.05294117647058816,
+            "ci95": [
+              -0.012200894790013,
+              0.15112559141512577
+            ],
+            "share_of_draws_above_zero": 0.9215,
+            "n_draws_used": 2000
+          }
+        }
+      }
+    },
+    "interaction_raw": {
+      "windows": 1419,
+      "hours": 11.825,
+      "base_rate": 0.18111346018322763,
+      "curves": {
+        "floor_only": [
+          {
+            "floor": 0.5,
+            "offers": 497,
+            "correct": 153,
+            "precision": 0.30784708249496984,
+            "offers_per_hour": 42.02959830866808
+          },
+          {
+            "floor": 0.51,
+            "offers": 478,
+            "correct": 150,
+            "precision": 0.3138075313807531,
+            "offers_per_hour": 40.422832980972515
+          },
+          {
+            "floor": 0.52,
+            "offers": 457,
+            "correct": 147,
+            "precision": 0.32166301969365424,
+            "offers_per_hour": 38.64693446088795
+          },
+          {
+            "floor": 0.53,
+            "offers": 436,
+            "correct": 143,
+            "precision": 0.32798165137614677,
+            "offers_per_hour": 36.87103594080339
+          },
+          {
+            "floor": 0.54,
+            "offers": 414,
+            "correct": 142,
+            "precision": 0.34299516908212563,
+            "offers_per_hour": 35.010570824524315
+          },
+          {
+            "floor": 0.55,
+            "offers": 393,
+            "correct": 138,
+            "precision": 0.3511450381679389,
+            "offers_per_hour": 33.23467230443975
+          },
+          {
+            "floor": 0.56,
+            "offers": 372,
+            "correct": 132,
+            "precision": 0.3548387096774194,
+            "offers_per_hour": 31.45877378435518
+          },
+          {
+            "floor": 0.57,
+            "offers": 357,
+            "correct": 126,
+            "precision": 0.35294117647058826,
+            "offers_per_hour": 30.190274841437635
+          },
+          {
+            "floor": 0.58,
+            "offers": 342,
+            "correct": 122,
+            "precision": 0.3567251461988304,
+            "offers_per_hour": 28.921775898520085
+          },
+          {
+            "floor": 0.59,
+            "offers": 322,
+            "correct": 118,
+            "precision": 0.36645962732919257,
+            "offers_per_hour": 27.230443974630024
+          },
+          {
+            "floor": 0.6,
+            "offers": 305,
+            "correct": 114,
+            "precision": 0.3737704918032787,
+            "offers_per_hour": 25.79281183932347
+          },
+          {
+            "floor": 0.61,
+            "offers": 291,
+            "correct": 111,
+            "precision": 0.38144329896907214,
+            "offers_per_hour": 24.608879492600423
+          },
+          {
+            "floor": 0.62,
+            "offers": 274,
+            "correct": 108,
+            "precision": 0.39416058394160586,
+            "offers_per_hour": 23.171247357293872
+          },
+          {
+            "floor": 0.63,
+            "offers": 260,
+            "correct": 102,
+            "precision": 0.3923076923076923,
+            "offers_per_hour": 21.987315010570825
+          },
+          {
+            "floor": 0.64,
+            "offers": 242,
+            "correct": 94,
+            "precision": 0.3884297520661157,
+            "offers_per_hour": 20.46511627906977
+          },
+          {
+            "floor": 0.65,
+            "offers": 233,
+            "correct": 88,
+            "precision": 0.3776824034334764,
+            "offers_per_hour": 19.70401691331924
+          },
+          {
+            "floor": 0.66,
+            "offers": 214,
+            "correct": 84,
+            "precision": 0.3925233644859813,
+            "offers_per_hour": 18.09725158562368
+          },
+          {
+            "floor": 0.67,
+            "offers": 191,
+            "correct": 76,
+            "precision": 0.39790575916230364,
+            "offers_per_hour": 16.152219873150106
+          },
+          {
+            "floor": 0.68,
+            "offers": 173,
+            "correct": 69,
+            "precision": 0.3988439306358382,
+            "offers_per_hour": 14.630021141649049
+          },
+          {
+            "floor": 0.69,
+            "offers": 156,
+            "correct": 63,
+            "precision": 0.40384615384615385,
+            "offers_per_hour": 13.192389006342495
+          },
+          {
+            "floor": 0.7,
+            "offers": 143,
+            "correct": 59,
+            "precision": 0.4125874125874126,
+            "offers_per_hour": 12.093023255813954
+          },
+          {
+            "floor": 0.71,
+            "offers": 129,
+            "correct": 55,
+            "precision": 0.4263565891472868,
+            "offers_per_hour": 10.90909090909091
+          },
+          {
+            "floor": 0.72,
+            "offers": 116,
+            "correct": 49,
+            "precision": 0.4224137931034483,
+            "offers_per_hour": 9.809725158562369
+          },
+          {
+            "floor": 0.73,
+            "offers": 101,
+            "correct": 46,
+            "precision": 0.45544554455445546,
+            "offers_per_hour": 8.541226215644821
+          },
+          {
+            "floor": 0.74,
+            "offers": 86,
+            "correct": 43,
+            "precision": 0.5,
+            "offers_per_hour": 7.272727272727273
+          },
+          {
+            "floor": 0.75,
+            "offers": 69,
+            "correct": 37,
+            "precision": 0.5362318840579711,
+            "offers_per_hour": 5.835095137420719
+          },
+          {
+            "floor": 0.76,
+            "offers": 58,
+            "correct": 33,
+            "precision": 0.5689655172413793,
+            "offers_per_hour": 4.904862579281184
+          },
+          {
+            "floor": 0.77,
+            "offers": 43,
+            "correct": 24,
+            "precision": 0.5581395348837209,
+            "offers_per_hour": 3.6363636363636367
+          },
+          {
+            "floor": 0.78,
+            "offers": 35,
+            "correct": 19,
+            "precision": 0.5428571428571428,
+            "offers_per_hour": 2.959830866807611
+          },
+          {
+            "floor": 0.79,
+            "offers": 27,
+            "correct": 14,
+            "precision": 0.5185185185185185,
+            "offers_per_hour": 2.2832980972515857
+          },
+          {
+            "floor": 0.8,
+            "offers": 18,
+            "correct": 7,
+            "precision": 0.3888888888888889,
+            "offers_per_hour": 1.5221987315010572
+          },
+          {
+            "floor": 0.81,
+            "offers": 14,
+            "correct": 5,
+            "precision": 0.35714285714285715,
+            "offers_per_hour": 1.1839323467230445
+          },
+          {
+            "floor": 0.82,
+            "offers": 11,
+            "correct": 4,
+            "precision": 0.36363636363636365,
+            "offers_per_hour": 0.930232558139535
+          },
+          {
+            "floor": 0.83,
+            "offers": 10,
+            "correct": 4,
+            "precision": 0.4,
+            "offers_per_hour": 0.8456659619450317
+          },
+          {
+            "floor": 0.84,
+            "offers": 5,
+            "correct": 1,
+            "precision": 0.2,
+            "offers_per_hour": 0.42283298097251587
+          },
+          {
+            "floor": 0.85,
+            "offers": 4,
+            "correct": 1,
+            "precision": 0.25,
+            "offers_per_hour": 0.3382663847780127
+          },
+          {
+            "floor": 0.86,
+            "offers": 3,
+            "correct": 1,
+            "precision": 0.3333333333333333,
+            "offers_per_hour": 0.25369978858350956
+          },
+          {
+            "floor": 0.87,
+            "offers": 2,
+            "correct": 1,
+            "precision": 0.5,
+            "offers_per_hour": 0.16913319238900634
+          },
+          {
+            "floor": 0.88,
+            "offers": 1,
+            "correct": 1,
+            "precision": 1.0,
+            "offers_per_hour": 0.08456659619450317
+          },
+          {
+            "floor": 0.89,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.9,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.91,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.92,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.93,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.94,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.95,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.96,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.97,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.98,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.99,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          }
+        ],
+        "floor_persistence": [
+          {
+            "floor": 0.5,
+            "offers": 258,
+            "correct": 87,
+            "precision": 0.3372093023255814,
+            "offers_per_hour": 21.81818181818182
+          },
+          {
+            "floor": 0.51,
+            "offers": 252,
+            "correct": 85,
+            "precision": 0.3373015873015873,
+            "offers_per_hour": 21.3107822410148
+          },
+          {
+            "floor": 0.52,
+            "offers": 244,
+            "correct": 84,
+            "precision": 0.3442622950819672,
+            "offers_per_hour": 20.634249471458777
+          },
+          {
+            "floor": 0.53,
+            "offers": 236,
+            "correct": 83,
+            "precision": 0.3516949152542373,
+            "offers_per_hour": 19.95771670190275
+          },
+          {
+            "floor": 0.54,
+            "offers": 228,
+            "correct": 82,
+            "precision": 0.35964912280701755,
+            "offers_per_hour": 19.281183932346725
+          },
+          {
+            "floor": 0.55,
+            "offers": 221,
+            "correct": 80,
+            "precision": 0.36199095022624433,
+            "offers_per_hour": 18.6892177589852
+          },
+          {
+            "floor": 0.56,
+            "offers": 212,
+            "correct": 77,
+            "precision": 0.3632075471698113,
+            "offers_per_hour": 17.928118393234673
+          },
+          {
+            "floor": 0.57,
+            "offers": 206,
+            "correct": 75,
+            "precision": 0.3640776699029126,
+            "offers_per_hour": 17.420718816067655
+          },
+          {
+            "floor": 0.58,
+            "offers": 197,
+            "correct": 73,
+            "precision": 0.37055837563451777,
+            "offers_per_hour": 16.659619450317127
+          },
+          {
+            "floor": 0.59,
+            "offers": 187,
+            "correct": 70,
+            "precision": 0.37433155080213903,
+            "offers_per_hour": 15.813953488372094
+          },
+          {
+            "floor": 0.6,
+            "offers": 184,
+            "correct": 70,
+            "precision": 0.3804347826086957,
+            "offers_per_hour": 15.560253699788584
+          },
+          {
+            "floor": 0.61,
+            "offers": 178,
+            "correct": 68,
+            "precision": 0.38202247191011235,
+            "offers_per_hour": 15.052854122621566
+          },
+          {
+            "floor": 0.62,
+            "offers": 172,
+            "correct": 67,
+            "precision": 0.38953488372093026,
+            "offers_per_hour": 14.545454545454547
+          },
+          {
+            "floor": 0.63,
+            "offers": 165,
+            "correct": 65,
+            "precision": 0.3939393939393939,
+            "offers_per_hour": 13.953488372093025
+          },
+          {
+            "floor": 0.64,
+            "offers": 157,
+            "correct": 62,
+            "precision": 0.39490445859872614,
+            "offers_per_hour": 13.276955602536999
+          },
+          {
+            "floor": 0.65,
+            "offers": 153,
+            "correct": 59,
+            "precision": 0.38562091503267976,
+            "offers_per_hour": 12.938689217758986
+          },
+          {
+            "floor": 0.66,
+            "offers": 141,
+            "correct": 57,
+            "precision": 0.40425531914893614,
+            "offers_per_hour": 11.923890063424947
+          },
+          {
+            "floor": 0.67,
+            "offers": 130,
+            "correct": 54,
+            "precision": 0.4153846153846154,
+            "offers_per_hour": 10.993657505285412
+          },
+          {
+            "floor": 0.68,
+            "offers": 118,
+            "correct": 49,
+            "precision": 0.4152542372881356,
+            "offers_per_hour": 9.978858350951375
+          },
+          {
+            "floor": 0.69,
+            "offers": 108,
+            "correct": 44,
+            "precision": 0.4074074074074074,
+            "offers_per_hour": 9.133192389006343
+          },
+          {
+            "floor": 0.7,
+            "offers": 100,
+            "correct": 41,
+            "precision": 0.41,
+            "offers_per_hour": 8.456659619450317
+          },
+          {
+            "floor": 0.71,
+            "offers": 94,
+            "correct": 39,
+            "precision": 0.4148936170212766,
+            "offers_per_hour": 7.949260042283298
+          },
+          {
+            "floor": 0.72,
+            "offers": 85,
+            "correct": 35,
+            "precision": 0.4117647058823529,
+            "offers_per_hour": 7.18816067653277
+          },
+          {
+            "floor": 0.73,
+            "offers": 76,
+            "correct": 33,
+            "precision": 0.4342105263157895,
+            "offers_per_hour": 6.427061310782241
+          },
+          {
+            "floor": 0.74,
+            "offers": 64,
+            "correct": 31,
+            "precision": 0.484375,
+            "offers_per_hour": 5.412262156448203
+          },
+          {
+            "floor": 0.75,
+            "offers": 52,
+            "correct": 27,
+            "precision": 0.5192307692307693,
+            "offers_per_hour": 4.397463002114165
+          },
+          {
+            "floor": 0.76,
+            "offers": 45,
+            "correct": 26,
+            "precision": 0.5777777777777777,
+            "offers_per_hour": 3.8054968287526427
+          },
+          {
+            "floor": 0.77,
+            "offers": 35,
+            "correct": 21,
+            "precision": 0.6,
+            "offers_per_hour": 2.959830866807611
+          },
+          {
+            "floor": 0.78,
+            "offers": 28,
+            "correct": 16,
+            "precision": 0.5714285714285714,
+            "offers_per_hour": 2.367864693446089
+          },
+          {
+            "floor": 0.79,
+            "offers": 21,
+            "correct": 12,
+            "precision": 0.5714285714285714,
+            "offers_per_hour": 1.7758985200845667
+          },
+          {
+            "floor": 0.8,
+            "offers": 13,
+            "correct": 6,
+            "precision": 0.46153846153846156,
+            "offers_per_hour": 1.0993657505285412
+          },
+          {
+            "floor": 0.81,
+            "offers": 9,
+            "correct": 4,
+            "precision": 0.4444444444444444,
+            "offers_per_hour": 0.7610993657505286
+          },
+          {
+            "floor": 0.82,
+            "offers": 6,
+            "correct": 3,
+            "precision": 0.5,
+            "offers_per_hour": 0.5073995771670191
+          },
+          {
+            "floor": 0.83,
+            "offers": 6,
+            "correct": 3,
+            "precision": 0.5,
+            "offers_per_hour": 0.5073995771670191
+          },
+          {
+            "floor": 0.84,
+            "offers": 3,
+            "correct": 1,
+            "precision": 0.3333333333333333,
+            "offers_per_hour": 0.25369978858350956
+          },
+          {
+            "floor": 0.85,
+            "offers": 3,
+            "correct": 1,
+            "precision": 0.3333333333333333,
+            "offers_per_hour": 0.25369978858350956
+          },
+          {
+            "floor": 0.86,
+            "offers": 3,
+            "correct": 1,
+            "precision": 0.3333333333333333,
+            "offers_per_hour": 0.25369978858350956
+          },
+          {
+            "floor": 0.87,
+            "offers": 2,
+            "correct": 1,
+            "precision": 0.5,
+            "offers_per_hour": 0.16913319238900634
+          },
+          {
+            "floor": 0.88,
+            "offers": 1,
+            "correct": 1,
+            "precision": 1.0,
+            "offers_per_hour": 0.08456659619450317
+          },
+          {
+            "floor": 0.89,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.9,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.91,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.92,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.93,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.94,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.95,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.96,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.97,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.98,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.99,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          }
+        ],
+        "floor_cooldown": [
+          {
+            "floor": 0.5,
+            "offers": 275,
+            "correct": 86,
+            "precision": 0.31272727272727274,
+            "offers_per_hour": 23.255813953488374
+          },
+          {
+            "floor": 0.51,
+            "offers": 264,
+            "correct": 86,
+            "precision": 0.32575757575757575,
+            "offers_per_hour": 22.325581395348838
+          },
+          {
+            "floor": 0.52,
+            "offers": 255,
+            "correct": 84,
+            "precision": 0.32941176470588235,
+            "offers_per_hour": 21.56448202959831
+          },
+          {
+            "floor": 0.53,
+            "offers": 243,
+            "correct": 82,
+            "precision": 0.3374485596707819,
+            "offers_per_hour": 20.54968287526427
+          },
+          {
+            "floor": 0.54,
+            "offers": 229,
+            "correct": 86,
+            "precision": 0.37554585152838427,
+            "offers_per_hour": 19.365750528541227
+          },
+          {
+            "floor": 0.55,
+            "offers": 221,
+            "correct": 84,
+            "precision": 0.38009049773755654,
+            "offers_per_hour": 18.6892177589852
+          },
+          {
+            "floor": 0.56,
+            "offers": 210,
+            "correct": 79,
+            "precision": 0.3761904761904762,
+            "offers_per_hour": 17.758985200845668
+          },
+          {
+            "floor": 0.57,
+            "offers": 203,
+            "correct": 77,
+            "precision": 0.3793103448275862,
+            "offers_per_hour": 17.167019027484145
+          },
+          {
+            "floor": 0.58,
+            "offers": 198,
+            "correct": 75,
+            "precision": 0.3787878787878788,
+            "offers_per_hour": 16.74418604651163
+          },
+          {
+            "floor": 0.59,
+            "offers": 188,
+            "correct": 74,
+            "precision": 0.39361702127659576,
+            "offers_per_hour": 15.898520084566597
+          },
+          {
+            "floor": 0.6,
+            "offers": 182,
+            "correct": 73,
+            "precision": 0.4010989010989011,
+            "offers_per_hour": 15.391120507399577
+          },
+          {
+            "floor": 0.61,
+            "offers": 175,
+            "correct": 73,
+            "precision": 0.41714285714285715,
+            "offers_per_hour": 14.799154334038056
+          },
+          {
+            "floor": 0.62,
+            "offers": 169,
+            "correct": 73,
+            "precision": 0.4319526627218935,
+            "offers_per_hour": 14.291754756871036
+          },
+          {
+            "floor": 0.63,
+            "offers": 160,
+            "correct": 69,
+            "precision": 0.43125,
+            "offers_per_hour": 13.530655391120508
+          },
+          {
+            "floor": 0.64,
+            "offers": 151,
+            "correct": 63,
+            "precision": 0.41721854304635764,
+            "offers_per_hour": 12.76955602536998
+          },
+          {
+            "floor": 0.65,
+            "offers": 145,
+            "correct": 59,
+            "precision": 0.4068965517241379,
+            "offers_per_hour": 12.26215644820296
+          },
+          {
+            "floor": 0.66,
+            "offers": 139,
+            "correct": 58,
+            "precision": 0.4172661870503597,
+            "offers_per_hour": 11.75475687103594
+          },
+          {
+            "floor": 0.67,
+            "offers": 128,
+            "correct": 53,
+            "precision": 0.4140625,
+            "offers_per_hour": 10.824524312896406
+          },
+          {
+            "floor": 0.68,
+            "offers": 120,
+            "correct": 50,
+            "precision": 0.4166666666666667,
+            "offers_per_hour": 10.147991543340382
+          },
+          {
+            "floor": 0.69,
+            "offers": 111,
+            "correct": 47,
+            "precision": 0.42342342342342343,
+            "offers_per_hour": 9.386892177589852
+          },
+          {
+            "floor": 0.7,
+            "offers": 105,
+            "correct": 46,
+            "precision": 0.4380952380952381,
+            "offers_per_hour": 8.879492600422834
+          },
+          {
+            "floor": 0.71,
+            "offers": 97,
+            "correct": 42,
+            "precision": 0.4329896907216495,
+            "offers_per_hour": 8.202959830866808
+          },
+          {
+            "floor": 0.72,
+            "offers": 89,
+            "correct": 37,
+            "precision": 0.4157303370786517,
+            "offers_per_hour": 7.526427061310783
+          },
+          {
+            "floor": 0.73,
+            "offers": 78,
+            "correct": 36,
+            "precision": 0.46153846153846156,
+            "offers_per_hour": 6.5961945031712474
+          },
+          {
+            "floor": 0.74,
+            "offers": 69,
+            "correct": 34,
+            "precision": 0.4927536231884058,
+            "offers_per_hour": 5.835095137420719
+          },
+          {
+            "floor": 0.75,
+            "offers": 57,
+            "correct": 30,
+            "precision": 0.5263157894736842,
+            "offers_per_hour": 4.820295983086681
+          },
+          {
+            "floor": 0.76,
+            "offers": 48,
+            "correct": 26,
+            "precision": 0.5416666666666666,
+            "offers_per_hour": 4.059196617336153
+          },
+          {
+            "floor": 0.77,
+            "offers": 37,
+            "correct": 20,
+            "precision": 0.5405405405405406,
+            "offers_per_hour": 3.1289640591966177
+          },
+          {
+            "floor": 0.78,
+            "offers": 30,
+            "correct": 15,
+            "precision": 0.5,
+            "offers_per_hour": 2.5369978858350954
+          },
+          {
+            "floor": 0.79,
+            "offers": 25,
+            "correct": 13,
+            "precision": 0.52,
+            "offers_per_hour": 2.1141649048625792
+          },
+          {
+            "floor": 0.8,
+            "offers": 17,
+            "correct": 7,
+            "precision": 0.4117647058823529,
+            "offers_per_hour": 1.437632135306554
+          },
+          {
+            "floor": 0.81,
+            "offers": 13,
+            "correct": 5,
+            "precision": 0.38461538461538464,
+            "offers_per_hour": 1.0993657505285412
+          },
+          {
+            "floor": 0.82,
+            "offers": 10,
+            "correct": 4,
+            "precision": 0.4,
+            "offers_per_hour": 0.8456659619450317
+          },
+          {
+            "floor": 0.83,
+            "offers": 9,
+            "correct": 4,
+            "precision": 0.4444444444444444,
+            "offers_per_hour": 0.7610993657505286
+          },
+          {
+            "floor": 0.84,
+            "offers": 5,
+            "correct": 1,
+            "precision": 0.2,
+            "offers_per_hour": 0.42283298097251587
+          },
+          {
+            "floor": 0.85,
+            "offers": 4,
+            "correct": 1,
+            "precision": 0.25,
+            "offers_per_hour": 0.3382663847780127
+          },
+          {
+            "floor": 0.86,
+            "offers": 3,
+            "correct": 1,
+            "precision": 0.3333333333333333,
+            "offers_per_hour": 0.25369978858350956
+          },
+          {
+            "floor": 0.87,
+            "offers": 2,
+            "correct": 1,
+            "precision": 0.5,
+            "offers_per_hour": 0.16913319238900634
+          },
+          {
+            "floor": 0.88,
+            "offers": 1,
+            "correct": 1,
+            "precision": 1.0,
+            "offers_per_hour": 0.08456659619450317
+          },
+          {
+            "floor": 0.89,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.9,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.91,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.92,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.93,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.94,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.95,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.96,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.97,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.98,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.99,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          }
+        ],
+        "deployed_rule": [
+          {
+            "floor": 0.5,
+            "offers": 129,
+            "correct": 46,
+            "precision": 0.35658914728682173,
+            "offers_per_hour": 10.90909090909091
+          },
+          {
+            "floor": 0.51,
+            "offers": 126,
+            "correct": 45,
+            "precision": 0.35714285714285715,
+            "offers_per_hour": 10.6553911205074
+          },
+          {
+            "floor": 0.52,
+            "offers": 124,
+            "correct": 46,
+            "precision": 0.3709677419354839,
+            "offers_per_hour": 10.486257928118395
+          },
+          {
+            "floor": 0.53,
+            "offers": 121,
+            "correct": 45,
+            "precision": 0.371900826446281,
+            "offers_per_hour": 10.232558139534884
+          },
+          {
+            "floor": 0.54,
+            "offers": 118,
+            "correct": 45,
+            "precision": 0.3813559322033898,
+            "offers_per_hour": 9.978858350951375
+          },
+          {
+            "floor": 0.55,
+            "offers": 115,
+            "correct": 44,
+            "precision": 0.3826086956521739,
+            "offers_per_hour": 9.725158562367865
+          },
+          {
+            "floor": 0.56,
+            "offers": 111,
+            "correct": 43,
+            "precision": 0.38738738738738737,
+            "offers_per_hour": 9.386892177589852
+          },
+          {
+            "floor": 0.57,
+            "offers": 109,
+            "correct": 43,
+            "precision": 0.3944954128440367,
+            "offers_per_hour": 9.217758985200847
+          },
+          {
+            "floor": 0.58,
+            "offers": 106,
+            "correct": 42,
+            "precision": 0.39622641509433965,
+            "offers_per_hour": 8.964059196617336
+          },
+          {
+            "floor": 0.59,
+            "offers": 102,
+            "correct": 42,
+            "precision": 0.4117647058823529,
+            "offers_per_hour": 8.625792811839323
+          },
+          {
+            "floor": 0.6,
+            "offers": 100,
+            "correct": 42,
+            "precision": 0.42,
+            "offers_per_hour": 8.456659619450317
+          },
+          {
+            "floor": 0.61,
+            "offers": 99,
+            "correct": 42,
+            "precision": 0.42424242424242425,
+            "offers_per_hour": 8.372093023255815
+          },
+          {
+            "floor": 0.62,
+            "offers": 97,
+            "correct": 41,
+            "precision": 0.422680412371134,
+            "offers_per_hour": 8.202959830866808
+          },
+          {
+            "floor": 0.63,
+            "offers": 93,
+            "correct": 40,
+            "precision": 0.43010752688172044,
+            "offers_per_hour": 7.864693446088795
+          },
+          {
+            "floor": 0.64,
+            "offers": 90,
+            "correct": 39,
+            "precision": 0.43333333333333335,
+            "offers_per_hour": 7.6109936575052854
+          },
+          {
+            "floor": 0.65,
+            "offers": 87,
+            "correct": 37,
+            "precision": 0.42528735632183906,
+            "offers_per_hour": 7.357293868921777
+          },
+          {
+            "floor": 0.66,
+            "offers": 86,
+            "correct": 37,
+            "precision": 0.43023255813953487,
+            "offers_per_hour": 7.272727272727273
+          },
+          {
+            "floor": 0.67,
+            "offers": 81,
+            "correct": 35,
+            "precision": 0.43209876543209874,
+            "offers_per_hour": 6.849894291754757
+          },
+          {
+            "floor": 0.68,
+            "offers": 74,
+            "correct": 31,
+            "precision": 0.4189189189189189,
+            "offers_per_hour": 6.257928118393235
+          },
+          {
+            "floor": 0.69,
+            "offers": 69,
+            "correct": 29,
+            "precision": 0.42028985507246375,
+            "offers_per_hour": 5.835095137420719
+          },
+          {
+            "floor": 0.7,
+            "offers": 64,
+            "correct": 27,
+            "precision": 0.421875,
+            "offers_per_hour": 5.412262156448203
+          },
+          {
+            "floor": 0.71,
+            "offers": 63,
+            "correct": 25,
+            "precision": 0.3968253968253968,
+            "offers_per_hour": 5.3276955602537
+          },
+          {
+            "floor": 0.72,
+            "offers": 58,
+            "correct": 22,
+            "precision": 0.3793103448275862,
+            "offers_per_hour": 4.904862579281184
+          },
+          {
+            "floor": 0.73,
+            "offers": 53,
+            "correct": 22,
+            "precision": 0.41509433962264153,
+            "offers_per_hour": 4.482029598308668
+          },
+          {
+            "floor": 0.74,
+            "offers": 47,
+            "correct": 22,
+            "precision": 0.46808510638297873,
+            "offers_per_hour": 3.974630021141649
+          },
+          {
+            "floor": 0.75,
+            "offers": 40,
+            "correct": 20,
+            "precision": 0.5,
+            "offers_per_hour": 3.382663847780127
+          },
+          {
+            "floor": 0.76,
+            "offers": 35,
+            "correct": 19,
+            "precision": 0.5428571428571428,
+            "offers_per_hour": 2.959830866807611
+          },
+          {
+            "floor": 0.77,
+            "offers": 29,
+            "correct": 17,
+            "precision": 0.5862068965517241,
+            "offers_per_hour": 2.452431289640592
+          },
+          {
+            "floor": 0.78,
+            "offers": 23,
+            "correct": 12,
+            "precision": 0.5217391304347826,
+            "offers_per_hour": 1.945031712473573
+          },
+          {
+            "floor": 0.79,
+            "offers": 19,
+            "correct": 11,
+            "precision": 0.5789473684210527,
+            "offers_per_hour": 1.6067653276955602
+          },
+          {
+            "floor": 0.8,
+            "offers": 12,
+            "correct": 6,
+            "precision": 0.5,
+            "offers_per_hour": 1.0147991543340382
+          },
+          {
+            "floor": 0.81,
+            "offers": 8,
+            "correct": 4,
+            "precision": 0.5,
+            "offers_per_hour": 0.6765327695560254
+          },
+          {
+            "floor": 0.82,
+            "offers": 5,
+            "correct": 3,
+            "precision": 0.6,
+            "offers_per_hour": 0.42283298097251587
+          },
+          {
+            "floor": 0.83,
+            "offers": 5,
+            "correct": 3,
+            "precision": 0.6,
+            "offers_per_hour": 0.42283298097251587
+          },
+          {
+            "floor": 0.84,
+            "offers": 3,
+            "correct": 1,
+            "precision": 0.3333333333333333,
+            "offers_per_hour": 0.25369978858350956
+          },
+          {
+            "floor": 0.85,
+            "offers": 3,
+            "correct": 1,
+            "precision": 0.3333333333333333,
+            "offers_per_hour": 0.25369978858350956
+          },
+          {
+            "floor": 0.86,
+            "offers": 3,
+            "correct": 1,
+            "precision": 0.3333333333333333,
+            "offers_per_hour": 0.25369978858350956
+          },
+          {
+            "floor": 0.87,
+            "offers": 2,
+            "correct": 1,
+            "precision": 0.5,
+            "offers_per_hour": 0.16913319238900634
+          },
+          {
+            "floor": 0.88,
+            "offers": 1,
+            "correct": 1,
+            "precision": 1.0,
+            "offers_per_hour": 0.08456659619450317
+          },
+          {
+            "floor": 0.89,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.9,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.91,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.92,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.93,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.94,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.95,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.96,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.97,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.98,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.99,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          }
+        ]
+      },
+      "reference": {
+        "floor": 0.7,
+        "offers": 64,
+        "correct": 27,
+        "precision": 0.421875,
+        "offers_per_hour": 5.412262156448203,
+        "spacing": {
+          "offers": 64,
+          "share_within_90s": 0.0,
+          "longest_consecutive_run": 1
+        }
+      },
+      "matched": {
+        "floor_only": {
+          "floor": 0.75,
+          "offers": 69,
+          "correct": 37,
+          "precision": 0.5362318840579711,
+          "offers_per_hour": 5.835095137420719,
+          "spacing": {
+            "offers": 69,
+            "share_within_90s": 0.21739130434782608,
+            "longest_consecutive_run": 2
+          },
+          "precision_minus_deployed": {
+            "difference": 0.11435688405797106,
+            "ci95": [
+              -0.009136011456930953,
+              0.25103110357197467
+            ],
+            "share_of_draws_above_zero": 0.965,
+            "n_draws_used": 2000
+          }
+        },
+        "floor_cooldown": {
+          "floor": 0.74,
+          "offers": 69,
+          "correct": 34,
+          "precision": 0.4927536231884058,
+          "offers_per_hour": 5.835095137420719,
+          "spacing": {
+            "offers": 69,
+            "share_within_90s": 0.0,
+            "longest_consecutive_run": 1
+          },
+          "precision_minus_deployed": {
+            "difference": 0.07087862318840582,
+            "ci95": [
+              -0.04483201581027669,
+              0.18733140635972761
+            ],
+            "share_of_draws_above_zero": 0.879,
+            "n_draws_used": 2000
+          }
+        }
+      }
+    },
+    "interaction_platform_like": {
+      "windows": 1421,
+      "hours": 11.841666666666667,
+      "base_rate": 0.18085855031667838,
+      "curves": {
+        "floor_only": [
+          {
+            "floor": 0.5,
+            "offers": 527,
+            "correct": 158,
+            "precision": 0.2998102466793169,
+            "offers_per_hour": 44.50387051372273
+          },
+          {
+            "floor": 0.51,
+            "offers": 508,
+            "correct": 150,
+            "precision": 0.2952755905511811,
+            "offers_per_hour": 42.89936664320901
+          },
+          {
+            "floor": 0.52,
+            "offers": 488,
+            "correct": 143,
+            "precision": 0.2930327868852459,
+            "offers_per_hour": 41.210415200562984
+          },
+          {
+            "floor": 0.53,
+            "offers": 469,
+            "correct": 139,
+            "precision": 0.29637526652452023,
+            "offers_per_hour": 39.60591133004926
+          },
+          {
+            "floor": 0.54,
+            "offers": 446,
+            "correct": 133,
+            "precision": 0.2982062780269058,
+            "offers_per_hour": 37.66361717100634
+          },
+          {
+            "floor": 0.55,
+            "offers": 429,
+            "correct": 127,
+            "precision": 0.29603729603729606,
+            "offers_per_hour": 36.228008444757215
+          },
+          {
+            "floor": 0.56,
+            "offers": 414,
+            "correct": 124,
+            "precision": 0.2995169082125604,
+            "offers_per_hour": 34.9612948627727
+          },
+          {
+            "floor": 0.57,
+            "offers": 393,
+            "correct": 123,
+            "precision": 0.31297709923664124,
+            "offers_per_hour": 33.18789584799437
+          },
+          {
+            "floor": 0.58,
+            "offers": 377,
+            "correct": 116,
+            "precision": 0.3076923076923077,
+            "offers_per_hour": 31.83673469387755
+          },
+          {
+            "floor": 0.59,
+            "offers": 355,
+            "correct": 108,
+            "precision": 0.30422535211267604,
+            "offers_per_hour": 29.978888106966924
+          },
+          {
+            "floor": 0.6,
+            "offers": 333,
+            "correct": 99,
+            "precision": 0.2972972972972973,
+            "offers_per_hour": 28.1210415200563
+          },
+          {
+            "floor": 0.61,
+            "offers": 309,
+            "correct": 95,
+            "precision": 0.3074433656957929,
+            "offers_per_hour": 26.09429978888107
+          },
+          {
+            "floor": 0.62,
+            "offers": 297,
+            "correct": 91,
+            "precision": 0.3063973063973064,
+            "offers_per_hour": 25.080928923293456
+          },
+          {
+            "floor": 0.63,
+            "offers": 281,
+            "correct": 89,
+            "precision": 0.3167259786476868,
+            "offers_per_hour": 23.729767769176636
+          },
+          {
+            "floor": 0.64,
+            "offers": 259,
+            "correct": 83,
+            "precision": 0.3204633204633205,
+            "offers_per_hour": 21.87192118226601
+          },
+          {
+            "floor": 0.65,
+            "offers": 235,
+            "correct": 75,
+            "precision": 0.3191489361702128,
+            "offers_per_hour": 19.845179451090782
+          },
+          {
+            "floor": 0.66,
+            "offers": 210,
+            "correct": 71,
+            "precision": 0.3380952380952381,
+            "offers_per_hour": 17.733990147783253
+          },
+          {
+            "floor": 0.67,
+            "offers": 186,
+            "correct": 62,
+            "precision": 0.3333333333333333,
+            "offers_per_hour": 15.707248416608023
+          },
+          {
+            "floor": 0.68,
+            "offers": 162,
+            "correct": 54,
+            "precision": 0.3333333333333333,
+            "offers_per_hour": 13.680506685432794
+          },
+          {
+            "floor": 0.69,
+            "offers": 136,
+            "correct": 43,
+            "precision": 0.3161764705882353,
+            "offers_per_hour": 11.484869809992963
+          },
+          {
+            "floor": 0.7,
+            "offers": 115,
+            "correct": 31,
+            "precision": 0.26956521739130435,
+            "offers_per_hour": 9.711470795214638
+          },
+          {
+            "floor": 0.71,
+            "offers": 91,
+            "correct": 28,
+            "precision": 0.3076923076923077,
+            "offers_per_hour": 7.684729064039408
+          },
+          {
+            "floor": 0.72,
+            "offers": 79,
+            "correct": 22,
+            "precision": 0.27848101265822783,
+            "offers_per_hour": 6.671358198451794
+          },
+          {
+            "floor": 0.73,
+            "offers": 67,
+            "correct": 21,
+            "precision": 0.31343283582089554,
+            "offers_per_hour": 5.65798733286418
+          },
+          {
+            "floor": 0.74,
+            "offers": 51,
+            "correct": 16,
+            "precision": 0.3137254901960784,
+            "offers_per_hour": 4.306826178747361
+          },
+          {
+            "floor": 0.75,
+            "offers": 35,
+            "correct": 9,
+            "precision": 0.2571428571428571,
+            "offers_per_hour": 2.955665024630542
+          },
+          {
+            "floor": 0.76,
+            "offers": 30,
+            "correct": 9,
+            "precision": 0.3,
+            "offers_per_hour": 2.533427163969036
+          },
+          {
+            "floor": 0.77,
+            "offers": 19,
+            "correct": 7,
+            "precision": 0.3684210526315789,
+            "offers_per_hour": 1.6045038705137227
+          },
+          {
+            "floor": 0.78,
+            "offers": 13,
+            "correct": 4,
+            "precision": 0.3076923076923077,
+            "offers_per_hour": 1.0978184377199156
+          },
+          {
+            "floor": 0.79,
+            "offers": 8,
+            "correct": 3,
+            "precision": 0.375,
+            "offers_per_hour": 0.6755805770584096
+          },
+          {
+            "floor": 0.8,
+            "offers": 4,
+            "correct": 1,
+            "precision": 0.25,
+            "offers_per_hour": 0.3377902885292048
+          },
+          {
+            "floor": 0.81,
+            "offers": 2,
+            "correct": 1,
+            "precision": 0.5,
+            "offers_per_hour": 0.1688951442646024
+          },
+          {
+            "floor": 0.82,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.83,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.84,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.85,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.86,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.87,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.88,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.89,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.9,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.91,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.92,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.93,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.94,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.95,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.96,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.97,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.98,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.99,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          }
+        ],
+        "floor_persistence": [
+          {
+            "floor": 0.5,
+            "offers": 273,
+            "correct": 86,
+            "precision": 0.315018315018315,
+            "offers_per_hour": 23.054187192118228
+          },
+          {
+            "floor": 0.51,
+            "offers": 269,
+            "correct": 85,
+            "precision": 0.3159851301115242,
+            "offers_per_hour": 22.716396903589022
+          },
+          {
+            "floor": 0.52,
+            "offers": 263,
+            "correct": 84,
+            "precision": 0.3193916349809886,
+            "offers_per_hour": 22.209711470795213
+          },
+          {
+            "floor": 0.53,
+            "offers": 255,
+            "correct": 83,
+            "precision": 0.3254901960784314,
+            "offers_per_hour": 21.534130893736805
+          },
+          {
+            "floor": 0.54,
+            "offers": 250,
+            "correct": 81,
+            "precision": 0.324,
+            "offers_per_hour": 21.111893033075297
+          },
+          {
+            "floor": 0.55,
+            "offers": 243,
+            "correct": 78,
+            "precision": 0.32098765432098764,
+            "offers_per_hour": 20.52076002814919
+          },
+          {
+            "floor": 0.56,
+            "offers": 238,
+            "correct": 76,
+            "precision": 0.31932773109243695,
+            "offers_per_hour": 20.098522167487683
+          },
+          {
+            "floor": 0.57,
+            "offers": 225,
+            "correct": 75,
+            "precision": 0.3333333333333333,
+            "offers_per_hour": 19.000703729767768
+          },
+          {
+            "floor": 0.58,
+            "offers": 221,
+            "correct": 73,
+            "precision": 0.33031674208144796,
+            "offers_per_hour": 18.662913441238565
+          },
+          {
+            "floor": 0.59,
+            "offers": 208,
+            "correct": 67,
+            "precision": 0.32211538461538464,
+            "offers_per_hour": 17.56509500351865
+          },
+          {
+            "floor": 0.6,
+            "offers": 198,
+            "correct": 61,
+            "precision": 0.30808080808080807,
+            "offers_per_hour": 16.720619282195635
+          },
+          {
+            "floor": 0.61,
+            "offers": 188,
+            "correct": 60,
+            "precision": 0.3191489361702128,
+            "offers_per_hour": 15.876143560872626
+          },
+          {
+            "floor": 0.62,
+            "offers": 181,
+            "correct": 57,
+            "precision": 0.3149171270718232,
+            "offers_per_hour": 15.285010555946517
+          },
+          {
+            "floor": 0.63,
+            "offers": 173,
+            "correct": 56,
+            "precision": 0.3236994219653179,
+            "offers_per_hour": 14.609429978888107
+          },
+          {
+            "floor": 0.64,
+            "offers": 163,
+            "correct": 52,
+            "precision": 0.31901840490797545,
+            "offers_per_hour": 13.764954257565094
+          },
+          {
+            "floor": 0.65,
+            "offers": 149,
+            "correct": 47,
+            "precision": 0.31543624161073824,
+            "offers_per_hour": 12.582688247712879
+          },
+          {
+            "floor": 0.66,
+            "offers": 133,
+            "correct": 45,
+            "precision": 0.3383458646616541,
+            "offers_per_hour": 11.231527093596059
+          },
+          {
+            "floor": 0.67,
+            "offers": 118,
+            "correct": 39,
+            "precision": 0.3305084745762712,
+            "offers_per_hour": 9.964813511611542
+          },
+          {
+            "floor": 0.68,
+            "offers": 103,
+            "correct": 33,
+            "precision": 0.32038834951456313,
+            "offers_per_hour": 8.698099929627023
+          },
+          {
+            "floor": 0.69,
+            "offers": 90,
+            "correct": 28,
+            "precision": 0.3111111111111111,
+            "offers_per_hour": 7.600281491907108
+          },
+          {
+            "floor": 0.7,
+            "offers": 79,
+            "correct": 23,
+            "precision": 0.2911392405063291,
+            "offers_per_hour": 6.671358198451794
+          },
+          {
+            "floor": 0.71,
+            "offers": 65,
+            "correct": 20,
+            "precision": 0.3076923076923077,
+            "offers_per_hour": 5.489092188599578
+          },
+          {
+            "floor": 0.72,
+            "offers": 57,
+            "correct": 16,
+            "precision": 0.2807017543859649,
+            "offers_per_hour": 4.813511611541168
+          },
+          {
+            "floor": 0.73,
+            "offers": 47,
+            "correct": 15,
+            "precision": 0.3191489361702128,
+            "offers_per_hour": 3.9690358902181564
+          },
+          {
+            "floor": 0.74,
+            "offers": 36,
+            "correct": 11,
+            "precision": 0.3055555555555556,
+            "offers_per_hour": 3.040112596762843
+          },
+          {
+            "floor": 0.75,
+            "offers": 26,
+            "correct": 8,
+            "precision": 0.3076923076923077,
+            "offers_per_hour": 2.195636875439831
+          },
+          {
+            "floor": 0.76,
+            "offers": 23,
+            "correct": 8,
+            "precision": 0.34782608695652173,
+            "offers_per_hour": 1.9422941590429275
+          },
+          {
+            "floor": 0.77,
+            "offers": 17,
+            "correct": 7,
+            "precision": 0.4117647058823529,
+            "offers_per_hour": 1.4356087262491204
+          },
+          {
+            "floor": 0.78,
+            "offers": 12,
+            "correct": 4,
+            "precision": 0.3333333333333333,
+            "offers_per_hour": 1.0133708655876144
+          },
+          {
+            "floor": 0.79,
+            "offers": 8,
+            "correct": 3,
+            "precision": 0.375,
+            "offers_per_hour": 0.6755805770584096
+          },
+          {
+            "floor": 0.8,
+            "offers": 4,
+            "correct": 1,
+            "precision": 0.25,
+            "offers_per_hour": 0.3377902885292048
+          },
+          {
+            "floor": 0.81,
+            "offers": 2,
+            "correct": 1,
+            "precision": 0.5,
+            "offers_per_hour": 0.1688951442646024
+          },
+          {
+            "floor": 0.82,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.83,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.84,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.85,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.86,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.87,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.88,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.89,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.9,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.91,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.92,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.93,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.94,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.95,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.96,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.97,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.98,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.99,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          }
+        ],
+        "floor_cooldown": [
+          {
+            "floor": 0.5,
+            "offers": 287,
+            "correct": 88,
+            "precision": 0.30662020905923343,
+            "offers_per_hour": 24.236453201970445
+          },
+          {
+            "floor": 0.51,
+            "offers": 277,
+            "correct": 84,
+            "precision": 0.30324909747292417,
+            "offers_per_hour": 23.39197748064743
+          },
+          {
+            "floor": 0.52,
+            "offers": 273,
+            "correct": 81,
+            "precision": 0.2967032967032967,
+            "offers_per_hour": 23.054187192118228
+          },
+          {
+            "floor": 0.53,
+            "offers": 263,
+            "correct": 79,
+            "precision": 0.30038022813688214,
+            "offers_per_hour": 22.209711470795213
+          },
+          {
+            "floor": 0.54,
+            "offers": 254,
+            "correct": 76,
+            "precision": 0.2992125984251969,
+            "offers_per_hour": 21.449683321604503
+          },
+          {
+            "floor": 0.55,
+            "offers": 245,
+            "correct": 73,
+            "precision": 0.2979591836734694,
+            "offers_per_hour": 20.689655172413794
+          },
+          {
+            "floor": 0.56,
+            "offers": 239,
+            "correct": 74,
+            "precision": 0.30962343096234307,
+            "offers_per_hour": 20.182969739619985
+          },
+          {
+            "floor": 0.57,
+            "offers": 229,
+            "correct": 72,
+            "precision": 0.314410480349345,
+            "offers_per_hour": 19.338494018296974
+          },
+          {
+            "floor": 0.58,
+            "offers": 216,
+            "correct": 65,
+            "precision": 0.30092592592592593,
+            "offers_per_hour": 18.240675580577058
+          },
+          {
+            "floor": 0.59,
+            "offers": 209,
+            "correct": 62,
+            "precision": 0.2966507177033493,
+            "offers_per_hour": 17.64954257565095
+          },
+          {
+            "floor": 0.6,
+            "offers": 199,
+            "correct": 60,
+            "precision": 0.3015075376884422,
+            "offers_per_hour": 16.805066854327936
+          },
+          {
+            "floor": 0.61,
+            "offers": 187,
+            "correct": 60,
+            "precision": 0.32085561497326204,
+            "offers_per_hour": 15.791695988740324
+          },
+          {
+            "floor": 0.62,
+            "offers": 182,
+            "correct": 60,
+            "precision": 0.32967032967032966,
+            "offers_per_hour": 15.369458128078817
+          },
+          {
+            "floor": 0.63,
+            "offers": 177,
+            "correct": 58,
+            "precision": 0.327683615819209,
+            "offers_per_hour": 14.947220267417311
+          },
+          {
+            "floor": 0.64,
+            "offers": 169,
+            "correct": 55,
+            "precision": 0.3254437869822485,
+            "offers_per_hour": 14.271639690358903
+          },
+          {
+            "floor": 0.65,
+            "offers": 156,
+            "correct": 48,
+            "precision": 0.3076923076923077,
+            "offers_per_hour": 13.173821252638987
+          },
+          {
+            "floor": 0.66,
+            "offers": 147,
+            "correct": 49,
+            "precision": 0.3333333333333333,
+            "offers_per_hour": 12.413793103448276
+          },
+          {
+            "floor": 0.67,
+            "offers": 138,
+            "correct": 45,
+            "precision": 0.32608695652173914,
+            "offers_per_hour": 11.653764954257564
+          },
+          {
+            "floor": 0.68,
+            "offers": 124,
+            "correct": 42,
+            "precision": 0.3387096774193548,
+            "offers_per_hour": 10.471498944405349
+          },
+          {
+            "floor": 0.69,
+            "offers": 107,
+            "correct": 35,
+            "precision": 0.32710280373831774,
+            "offers_per_hour": 9.035890218156228
+          },
+          {
+            "floor": 0.7,
+            "offers": 92,
+            "correct": 26,
+            "precision": 0.2826086956521739,
+            "offers_per_hour": 7.76917663617171
+          },
+          {
+            "floor": 0.71,
+            "offers": 75,
+            "correct": 25,
+            "precision": 0.3333333333333333,
+            "offers_per_hour": 6.333567909922589
+          },
+          {
+            "floor": 0.72,
+            "offers": 65,
+            "correct": 19,
+            "precision": 0.2923076923076923,
+            "offers_per_hour": 5.489092188599578
+          },
+          {
+            "floor": 0.73,
+            "offers": 57,
+            "correct": 19,
+            "precision": 0.3333333333333333,
+            "offers_per_hour": 4.813511611541168
+          },
+          {
+            "floor": 0.74,
+            "offers": 44,
+            "correct": 14,
+            "precision": 0.3181818181818182,
+            "offers_per_hour": 3.7156931738212524
+          },
+          {
+            "floor": 0.75,
+            "offers": 32,
+            "correct": 8,
+            "precision": 0.25,
+            "offers_per_hour": 2.7023223082336383
+          },
+          {
+            "floor": 0.76,
+            "offers": 28,
+            "correct": 8,
+            "precision": 0.2857142857142857,
+            "offers_per_hour": 2.3645320197044333
+          },
+          {
+            "floor": 0.77,
+            "offers": 18,
+            "correct": 6,
+            "precision": 0.3333333333333333,
+            "offers_per_hour": 1.5200562983814214
+          },
+          {
+            "floor": 0.78,
+            "offers": 13,
+            "correct": 4,
+            "precision": 0.3076923076923077,
+            "offers_per_hour": 1.0978184377199156
+          },
+          {
+            "floor": 0.79,
+            "offers": 8,
+            "correct": 3,
+            "precision": 0.375,
+            "offers_per_hour": 0.6755805770584096
+          },
+          {
+            "floor": 0.8,
+            "offers": 4,
+            "correct": 1,
+            "precision": 0.25,
+            "offers_per_hour": 0.3377902885292048
+          },
+          {
+            "floor": 0.81,
+            "offers": 2,
+            "correct": 1,
+            "precision": 0.5,
+            "offers_per_hour": 0.1688951442646024
+          },
+          {
+            "floor": 0.82,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.83,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.84,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.85,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.86,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.87,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.88,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.89,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.9,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.91,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.92,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.93,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.94,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.95,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.96,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.97,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.98,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.99,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          }
+        ],
+        "deployed_rule": [
+          {
+            "floor": 0.5,
+            "offers": 144,
+            "correct": 46,
+            "precision": 0.3194444444444444,
+            "offers_per_hour": 12.160450387051371
+          },
+          {
+            "floor": 0.51,
+            "offers": 143,
+            "correct": 45,
+            "precision": 0.3146853146853147,
+            "offers_per_hour": 12.076002814919072
+          },
+          {
+            "floor": 0.52,
+            "offers": 139,
+            "correct": 45,
+            "precision": 0.3237410071942446,
+            "offers_per_hour": 11.738212526389866
+          },
+          {
+            "floor": 0.53,
+            "offers": 134,
+            "correct": 44,
+            "precision": 0.3283582089552239,
+            "offers_per_hour": 11.31597466572836
+          },
+          {
+            "floor": 0.54,
+            "offers": 130,
+            "correct": 42,
+            "precision": 0.3230769230769231,
+            "offers_per_hour": 10.978184377199156
+          },
+          {
+            "floor": 0.55,
+            "offers": 128,
+            "correct": 41,
+            "precision": 0.3203125,
+            "offers_per_hour": 10.809289232934553
+          },
+          {
+            "floor": 0.56,
+            "offers": 126,
+            "correct": 41,
+            "precision": 0.3253968253968254,
+            "offers_per_hour": 10.64039408866995
+          },
+          {
+            "floor": 0.57,
+            "offers": 121,
+            "correct": 41,
+            "precision": 0.33884297520661155,
+            "offers_per_hour": 10.218156228008445
+          },
+          {
+            "floor": 0.58,
+            "offers": 118,
+            "correct": 39,
+            "precision": 0.3305084745762712,
+            "offers_per_hour": 9.964813511611542
+          },
+          {
+            "floor": 0.59,
+            "offers": 114,
+            "correct": 37,
+            "precision": 0.32456140350877194,
+            "offers_per_hour": 9.627023223082336
+          },
+          {
+            "floor": 0.6,
+            "offers": 109,
+            "correct": 34,
+            "precision": 0.3119266055045872,
+            "offers_per_hour": 9.20478536242083
+          },
+          {
+            "floor": 0.61,
+            "offers": 105,
+            "correct": 34,
+            "precision": 0.3238095238095238,
+            "offers_per_hour": 8.866995073891626
+          },
+          {
+            "floor": 0.62,
+            "offers": 102,
+            "correct": 33,
+            "precision": 0.3235294117647059,
+            "offers_per_hour": 8.613652357494722
+          },
+          {
+            "floor": 0.63,
+            "offers": 100,
+            "correct": 33,
+            "precision": 0.33,
+            "offers_per_hour": 8.444757213230119
+          },
+          {
+            "floor": 0.64,
+            "offers": 95,
+            "correct": 29,
+            "precision": 0.30526315789473685,
+            "offers_per_hour": 8.022519352568613
+          },
+          {
+            "floor": 0.65,
+            "offers": 90,
+            "correct": 27,
+            "precision": 0.3,
+            "offers_per_hour": 7.600281491907108
+          },
+          {
+            "floor": 0.66,
+            "offers": 86,
+            "correct": 26,
+            "precision": 0.3023255813953488,
+            "offers_per_hour": 7.262491203377903
+          },
+          {
+            "floor": 0.67,
+            "offers": 82,
+            "correct": 24,
+            "precision": 0.2926829268292683,
+            "offers_per_hour": 6.924700914848698
+          },
+          {
+            "floor": 0.68,
+            "offers": 75,
+            "correct": 22,
+            "precision": 0.29333333333333333,
+            "offers_per_hour": 6.333567909922589
+          },
+          {
+            "floor": 0.69,
+            "offers": 70,
+            "correct": 19,
+            "precision": 0.2714285714285714,
+            "offers_per_hour": 5.911330049261084
+          },
+          {
+            "floor": 0.7,
+            "offers": 63,
+            "correct": 17,
+            "precision": 0.2698412698412698,
+            "offers_per_hour": 5.320197044334975
+          },
+          {
+            "floor": 0.71,
+            "offers": 54,
+            "correct": 17,
+            "precision": 0.3148148148148148,
+            "offers_per_hour": 4.5601688951442645
+          },
+          {
+            "floor": 0.72,
+            "offers": 48,
+            "correct": 13,
+            "precision": 0.2708333333333333,
+            "offers_per_hour": 4.053483462350457
+          },
+          {
+            "floor": 0.73,
+            "offers": 40,
+            "correct": 13,
+            "precision": 0.325,
+            "offers_per_hour": 3.377902885292048
+          },
+          {
+            "floor": 0.74,
+            "offers": 31,
+            "correct": 9,
+            "precision": 0.2903225806451613,
+            "offers_per_hour": 2.6178747361013373
+          },
+          {
+            "floor": 0.75,
+            "offers": 24,
+            "correct": 7,
+            "precision": 0.2916666666666667,
+            "offers_per_hour": 2.0267417311752287
+          },
+          {
+            "floor": 0.76,
+            "offers": 22,
+            "correct": 7,
+            "precision": 0.3181818181818182,
+            "offers_per_hour": 1.8578465869106262
+          },
+          {
+            "floor": 0.77,
+            "offers": 16,
+            "correct": 6,
+            "precision": 0.375,
+            "offers_per_hour": 1.3511611541168191
+          },
+          {
+            "floor": 0.78,
+            "offers": 12,
+            "correct": 4,
+            "precision": 0.3333333333333333,
+            "offers_per_hour": 1.0133708655876144
+          },
+          {
+            "floor": 0.79,
+            "offers": 8,
+            "correct": 3,
+            "precision": 0.375,
+            "offers_per_hour": 0.6755805770584096
+          },
+          {
+            "floor": 0.8,
+            "offers": 4,
+            "correct": 1,
+            "precision": 0.25,
+            "offers_per_hour": 0.3377902885292048
+          },
+          {
+            "floor": 0.81,
+            "offers": 2,
+            "correct": 1,
+            "precision": 0.5,
+            "offers_per_hour": 0.1688951442646024
+          },
+          {
+            "floor": 0.82,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.83,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.84,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.85,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.86,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.87,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.88,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.89,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.9,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.91,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.92,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.93,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.94,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.95,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.96,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.97,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.98,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          },
+          {
+            "floor": 0.99,
+            "offers": 0,
+            "correct": 0,
+            "precision": null,
+            "offers_per_hour": 0.0
+          }
+        ]
+      },
+      "reference": {
+        "floor": 0.7,
+        "offers": 63,
+        "correct": 17,
+        "precision": 0.2698412698412698,
+        "offers_per_hour": 5.320197044334975,
+        "spacing": {
+          "offers": 63,
+          "share_within_90s": 0.0,
+          "longest_consecutive_run": 1
+        }
+      },
+      "matched": {
+        "floor_only": {
+          "floor": 0.73,
+          "offers": 67,
+          "correct": 21,
+          "precision": 0.31343283582089554,
+          "offers_per_hour": 5.65798733286418,
+          "spacing": {
+            "offers": 67,
+            "share_within_90s": 0.16417910447761194,
+            "longest_consecutive_run": 2
+          },
+          "precision_minus_deployed": {
+            "difference": 0.04359156597962571,
+            "ci95": [
+              -0.05970021439660909,
+              0.1399208438817761
+            ],
+            "share_of_draws_above_zero": 0.7995,
+            "n_draws_used": 2000
+          }
+        },
+        "floor_cooldown": {
+          "floor": 0.72,
+          "offers": 65,
+          "correct": 19,
+          "precision": 0.2923076923076923,
+          "offers_per_hour": 5.489092188599578,
+          "spacing": {
+            "offers": 65,
+            "share_within_90s": 0.0,
+            "longest_consecutive_run": 1
+          },
+          "precision_minus_deployed": {
+            "difference": 0.022466422466422498,
+            "ci95": [
+              -0.06941352436608737,
+              0.10974446987032792
+            ],
+            "share_of_draws_above_zero": 0.6805,
+            "n_draws_used": 2000
+          }
+        }
+      }
+    }
+  }
+}
