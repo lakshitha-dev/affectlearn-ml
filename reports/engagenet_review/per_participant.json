@@ -1,0 +1,36 @@
+{
+  "participants": 26,
+  "with_both_classes": 22,
+  "single_class": 4,
+  "single_class_detail": [
+    {
+      "positive_rate": 0.0,
+      "n": 4
+    },
+    {
+      "positive_rate": 0.0,
+      "n": 95
+    },
+    {
+      "positive_rate": 0.0,
+      "n": 102
+    },
+    {
+      "positive_rate": 0.0,
+      "n": 100
+    }
+  ],
+  "median": 0.8847566574839303,
+  "iqr": [
+    0.8406174635629653,
+    0.9244746193670924
+  ],
+  "mean": 0.8601265713410207,
+  "min": 0.2991281019450034,
+  "max": 1.0,
+  "below_0_5": 1,
+  "below_0_7": 1,
+  "at_or_above_0_9": 9,
+  "agrees_with_STAGE3_DIAGNOSTICS": true,
+  "note": "Summary only; per-subject values are in STAGE3_DIAGNOSTICS.json."
+}
