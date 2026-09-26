@@ -1,0 +1,198 @@
+{
+  "_note": "Choose the facial confidence floor without the test split, then report it on test.",
+  "rules": {
+    "primary": "lowest floor with training OOF precision >= 0.8",
+    "lift": "max training lift with >= 10 offers",
+    "lopo": "primary rule on the other 25 test participants"
+  },
+  "training_oof": {
+    "windows": 2177,
+    "scorable": 2109,
+    "base_rate": 0.29634898055950687,
+    "rows": [
+      {
+        "floor": null,
+        "offers": 2177,
+        "precision": 0.29634898055950687,
+        "lift": 1.0,
+        "ci95": null,
+        "offers_per_hour": 120.0
+      },
+      {
+        "floor": 0.5,
+        "offers": 193,
+        "correct": 148,
+        "precision": 0.7668393782383419,
+        "lift": 2.587622797927461,
+        "ci95": [
+          0.6850828729281768,
+          0.840014492753623
+        ],
+        "offers_per_hour": 10.63849333945797,
+        "minutes_between": 5.639896373056994
+      },
+      {
+        "floor": 0.55,
+        "offers": 186,
+        "correct": 146,
+        "precision": 0.7849462365591398,
+        "lift": 2.648722580645161,
+        "ci95": [
+          0.7058582449373192,
+          0.8571603641456581
+        ],
+        "offers_per_hour": 10.252641249425816,
+        "minutes_between": 5.852150537634409
+      },
+      {
+        "floor": 0.6,
+        "offers": 178,
+        "correct": 144,
+        "precision": 0.8089887640449438,
+        "lift": 2.7298516853932586,
+        "ci95": [
+          0.7329446353065538,
+          0.8789243568562662
+        ],
+        "offers_per_hour": 9.81166743224621,
+        "minutes_between": 6.115168539325842
+      },
+      {
+        "floor": 0.65,
+        "offers": 172,
+        "correct": 140,
+        "precision": 0.813953488372093,
+        "lift": 2.746604651162791,
+        "ci95": [
+          0.738631993006993,
+          0.8814486366131885
+        ],
+        "offers_per_hour": 9.480937069361508,
+        "minutes_between": 6.328488372093023
+      },
+      {
+        "floor": 0.7,
+        "offers": 163,
+        "correct": 139,
+        "precision": 0.852760736196319,
+        "lift": 2.8775558282208586,
+        "ci95": [
+          0.7830086136177195,
+          0.9115696278511405
+        ],
+        "offers_per_hour": 8.98484152503445,
+        "minutes_between": 6.677914110429448
+      },
+      {
+        "floor": 0.75,
+        "offers": 149,
+        "correct": 129,
+        "precision": 0.8657718120805369,
+        "lift": 2.9214604026845636,
+        "ci95": [
+          0.7983193277310925,
+          0.9220798662415428
+        ],
+        "offers_per_hour": 8.213137344970143,
+        "minutes_between": 7.305369127516778
+      },
+      {
+        "floor": 0.8,
+        "offers": 133,
+        "correct": 119,
+        "precision": 0.8947368421052632,
+        "lift": 3.0192,
+        "ci95": [
+          0.8279534287545397,
+          0.9480638846447669
+        ],
+        "offers_per_hour": 7.331189710610933,
+        "minutes_between": 8.18421052631579
+      },
+      {
+        "floor": 0.85,
+        "offers": 111,
+        "correct": 104,
+        "precision": 0.9369369369369369,
+        "lift": 3.1616,
+        "ci95": [
+          0.8850574712643678,
+          0.9770180250783699
+        ],
+        "offers_per_hour": 6.1185117133670195,
+        "minutes_between": 9.806306306306306
+      },
+      {
+        "floor": 0.9,
+        "offers": 95,
+        "correct": 92,
+        "precision": 0.968421052631579,
+        "lift": 3.26784,
+        "ci95": [
+          0.9247311827956989,
+          1.0
+        ],
+        "offers_per_hour": 5.23656407900781,
+        "minutes_between": 11.457894736842105
+      }
+    ]
+  },
+  "selected": {
+    "primary": 0.6,
+    "lift": 0.9
+  },
+  "test_at_selected": {
+    "primary": {
+      "floor": 0.6,
+      "offers": 192,
+      "correct": 149,
+      "precision": 0.7760416666666666,
+      "lift": 2.6931012573568753,
+      "ci95": [
+        0.6432535885167464,
+        0.8772019334049408
+      ],
+      "offers_per_hour": 10.212765957446807,
+      "minutes_between": 5.875
+    },
+    "lift": {
+      "floor": 0.9,
+      "offers": 96,
+      "correct": 88,
+      "precision": 0.9166666666666666,
+      "lift": 3.1811128945960405,
+      "ci95": [
+        0.8125,
+        1.0
+      ],
+      "offers_per_hour": 5.106382978723404,
+      "minutes_between": 11.75
+    },
+    "deployed_0_70": {
+      "floor": 0.7,
+      "offers": 170,
+      "correct": 141,
+      "precision": 0.8294117647058824,
+      "lift": 2.878311774147862,
+      "ci95": [
+        0.7239221435108294,
+        0.9111155913978494
+      ],
+      "offers_per_hour": 9.042553191489361,
+      "minutes_between": 6.635294117647059
+    }
+  },
+  "test_lopo_selection": {
+    "offers": 179,
+    "correct": 140,
+    "precision": 0.7821229050279329,
+    "lift": 2.714205009101751,
+    "chosen_floors": {
+      "0.6": 1,
+      "0.65": 7,
+      "0.7": 17,
+      "0.75": 1
+    }
+  },
+  "test_base_rate_scorable": 0.288159111933395
+}
