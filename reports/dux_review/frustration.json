@@ -1,0 +1,34 @@
+{
+  "source": "reports/dux_multistate/multistate.json (read, not re-run)",
+  "files": [
+    "v1.csv"
+  ],
+  "n": 1146,
+  "n_sessions": 36,
+  "folds": 5,
+  "class_counts": {
+    "none": 841,
+    "Confusion": 204,
+    "Anger": 45,
+    "Joy": 56
+  },
+  "anger_is": "frustrated (PROXY)",
+  "behavioural_anger": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "support": 45
+  },
+  "facial_anger": {
+    "precision": 0.046511627906976744,
+    "recall": 0.044444444444444446,
+    "f1": 0.045454545454545456,
+    "support": 45
+  },
+  "fused_anger": {
+    "precision": 0.07142857142857142,
+    "recall": 0.022222222222222223,
+    "f1": 0.03389830508474576,
+    "support": 45
+  }
+}

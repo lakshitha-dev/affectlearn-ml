@@ -1,0 +1,95 @@
+{
+  "settings": {
+    "seed": 42,
+    "bootstrap_resamples": 2000,
+    "permutation_draws": 2000,
+    "folds": "leave-one-session-out over namespaced DUX sessions",
+    "window_s": 30,
+    "label": "max human Confusion annotation in window >= 1.0",
+    "classifier": "HistGradientBoosting depth 3, 120 iter, lr 0.06, leaf 8, L2 1.0, balanced (train_dux_confusion._gbdt)",
+    "interval": "session-level cluster bootstrap, percentile",
+    "permutation": "labels shuffled within each session"
+  },
+  "subsets": {
+    "v0|interaction_raw": {
+      "n": 273,
+      "n_sessions": 10,
+      "positives": 46,
+      "base_rate": 0.1684981684981685,
+      "auc": 0.5989274085424248,
+      "auc_ci95_session": [
+        0.5578096245859403,
+        0.6774254472304414
+      ],
+      "kappa_at_0.5": 0.05562130177514801,
+      "accuracy_at_0.5": 0.7216117216117216,
+      "majority_accuracy": 0.8315018315018314,
+      "average_precision": 0.22864416764503595,
+      "ap_over_base_rate": 1.3569534297194523,
+      "permutation_p_within_session": 0.0014992503748125937,
+      "score_max": 0.8785531198612192,
+      "score_p99": 0.817779431083891,
+      "score_mean": 0.269731760240679
+    },
+    "v0|facial_raw": {
+      "n": 273,
+      "n_sessions": 10,
+      "positives": 46,
+      "base_rate": 0.1684981684981685,
+      "auc": 0.664240566941199,
+      "auc_ci95_session": [
+        0.568947909078492,
+        0.7172223813128636
+      ],
+      "kappa_at_0.5": 0.1895230798697567,
+      "accuracy_at_0.5": 0.7728937728937729,
+      "majority_accuracy": 0.8315018315018314,
+      "average_precision": 0.2792402706922399,
+      "ap_over_base_rate": 1.6572303021517714,
+      "permutation_p_within_session": 0.00399800099950025,
+      "score_max": 0.8833092345118111,
+      "score_p99": 0.8375593859253606,
+      "score_mean": 0.24175128391224635
+    },
+    "v1|interaction_raw": {
+      "n": 1146,
+      "n_sessions": 36,
+      "positives": 211,
+      "base_rate": 0.18411867364746945,
+      "auc": 0.7421750259776465,
+      "auc_ci95_session": [
+        0.7014555594185761,
+        0.7850793279057335
+      ],
+      "kappa_at_0.5": 0.25822099102674245,
+      "accuracy_at_0.5": 0.7068062827225131,
+      "majority_accuracy": 0.8158813263525305,
+      "average_precision": 0.364086919593444,
+      "ap_over_base_rate": 1.9774578666070468,
+      "permutation_p_within_session": 0.0004997501249375312,
+      "score_max": 0.8805810191431188,
+      "score_p99": 0.8247065820883565,
+      "score_mean": 0.36692051039848467
+    },
+    "v1|facial_raw": {
+      "n": 1146,
+      "n_sessions": 36,
+      "positives": 211,
+      "base_rate": 0.18411867364746945,
+      "auc": 0.478581747218491,
+      "auc_ci95_session": [
+        0.43043221070214244,
+        0.5271491948521173
+      ],
+      "kappa_at_0.5": -0.03784960061157028,
+      "accuracy_at_0.5": 0.6361256544502618,
+      "majority_accuracy": 0.8158813263525305,
+      "average_precision": 0.16954769563333166,
+      "ap_over_base_rate": 0.9208609440559151,
+      "permutation_p_within_session": 0.22288855572213892,
+      "score_max": 0.8692907496256604,
+      "score_p99": 0.7235844330068345,
+      "score_mean": 0.3834626314207252
+    }
+  }
+}

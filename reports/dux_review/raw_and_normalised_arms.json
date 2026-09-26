@@ -1,0 +1,203 @@
+{
+  "settings": {
+    "seed": 42,
+    "bootstrap_resamples": 2000,
+    "permutation_draws": 2000,
+    "folds": "leave-one-session-out over namespaced DUX sessions",
+    "window_s": 30,
+    "label": "max human Confusion annotation in window >= 1.0",
+    "classifier": "HistGradientBoosting depth 3, 120 iter, lr 0.06, leaf 8, L2 1.0, balanced (train_dux_confusion._gbdt)",
+    "interval": "session-level cluster bootstrap, percentile",
+    "permutation": "labels shuffled within each session"
+  },
+  "arms": {
+    "raw_interaction": {
+      "n": 1419,
+      "n_sessions": 46,
+      "positives": 257,
+      "base_rate": 0.18111346018322763,
+      "auc": 0.7341026139019668,
+      "auc_ci95_session": [
+        0.6996467530025794,
+        0.7670133648481993
+      ],
+      "kappa_at_0.5": 0.21947578050948602,
+      "accuracy_at_0.5": 0.6842847075405215,
+      "majority_accuracy": 0.8188865398167724,
+      "average_precision": 0.3624864163232122,
+      "ap_over_base_rate": 2.0014327811775803,
+      "permutation_p_within_session": 0.0004997501249375312,
+      "score_max": 0.8809843231442183,
+      "score_p99": 0.8091295270338039,
+      "score_mean": 0.38224404764122494
+    },
+    "causal_interaction": {
+      "n": 1419,
+      "n_sessions": 46,
+      "positives": 257,
+      "base_rate": 0.18111346018322763,
+      "auc": 0.7407696377505575,
+      "auc_ci95_session": [
+        0.7054638499104005,
+        0.7763657474353377
+      ],
+      "kappa_at_0.5": 0.2907472800023776,
+      "accuracy_at_0.5": 0.7392529950669485,
+      "majority_accuracy": 0.8188865398167724,
+      "average_precision": 0.3813789567006862,
+      "ap_over_base_rate": 2.1057460683201312,
+      "permutation_p_within_session": 0.0004997501249375312,
+      "score_max": 0.9094709273571204,
+      "score_p99": 0.8402050850541792,
+      "score_mean": 0.3639012827028706
+    },
+    "transductive_interaction": {
+      "n": 1419,
+      "n_sessions": 46,
+      "positives": 257,
+      "base_rate": 0.18111346018322763,
+      "auc": 0.7473060669582164,
+      "auc_ci95_session": [
+        0.7111259736964151,
+        0.7810812877094518
+      ],
+      "kappa_at_0.5": 0.2738177158562968,
+      "accuracy_at_0.5": 0.7300916138125441,
+      "majority_accuracy": 0.8188865398167724,
+      "average_precision": 0.3503648235094998,
+      "ap_over_base_rate": 1.9345046091828024,
+      "permutation_p_within_session": 0.0004997501249375312,
+      "score_max": 0.8801825572257346,
+      "score_p99": 0.8016480448793482,
+      "score_mean": 0.3622499915425819
+    },
+    "raw_facial": {
+      "n": 1419,
+      "n_sessions": 46,
+      "positives": 257,
+      "base_rate": 0.18111346018322763,
+      "auc": 0.47656998198463674,
+      "auc_ci95_session": [
+        0.4385282180793989,
+        0.5214583107142412
+      ],
+      "kappa_at_0.5": -0.024801870118022817,
+      "accuracy_at_0.5": 0.6250880902043693,
+      "majority_accuracy": 0.8188865398167724,
+      "average_precision": 0.17040616023802335,
+      "ap_over_base_rate": 0.9408807057500199,
+      "permutation_p_within_session": 0.13893053473263367,
+      "score_max": 0.7809888630902725,
+      "score_p99": 0.7184147146991889,
+      "score_mean": 0.4029453265702699
+    },
+    "causal_facial": {
+      "n": 1419,
+      "n_sessions": 46,
+      "positives": 257,
+      "base_rate": 0.18111346018322763,
+      "auc": 0.5513789454650174,
+      "auc_ci95_session": [
+        0.5098593696304625,
+        0.5895607152852256
+      ],
+      "kappa_at_0.5": 0.0014356811996416585,
+      "accuracy_at_0.5": 0.6490486257928119,
+      "majority_accuracy": 0.8188865398167724,
+      "average_precision": 0.1966105021229655,
+      "ap_over_base_rate": 1.0855653794260234,
+      "permutation_p_within_session": 0.0009995002498750624,
+      "score_max": 0.8373853421144181,
+      "score_p99": 0.7329070205862424,
+      "score_mean": 0.3914866865898779
+    },
+    "transductive_facial": {
+      "n": 1419,
+      "n_sessions": 46,
+      "positives": 257,
+      "base_rate": 0.18111346018322763,
+      "auc": 0.5532022475672562,
+      "auc_ci95_session": [
+        0.5072265429953323,
+        0.5996079440954086
+      ],
+      "kappa_at_0.5": 0.056716819965154874,
+      "accuracy_at_0.5": 0.6765327695560254,
+      "majority_accuracy": 0.8188865398167724,
+      "average_precision": 0.2105876900355594,
+      "ap_over_base_rate": 1.1627390356438085,
+      "permutation_p_within_session": 0.0004997501249375312,
+      "score_max": 0.8346121403703167,
+      "score_p99": 0.7577328190860744,
+      "score_mean": 0.39729367640058755
+    },
+    "raw_fused": {
+      "n": 1419,
+      "n_sessions": 46,
+      "positives": 257,
+      "base_rate": 0.18111346018322763,
+      "auc": 0.6805286738951358,
+      "auc_ci95_session": [
+        0.6405664006295543,
+        0.7200893519843329
+      ],
+      "kappa_at_0.5": 0.20301515939174342,
+      "accuracy_at_0.5": 0.696969696969697,
+      "majority_accuracy": 0.8188865398167724,
+      "average_precision": 0.2903373019811904,
+      "ap_over_base_rate": 1.6030686051023704,
+      "permutation_p_within_session": 0.0004997501249375312,
+      "score_max": 0.8908233181066108,
+      "score_p99": 0.7920387890419534,
+      "score_mean": 0.36411600247287346
+    },
+    "causal_fused": {
+      "n": 1419,
+      "n_sessions": 46,
+      "positives": 257,
+      "base_rate": 0.18111346018322763,
+      "auc": 0.7226002397583664,
+      "auc_ci95_session": [
+        0.6903155113792038,
+        0.7523934002459077
+      ],
+      "kappa_at_0.5": 0.26718338136855824,
+      "accuracy_at_0.5": 0.7427766032417196,
+      "majority_accuracy": 0.8188865398167724,
+      "average_precision": 0.36550717908944663,
+      "ap_over_base_rate": 2.018111623065855,
+      "permutation_p_within_session": 0.0004997501249375312,
+      "score_max": 0.899922853499827,
+      "score_p99": 0.8280181141697822,
+      "score_mean": 0.35864211694761977
+    },
+    "transductive_fused": {
+      "n": 1419,
+      "n_sessions": 46,
+      "positives": 257,
+      "base_rate": 0.18111346018322763,
+      "auc": 0.7350636565160028,
+      "auc_ci95_session": [
+        0.6969380090846556,
+        0.7713590723381415
+      ],
+      "kappa_at_0.5": 0.26825474707516783,
+      "accuracy_at_0.5": 0.7385482734319944,
+      "majority_accuracy": 0.8188865398167724,
+      "average_precision": 0.3472705346713912,
+      "ap_over_base_rate": 1.9174198003840626,
+      "permutation_p_within_session": 0.0004997501249375312,
+      "score_max": 0.8791487935762075,
+      "score_p99": 0.7882003770693332,
+      "score_mean": 0.348784103564008
+    }
+  },
+  "reproduces_committed_transductive": {
+    "committed_interaction_auc": 0.7473060669582164,
+    "this_run_interaction_auc": 0.7473060669582164,
+    "committed_facial_auc": 0.5532,
+    "this_run_facial_auc": 0.5532022475672562,
+    "committed_fused_auc": 0.7351,
+    "this_run_fused_auc": 0.7350636565160028
+  }
+}

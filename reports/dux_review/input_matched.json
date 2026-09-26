@@ -1,0 +1,303 @@
+{
+  "settings": {
+    "seed": 42,
+    "bootstrap_resamples": 2000,
+    "permutation_draws": 2000,
+    "folds": "leave-one-session-out over namespaced DUX sessions",
+    "window_s": 30,
+    "label": "max human Confusion annotation in window >= 1.0",
+    "classifier": "HistGradientBoosting depth 3, 120 iter, lr 0.06, leaf 8, L2 1.0, balanced (train_dux_confusion._gbdt)",
+    "interval": "session-level cluster bootstrap, percentile",
+    "permutation": "labels shuffled within each session"
+  },
+  "method": {
+    "pointer": "one sample per 100 ms slot with movement, latest position, ts = slot start + 99 ms (platform aggregatorTick)",
+    "clicks": "MouseButtonDown counts; MouseClick counts only with no unmatched down in the preceding 1,000 ms; MouseDoubleClick dropped (platform mousedown)",
+    "windows_same": "the native 1,419-window set (>= 5 native events), features recomputed from the matched stream",
+    "windows_serving_rule": "every window with >= 1 matched pointer, click, key or scroll event (backend _is_idle rule)",
+    "unchanged": "keys, scroll dy, labels, AFFDEX, extractor and classifier"
+  },
+  "native_raw_interaction": {
+    "n": 1419,
+    "n_sessions": 46,
+    "positives": 257,
+    "base_rate": 0.18111346018322763,
+    "auc": 0.7341026139019668,
+    "auc_ci95_session": [
+      0.6996467530025794,
+      0.7670133648481993
+    ],
+    "kappa_at_0.5": 0.21947578050948602,
+    "accuracy_at_0.5": 0.6842847075405215,
+    "majority_accuracy": 0.8188865398167724,
+    "average_precision": 0.3624864163232122,
+    "ap_over_base_rate": 2.0014327811775803,
+    "permutation_p_within_session": 0.0004997501249375312,
+    "score_max": 0.8809843231442183,
+    "score_p99": 0.8091295270338039,
+    "score_mean": 0.38224404764122494
+  },
+  "matched_same_windows": {
+    "n": 1419,
+    "n_sessions": 46,
+    "positives": 257,
+    "base_rate": 0.18111346018322763,
+    "auc": 0.7028971918803619,
+    "auc_ci95_session": [
+      0.6741785217053211,
+      0.7319763314071891
+    ],
+    "kappa_at_0.5": 0.2117726263302696,
+    "accuracy_at_0.5": 0.6708949964763918,
+    "majority_accuracy": 0.8188865398167724,
+    "average_precision": 0.2925339882716429,
+    "ap_over_base_rate": 1.6151973904959582,
+    "permutation_p_within_session": 0.0004997501249375312,
+    "score_max": 0.828860959111884,
+    "score_p99": 0.7839044072870315,
+    "score_mean": 0.3867391676403782
+  },
+  "matched_serving_rule": {
+    "n": 1421,
+    "n_sessions": 46,
+    "positives": 257,
+    "base_rate": 0.18085855031667838,
+    "auc": 0.7030767379357374,
+    "auc_ci95_session": [
+      0.6746348311883352,
+      0.7311514975219187
+    ],
+    "kappa_at_0.5": 0.21129145882403166,
+    "accuracy_at_0.5": 0.6706544686840253,
+    "majority_accuracy": 0.8191414496833216,
+    "average_precision": 0.29399255478483516,
+    "ap_over_base_rate": 1.6255386005807424,
+    "permutation_p_within_session": 0.0004997501249375312,
+    "score_max": 0.8185622138447194,
+    "score_p99": 0.7751406964290463,
+    "score_mean": 0.38536888560145666
+  },
+  "native_model_scored_on_matched_inputs": {
+    "n": 1419,
+    "n_sessions": 46,
+    "positives": 257,
+    "base_rate": 0.18111346018322763,
+    "auc": 0.6775249971537065,
+    "auc_ci95_session": [
+      0.647120078358919,
+      0.7099897570119547
+    ],
+    "kappa_at_0.5": 0.1553608126485374,
+    "accuracy_at_0.5": 0.7103594080338267,
+    "majority_accuracy": 0.8188865398167724,
+    "average_precision": 0.2774322541121,
+    "ap_over_base_rate": 1.5318146637551358,
+    "permutation_p_within_session": 0.0004997501249375312,
+    "score_max": 0.7260472468065811,
+    "score_p99": 0.6848865539141418,
+    "score_mean": 0.3389607824186241
+  },
+  "paired_native_minus_matched_same_windows": {
+    "delta_auc": 0.031205422021604923,
+    "ci95_session": [
+      0.008774730447370099,
+      0.054610018422115596
+    ],
+    "share_of_draws_above_zero": 0.9955
+  },
+  "per_bin_feature_shift_same_windows": {
+    "mouse_entropy": {
+      "native": {
+        "mean": 0.23719941079616547,
+        "p99": 2.2194936275482178,
+        "max": 3.7158939838409424
+      },
+      "matched": {
+        "mean": 0.20164887607097626,
+        "p99": 1.92192804813385,
+        "max": 2.75
+      }
+    },
+    "mouse_velocity_mean": {
+      "native": {
+        "mean": 0.34966957569122314,
+        "p99": 5.713568210601807,
+        "max": 146.03285217285156
+      },
+      "matched": {
+        "mean": 0.13652947545051575,
+        "p99": 1.9951261281967163,
+        "max": 10.277052879333496
+      }
+    },
+    "mouse_velocity_std": {
+      "native": {
+        "mean": 0.8162198066711426,
+        "p99": 16.623489379882812,
+        "max": 54.81822204589844
+      },
+      "matched": {
+        "mean": 0.13069698214530945,
+        "p99": 1.9833070039749146,
+        "max": 4.239836692810059
+      }
+    },
+    "click_count": {
+      "native": {
+        "mean": 0.2451961487531662,
+        "p99": 3.0,
+        "max": 7.0
+      },
+      "matched": {
+        "mean": 0.1301151067018509,
+        "p99": 1.0,
+        "max": 4.0
+      }
+    },
+    "hover_dwell_mean": {
+      "native": {
+        "mean": 0.06347869336605072,
+        "p99": 0.5,
+        "max": 2.0999999046325684
+      },
+      "matched": {
+        "mean": 0.05560057610273361,
+        "p99": 0.5,
+        "max": 0.8999999761581421
+      }
+    },
+    "keystroke_count": {
+      "native": {
+        "mean": 1.2935870885849,
+        "p99": 9.0,
+        "max": 49.0
+      },
+      "matched": {
+        "mean": 1.2935870885849,
+        "p99": 9.0,
+        "max": 49.0
+      }
+    },
+    "typing_rhythm_std": {
+      "native": {
+        "mean": 0.015320239588618279,
+        "p99": 0.1979999989271164,
+        "max": 0.42899999022483826
+      },
+      "matched": {
+        "mean": 0.015320239588618279,
+        "p99": 0.1979999989271164,
+        "max": 0.42899999022483826
+      }
+    },
+    "backspace_pct": {
+      "native": {
+        "mean": 0.020812667906284332,
+        "p99": 1.0,
+        "max": 1.0
+      },
+      "matched": {
+        "mean": 0.020812667906284332,
+        "p99": 1.0,
+        "max": 1.0
+      }
+    },
+    "pause_count": {
+      "native": {
+        "mean": 0.03272257372736931,
+        "p99": 1.0,
+        "max": 1.0
+      },
+      "matched": {
+        "mean": 0.03272257372736931,
+        "p99": 1.0,
+        "max": 1.0
+      }
+    },
+    "scroll_velocity_mean": {
+      "native": {
+        "mean": 0.5739057660102844,
+        "p99": 0.0,
+        "max": 297.0
+      },
+      "matched": {
+        "mean": 0.5739057660102844,
+        "p99": 0.0,
+        "max": 297.0
+      }
+    },
+    "scroll_direction_changes": {
+      "native": {
+        "mean": 0.0003288700827397406,
+        "p99": 0.0,
+        "max": 2.0
+      },
+      "matched": {
+        "mean": 0.0003288700827397406,
+        "p99": 0.0,
+        "max": 2.0
+      }
+    },
+    "scroll_back_runs": {
+      "native": {
+        "mean": 0.004087385255843401,
+        "p99": 0.0,
+        "max": 8.0
+      },
+      "matched": {
+        "mean": 0.004087385255843401,
+        "p99": 0.0,
+        "max": 8.0
+      }
+    },
+    "scroll_inactivity_pct": {
+      "native": {
+        "mean": 0.9971389174461365,
+        "p99": 1.0,
+        "max": 1.0
+      },
+      "matched": {
+        "mean": 0.9971389174461365,
+        "p99": 1.0,
+        "max": 1.0
+      }
+    },
+    "idle_time_pct": {
+      "native": {
+        "mean": 0.5660253763198853,
+        "p99": 1.0,
+        "max": 1.0
+      },
+      "matched": {
+        "mean": 0.5905812382698059,
+        "p99": 1.0,
+        "max": 1.0
+      }
+    },
+    "blur_time_pct": {
+      "native": {
+        "mean": 0.0,
+        "p99": 0.0,
+        "max": 0.0
+      },
+      "matched": {
+        "mean": 0.0,
+        "p99": 0.0,
+        "max": 0.0
+      }
+    },
+    "tab_switch_count": {
+      "native": {
+        "mean": 0.0,
+        "p99": 0.0,
+        "max": 0.0
+      },
+      "matched": {
+        "mean": 0.0,
+        "p99": 0.0,
+        "max": 0.0
+      }
+    }
+  },
+  "live_reference": "platform live interaction readings never exceeded 0.633 (reports/deployment/aggregates_30d.json)"
+}
