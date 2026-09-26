@@ -17,7 +17,7 @@ Several code defaults would change behaviour if the deployment settings were los
 | LLM (`core/config.py`) | `http://vllm:8080`, `affectlearn/llama-3-8b-pedagogical`, 3 s timeout | `https://api.openai.com`, `gpt-4o` (alias), 15 s | A different model and timeout |
 | Behavioural model (`services/behavioral_inference.py`) | `models/behavioral_bilstm.onnx` (trained on synthetic data) | `models/behavioral_confusion_gbdt.onnx` | A different, synthetic-data model |
 
-**Code versions.** The paper describes `affectlearn` `main` at `b6d2b58`, as deployed. The current code base is `develop` at `b4496cf`, which adds delivery-only offer accounting, the server-clock cooldown and the lesson quiz hold (PRs #138 and #139). These are not deployed.
+**Code versions.** The paper describes `affectlearn` `main` at `b6d2b58`, as deployed. The current code base is `develop` at `70513a8` (b4496cf plus PR #140, model metadata only), which adds delivery-only offer accounting, the server-clock cooldown and the lesson quiz hold (PRs #138 and #139). These are not deployed.
 
 ## 2. Prompts and LLM settings
 
@@ -47,11 +47,13 @@ The full claim-to-source map is `docs/paper/V4/v4-sources.md` in the documents r
 |---|---|---|
 | Deployed-rule gate replay (Fig. 2) | `evaluation/gate_deployed_rule.py` | `reports/gate_deployed_rule/sweep.json` |
 | Gate ablation | `evaluation/gate_deployed_rule.py --ablation` | `reports/gate_deployed_rule/ablation.json` |
+| Matched-rate gate comparison and spacing | `evaluation/gate_matched_rate.py` | `reports/gate_deployed_rule/matched_rate.json` |
 | Out-of-sample facial floor | `evaluation/facial_floor_oos.py` | `reports/engagenet_review/oos_floor.json` |
 | EngageNet baselines and four-class | `training/engagenet/review/baselines.py` | `reports/engagenet_review/baselines.json` |
 | Table 3 accuracy, balanced accuracy and κ | `training/engagenet/review/table3_metrics.py`; `training/behavioral/review/late_fusion_and_metrics.py` | `reports/*/table3_metrics.json` |
 | DUX arms, platform-like input, calibration, nested floor | `training/behavioral/review/dux_review.py` | `reports/dux_review/*.json` |
 | Late fusion | `training/behavioral/review/late_fusion_and_metrics.py` | `reports/dux_review/late_fusion.json` |
 | DUX label threshold | `training/behavioral/review/label_threshold.py` | `reports/dux_review/label_threshold.json` |
+| DUX intense vs none (mild windows removed) | `training/behavioral/review/label_exclusive.py` | `reports/dux_review/label_exclusive.json` |
 
 Corpora are not redistributed. EngageNet is licensed for research use, and DUX is CC BY 4.0 (Zenodo 10.5281/zenodo.7778612). Only aggregates are committed.
