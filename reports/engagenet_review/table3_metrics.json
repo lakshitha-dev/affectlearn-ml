@@ -1,0 +1,51 @@
+{
+  "threshold": 0.5,
+  "rows": {
+    "mean_gaze_y_logistic": {
+      "n": 2256,
+      "auc": 0.6888681476406423,
+      "accuracy": 0.7189716312056738,
+      "balanced_accuracy": 0.6837662890802824,
+      "kappa": 0.35941756112679135,
+      "majority_accuracy": 0.688386524822695,
+      "threshold": 0.5
+    },
+    "logistic_regression": {
+      "n": 2256,
+      "auc": 0.8804827805403939,
+      "accuracy": 0.8195921985815603,
+      "balanced_accuracy": 0.7879930460843465,
+      "kappa": 0.578011166118533,
+      "majority_accuracy": 0.688386524822695,
+      "threshold": 0.5
+    },
+    "random_forest": {
+      "n": 2256,
+      "auc": 0.9184774295426005,
+      "accuracy": 0.8572695035460993,
+      "balanced_accuracy": 0.8344341562560968,
+      "kappa": 0.667828423379386,
+      "majority_accuracy": 0.688386524822695,
+      "threshold": 0.5
+    },
+    "gbdt_deployed": {
+      "n": 2256,
+      "auc": 0.9224929677703596,
+      "accuracy": 0.863031914893617,
+      "balanced_accuracy": 0.851465845484214,
+      "kappa": 0.6876729415475491,
+      "majority_accuracy": 0.688386524822695,
+      "threshold": 0.5
+    },
+    "gbdt_deployed_scorable": {
+      "n": 2162,
+      "auc": 0.9166142572411053,
+      "accuracy": 0.8593894542090657,
+      "balanced_accuracy": 0.8424796906957364,
+      "kappa": 0.66649380277888,
+      "majority_accuracy": 0.711840888066605,
+      "threshold": 0.5
+    }
+  },
+  "note": "AUCs reproduce baselines.json exactly"
+}
