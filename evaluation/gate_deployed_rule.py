@@ -45,8 +45,12 @@ N_BOOT = 2000
 SEED = 42
 
 
-def _one_sequence(y, p, ok, floor):
-    """Offers and correct offers for one participant's ordered windows."""
+def _one_sequence(y, p, ok, floor, persistence=True, cooldown=True):
+    """Offers and correct offers for one participant's ordered windows.
+
+    `persistence` and `cooldown` switch those checks off for the ablation (--ablation); with both
+    on this is the deployed rule and reproduces sweep.json exactly.
+    """
     fired = correct = 0
     history: list[int] = []
     last = None
@@ -57,10 +61,11 @@ def _one_sequence(y, p, ok, floor):
         history.append(state)
         if state != 1 or p[k] < floor:
             continue
-        recent = history[-MIN_CONSECUTIVE:]
-        if len(recent) < MIN_CONSECUTIVE or any(s != 1 for s in recent):
-            continue
-        if last is not None and k - last < COOLDOWN:
+        if persistence:
+            recent = history[-MIN_CONSECUTIVE:]
+            if len(recent) < MIN_CONSECUTIVE or any(s != 1 for s in recent):
+                continue
+        if cooldown and last is not None and k - last < COOLDOWN:
             continue
         fired += 1
         correct += int(y[k] == 1)
@@ -68,27 +73,27 @@ def _one_sequence(y, p, ok, floor):
     return fired, correct
 
 
-def simulate(seqs, floor):
+def simulate(seqs, floor, persistence=True, cooldown=True):
     fired = correct = 0
     for y, p, ok in seqs:
-        f, c = _one_sequence(y, p, ok, floor)
+        f, c = _one_sequence(y, p, ok, floor, persistence, cooldown)
         fired += f
         correct += c
     return fired, correct
 
 
-def sweep(seqs, n_windows, base_rate, rng_seed=SEED):
+def sweep(seqs, n_windows, base_rate, rng_seed=SEED, persistence=True, cooldown=True):
     rng = np.random.default_rng(rng_seed)
     draws = [rng.integers(0, len(seqs), len(seqs)) for _ in range(N_BOOT)]
     hours = n_windows * WINDOW_S / 3600.0
     rows = [{"floor": None, "offers": n_windows, "precision": base_rate, "lift": 1.0,
              "ci95": None, "offers_per_hour": n_windows / hours}]
     for floor in FLOORS:
-        fired, correct = simulate(seqs, floor)
+        fired, correct = simulate(seqs, floor, persistence, cooldown)
         prec = correct / fired if fired else None
         boot = []
         for d in draws:
-            f, c = simulate([seqs[i] for i in d], floor)
+            f, c = simulate([seqs[i] for i in d], floor, persistence, cooldown)
             if f:
                 boot.append(c / f)
         ci = [float(np.percentile(boot, 2.5)), float(np.percentile(boot, 97.5))] if boot else None
@@ -144,11 +149,85 @@ def dux() -> dict:
     return res
 
 
+VARIANTS = {                                  # (persistence, cooldown)
+    "floor_only": (False, False),
+    "floor_persistence": (True, False),
+    "floor_cooldown": (False, True),
+    "deployed_rule": (True, True),
+}
+
+
+def _ablation_channels(work: pathlib.Path) -> dict:
+    """The three series of Fig. 2, as (sequences, n_windows, base_rate)."""
+    import _common as C
+    from geometry_gate_calibration import temporal_order
+
+    feats, _, _, ids_lab = C.load_split("Test", work)
+    found = feats[:, :, C.rungs.NAMES.index("face_found")]
+    y, p, g, ids = C.committed_test_predictions(work)
+    n_face = C.align(ids_lab, np.sum(found == 1.0, axis=1), list(ids))
+    order = temporal_order(np.asarray(ids))
+    y, p, g = np.asarray(y)[order], np.asarray(p, float)[order], np.asarray(g)[order]
+    ok = np.asarray(n_face)[order] >= 5
+    out = {"geometry_scorable": (sequences(y, p, g, ok), len(y), float(y[ok].mean()))}
+    pred_dir = REPO / "reports" / "dux_review" / "predictions"
+    for name, stem in (("interaction_raw", "raw_interaction"),
+                       ("interaction_platform_like", "matched_serving_rule_interaction")):
+        d = np.load(pred_dir / f"{stem}.npz", allow_pickle=False)
+        yy, pp, gg = d["y_true"], d["y_prob"].astype(float), d["groups"]
+        o = np.lexsort((d["window_index"], gg))
+        out[name] = (sequences(yy[o], pp[o], gg[o]), len(yy), float(yy.mean()))
+    return out
+
+
+def ablation(work: pathlib.Path) -> dict:
+    """Which of the gate's checks change precision and offer rate beyond the floor alone."""
+    res = {}
+    for name, (seqs, n, base) in _ablation_channels(work).items():
+        block = {"windows": n, "base_rate": base, "variants": {}}
+        for v, (pers, cool) in VARIANTS.items():
+            block["variants"][v] = sweep(seqs, n, base, persistence=pers, cooldown=cool)
+        # paired difference at 0.70: deployed rule minus floor only, same participant draws
+        rng = np.random.default_rng(SEED)
+        diffs = []
+        for _ in range(N_BOOT):
+            d = rng.integers(0, len(seqs), len(seqs))
+            s = [seqs[i] for i in d]
+            f_full, c_full = simulate(s, 0.70, True, True)
+            f_base, c_base = simulate(s, 0.70, False, False)
+            if f_full and f_base:
+                diffs.append(c_full / f_full - c_base / f_base)
+        block["paired_precision_diff_at_0_70"] = {
+            "deployed_minus_floor_only": float(np.mean(diffs)) if diffs else None,
+            "ci95": [float(np.percentile(diffs, 2.5)), float(np.percentile(diffs, 97.5))]
+            if diffs else None, "n_draws_used": len(diffs)}
+        res[name] = block
+    return res
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--work", default="C:/engagenet")
+    ap.add_argument("--ablation", action="store_true",
+                    help="write ablation.json (floor only / + persistence / + cooldown / both)")
     a = ap.parse_args()
+    if a.ablation:
+        out = {"_note": "Gate ablation under the deployed rule; see ablation() docstring.",
+               "variants": {k: {"persistence": v[0], "cooldown": v[1]} for k, v in VARIANTS.items()},
+               "n_bootstrap": N_BOOT, "seed": SEED, "channels": ablation(pathlib.Path(a.work))}
+        dest = REPO / "reports" / "gate_deployed_rule"
+        dest.mkdir(parents=True, exist_ok=True)
+        (dest / "ablation.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
+        for ch, block in out["channels"].items():
+            for v, rows in block["variants"].items():
+                r = next(x for x in rows if x["floor"] == 0.70)
+                pr = None if r["precision"] is None else round(r["precision"], 3)
+                print(f"{ch:26s} {v:18s} @0.70 offers {r['offers']:4d} prec {pr} "
+                      f"ci {r['ci95'] and [round(x, 3) for x in r['ci95']]} "
+                      f"per_h {r['offers_per_hour']:.2f}")
+            print(f"{ch:26s} paired diff (deployed - floor only) {block['paired_precision_diff_at_0_70']}")
+        return 0
     out = {"_note": __doc__.strip().splitlines()[0],
            "rule": {"floor_applies_to": "current reading only",
                     "persistence": f"last {MIN_CONSECUTIVE} readings share the actionable state",
