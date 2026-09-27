@@ -1,0 +1,78 @@
+{
+  "threshold": 0.5,
+  "note": "leave-one-session-out predictions, raw features",
+  "rows": {
+    "interaction_gbdt_deployed": {
+      "n": 1419,
+      "auc": 0.7341026139019668,
+      "auc_ci95_session": [
+        0.6996467530025794,
+        0.7670133648481993
+      ],
+      "accuracy": 0.6842847075405215,
+      "balanced_accuracy": 0.649644715605055,
+      "kappa": 0.21947578050948602,
+      "majority_accuracy": 0.8188865398167724
+    },
+    "interaction_platform_like": {
+      "n": 1421,
+      "auc": 0.7030767379357374,
+      "auc_ci95_session": [
+        0.6746348311883352,
+        0.7311514975219187
+      ],
+      "accuracy": 0.6706544686840253,
+      "balanced_accuracy": 0.6488878414697742,
+      "kappa": 0.21129145882403166,
+      "majority_accuracy": 0.8191414496833216
+    },
+    "random_forest": {
+      "n": 1419,
+      "auc": 0.722089581226518,
+      "auc_ci95_session": [
+        0.6939262904547627,
+        0.752482853498475
+      ],
+      "accuracy": 0.7822410147991543,
+      "balanced_accuracy": 0.5897520041254511,
+      "kappa": 0.19647304387345765,
+      "majority_accuracy": 0.8188865398167724
+    },
+    "logistic_regression": {
+      "n": 1419,
+      "auc": 0.6920310480387364,
+      "auc_ci95_session": [
+        0.6560953348258903,
+        0.7299108360235532
+      ],
+      "accuracy": 0.6391825229034531,
+      "balanced_accuracy": 0.6493801777426549,
+      "kappa": 0.19717824276659512,
+      "majority_accuracy": 0.8188865398167724
+    },
+    "affdex_expression": {
+      "n": 1419,
+      "auc": 0.47656998198463674,
+      "auc_ci95_session": [
+        0.4385282180793989,
+        0.5214583107142412
+      ],
+      "accuracy": 0.6250880902043693,
+      "balanced_accuracy": 0.48470535839857487,
+      "kappa": -0.024801870118022817,
+      "majority_accuracy": 0.8188865398167724
+    },
+    "early_fusion": {
+      "n": 1419,
+      "auc": 0.6805286738951358,
+      "auc_ci95_session": [
+        0.6405664006295543,
+        0.7200893519843329
+      ],
+      "accuracy": 0.696969696969697,
+      "balanced_accuracy": 0.6301157939149595,
+      "kappa": 0.20301515939174342,
+      "majority_accuracy": 0.8188865398167724
+    }
+  }
+}

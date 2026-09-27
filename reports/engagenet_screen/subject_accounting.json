@@ -1,0 +1,42 @@
+{
+  "_note": "Subject accounting for the three official splits, as extracted and as scored. Written because the per-split counts sum to one more than the published participant total, and a thesis should say which number it is using and why. Identifiers and counts only, no corpus data.",
+  "_generator": "training/engagenet/subject_accounting.py",
+  "_captured": "2026-09-10",
+  "published_participants": 127,
+  "splits": {
+    "Train": {
+      "clips_extracted": 2177,
+      "clips_scored": 2177,
+      "dropped_subject_not_present": 0,
+      "dropped_no_label_row": 0,
+      "subjects_extracted": 91,
+      "subjects_scored": 91
+    },
+    "Validation": {
+      "clips_extracted": 1071,
+      "clips_scored": 1071,
+      "dropped_subject_not_present": 0,
+      "dropped_no_label_row": 0,
+      "subjects_extracted": 11,
+      "subjects_scored": 11
+    },
+    "Test": {
+      "clips_extracted": 2257,
+      "clips_scored": 2256,
+      "dropped_subject_not_present": 1,
+      "dropped_no_label_row": 0,
+      "subjects_extracted": 26,
+      "subjects_scored": 26
+    }
+  },
+  "pairwise_overlap": {
+    "Train/Validation": 0,
+    "Test/Train": 0,
+    "Test/Validation": 0
+  },
+  "splits_are_disjoint": true,
+  "subjects_union": 128,
+  "subjects_summed": 128,
+  "subjects_union_scored": 128,
+  "subjects_summed_scored": 128
+}

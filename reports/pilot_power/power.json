@@ -1,0 +1,95 @@
+{
+  "alpha": 0.05,
+  "tails": 2,
+  "target_power": 0.8,
+  "planned_total_n": [
+    20,
+    30
+  ],
+  "allocation": "even, two arms",
+  "assumed_effect_size": null,
+  "note": "No effect size for affect-aware adaptation on learning gain is established in the reviewed literature, so none is assumed; minimum detectable effects are reported instead of power against a target.",
+  "between_arms": [
+    {
+      "total_n": 20,
+      "per_arm": 10,
+      "min_detectable_d": 1.3249
+    },
+    {
+      "total_n": 24,
+      "per_arm": 12,
+      "min_detectable_d": 1.1968
+    },
+    {
+      "total_n": 30,
+      "per_arm": 15,
+      "min_detectable_d": 1.0598
+    },
+    {
+      "total_n": 40,
+      "per_arm": 20,
+      "min_detectable_d": 0.9092
+    },
+    {
+      "total_n": 60,
+      "per_arm": 30,
+      "min_detectable_d": 0.7356
+    },
+    {
+      "total_n": 100,
+      "per_arm": 50,
+      "min_detectable_d": 0.5659
+    },
+    {
+      "total_n": 150,
+      "per_arm": 75,
+      "min_detectable_d": 0.4605
+    },
+    {
+      "total_n": 200,
+      "per_arm": 100,
+      "min_detectable_d": 0.3981
+    },
+    {
+      "total_n": 260,
+      "per_arm": 130,
+      "min_detectable_d": 0.3488
+    }
+  ],
+  "within_participant": [
+    {
+      "n": 20,
+      "min_detectable_dz": 0.6605
+    },
+    {
+      "n": 25,
+      "min_detectable_dz": 0.584
+    },
+    {
+      "n": 30,
+      "min_detectable_dz": 0.5292
+    }
+  ],
+  "power_at_15_per_arm": [
+    {
+      "d": 0.3,
+      "power": 0.1218
+    },
+    {
+      "d": 0.5,
+      "power": 0.2619
+    },
+    {
+      "d": 0.8,
+      "power": 0.5618
+    },
+    {
+      "d": 1.0,
+      "power": 0.7529
+    },
+    {
+      "d": 1.2,
+      "power": 0.8872
+    }
+  ]
+}

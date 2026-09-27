@@ -1,0 +1,269 @@
+{
+  "files": [
+    "v1.csv"
+  ],
+  "window_s": 30,
+  "n": 1146,
+  "n_participants": 36,
+  "folds": 5,
+  "states": [
+    "none",
+    "Confusion",
+    "Anger",
+    "Joy"
+  ],
+  "platform_mapping": {
+    "Confusion": "confused",
+    "Anger": "frustrated (PROXY)",
+    "Joy": "-- no mapping --",
+    "none": "not annotated"
+  },
+  "class_counts": {
+    "none": 841,
+    "Confusion": 204,
+    "Anger": 45,
+    "Joy": 56
+  },
+  "majority_baseline": 0.7338568935427574,
+  "arms": {
+    "behavioural": {
+      "n": 1146,
+      "labels": [
+        "none",
+        "Confusion",
+        "Anger",
+        "Joy"
+      ],
+      "confusion_matrix": [
+        [
+          667,
+          142,
+          9,
+          23
+        ],
+        [
+          108,
+          92,
+          2,
+          2
+        ],
+        [
+          33,
+          11,
+          0,
+          1
+        ],
+        [
+          42,
+          11,
+          1,
+          2
+        ]
+      ],
+      "accuracy": 0.6640488656195462,
+      "weighted_f1": 0.6524578501177744,
+      "macro_f1": 0.3091253414434964,
+      "cohen_kappa": 0.18915193683908738,
+      "per_class": {
+        "none": {
+          "precision": 0.7847058823529411,
+          "recall": 0.7931034482758621,
+          "f1": 0.7888823181549379,
+          "support": 841
+        },
+        "Confusion": {
+          "precision": 0.359375,
+          "recall": 0.45098039215686275,
+          "f1": 0.4,
+          "support": 204
+        },
+        "Anger": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 45
+        },
+        "Joy": {
+          "precision": 0.07142857142857142,
+          "recall": 0.03571428571428571,
+          "f1": 0.047619047619047616,
+          "support": 56
+        }
+      },
+      "zero_recall_classes": [
+        "Anger"
+      ],
+      "auc_ovr_macro": 0.6115550981883743,
+      "errors_total": 385,
+      "errors_between_adjacent_classes": 265,
+      "adjacent_error_share": 0.6883116883116883,
+      "worst_confused_pair": "none<->Confusion",
+      "confused_pairs": {
+        "none<->Confusion": 250,
+        "none<->Joy": 65,
+        "none<->Anger": 42,
+        "Confusion<->Anger": 13,
+        "Confusion<->Joy": 13,
+        "Anger<->Joy": 2
+      }
+    },
+    "facial": {
+      "n": 1146,
+      "labels": [
+        "none",
+        "Confusion",
+        "Anger",
+        "Joy"
+      ],
+      "confusion_matrix": [
+        [
+          565,
+          200,
+          33,
+          43
+        ],
+        [
+          144,
+          40,
+          8,
+          12
+        ],
+        [
+          32,
+          11,
+          2,
+          0
+        ],
+        [
+          24,
+          8,
+          0,
+          24
+        ]
+      ],
+      "accuracy": 0.5506108202443281,
+      "weighted_f1": 0.5662671737814378,
+      "macro_f1": 0.3193519337880118,
+      "cohen_kappa": 0.033673021632206646,
+      "per_class": {
+        "none": {
+          "precision": 0.738562091503268,
+          "recall": 0.6718192627824019,
+          "f1": 0.7036114570361146,
+          "support": 841
+        },
+        "Confusion": {
+          "precision": 0.15444015444015444,
+          "recall": 0.19607843137254902,
+          "f1": 0.17278617710583152,
+          "support": 204
+        },
+        "Anger": {
+          "precision": 0.046511627906976744,
+          "recall": 0.044444444444444446,
+          "f1": 0.045454545454545456,
+          "support": 45
+        },
+        "Joy": {
+          "precision": 0.3037974683544304,
+          "recall": 0.42857142857142855,
+          "f1": 0.35555555555555557,
+          "support": 56
+        }
+      },
+      "zero_recall_classes": [],
+      "auc_ovr_macro": 0.5859223617119708,
+      "errors_total": 515,
+      "errors_between_adjacent_classes": 363,
+      "adjacent_error_share": 0.7048543689320388,
+      "worst_confused_pair": "none<->Confusion",
+      "confused_pairs": {
+        "none<->Confusion": 344,
+        "none<->Joy": 67,
+        "none<->Anger": 65,
+        "Confusion<->Joy": 20,
+        "Confusion<->Anger": 19,
+        "Anger<->Joy": 0
+      }
+    },
+    "fused": {
+      "n": 1146,
+      "labels": [
+        "none",
+        "Confusion",
+        "Anger",
+        "Joy"
+      ],
+      "confusion_matrix": [
+        [
+          664,
+          151,
+          10,
+          16
+        ],
+        [
+          105,
+          92,
+          3,
+          4
+        ],
+        [
+          36,
+          8,
+          1,
+          0
+        ],
+        [
+          40,
+          6,
+          0,
+          10
+        ]
+      ],
+      "accuracy": 0.6692844677137871,
+      "weighted_f1": 0.6617769169452697,
+      "macro_f1": 0.36331296840216243,
+      "cohen_kappa": 0.20732279311521662,
+      "per_class": {
+        "none": {
+          "precision": 0.7857988165680473,
+          "recall": 0.7895362663495838,
+          "f1": 0.7876631079478055,
+          "support": 841
+        },
+        "Confusion": {
+          "precision": 0.35797665369649806,
+          "recall": 0.45098039215686275,
+          "f1": 0.39913232104121477,
+          "support": 204
+        },
+        "Anger": {
+          "precision": 0.07142857142857142,
+          "recall": 0.022222222222222223,
+          "f1": 0.03389830508474576,
+          "support": 45
+        },
+        "Joy": {
+          "precision": 0.3333333333333333,
+          "recall": 0.17857142857142858,
+          "f1": 0.23255813953488372,
+          "support": 56
+        }
+      },
+      "zero_recall_classes": [],
+      "auc_ovr_macro": 0.6811374847007193,
+      "errors_total": 379,
+      "errors_between_adjacent_classes": 267,
+      "adjacent_error_share": 0.7044854881266491,
+      "worst_confused_pair": "none<->Confusion",
+      "confused_pairs": {
+        "none<->Confusion": 256,
+        "none<->Joy": 56,
+        "none<->Anger": 46,
+        "Confusion<->Anger": 11,
+        "Confusion<->Joy": 10,
+        "Anger<->Joy": 0
+      }
+    }
+  }
+}

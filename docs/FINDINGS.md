@@ -44,7 +44,9 @@ lifted "Very High" recall from 15% → 40% and weighted F1 from 0.456 → 0.509.
 
 ## To push past ~0.51 (future work, not tuning)
 
-1. **Ordinal modelling** (CORAL/CORN) — treat VL<L<H<VH as ordered; targets the exact error.
+1. ~~**Ordinal modelling** (CORAL/CORN)~~ — **tried (2026-06-09), no benefit.** CORN ordinal
+   regression scored test wF1 0.471, tied with focal 0.473. The High↔Very-High wall does not
+   yield to ordinal modelling. See "Serve-alignment + ordinal experiment" below.
 2. **Stronger temporal model** — small 3D-CNN or temporal transformer instead of CNN+LSTM.
 3. **Label de-noising / merging** to a 2–3 class engagement scheme if the use-case allows.
 
@@ -55,3 +57,39 @@ lifted "Very High" recall from 15% → 40% and weighted F1 from 0.456 → 0.509.
    or `python training/facial/train_cnn_lstm.py --config training/facial/config.yaml`
    after preprocessing.
 3. Best checkpoint + self-contained ONNX are written to the `checkpoints` path on Drive.
+
+## Serve-alignment + ordinal experiment (2026-06-09)
+
+**Motivation.** Training cropped faces with **OpenCV Haar + 10% padding + centre-crop
+fallback**, but the browser (`affectlearn/frontend/src/lib/preprocess.ts`, story 4-2) crops
+with **MediaPipe `blaze_face_short_range`, raw bbox, no padding, dropping faceless frames**.
+Train/serve preprocessing must match or the model sees a distribution it never trained on.
+
+**Measured gap** (same 1638 Test clips, same `cnn_lstm_best.pt`, `evaluation/crop_gap_eval.py`):
+
+| Serve cropper | test wF1 | macro F1 | acc |
+|---|---|---|---|
+| Haar (matched train) | 0.509 | 0.284 | 0.520 |
+| MediaPipe (real production) | **0.480** | 0.245 | 0.540 |
+
+So the deployed Haar-trained model fed real MediaPipe crops scores ~0.48, not 0.509.
+
+**Fix attempt — re-preprocess all splits with MediaPipe and retrain**
+(`training/facial/mediapipe_retrain_pipeline.py`, two variants):
+
+| Model | train→serve | val wF1 | test wF1 | macro F1 | per-class [VL,L,H,VH] |
+|---|---|---|---|---|---|
+| focal | MP→MP | 0.507 | **0.473** | 0.271 | [.00, .12, .59, .38] |
+| CORN ordinal | MP→MP | 0.505 | 0.471 | 0.262 | [.00, .08, .58, .39] |
+
+**Conclusions.**
+- Aligning the cropper did **not** recover weighted-F1 (0.473 is within run-noise of 0.480).
+  The mismatch is **not** a recoverable distribution-shift bug — MP's tight face-only crop is
+  intrinsically a touch harder than Haar's looser, context-including crop.
+- **CORN ordinal loss gave no benefit** — triple-confirms the ~0.51 wall is representational
+  (High↔Very-High label noise), not loss/preprocessing.
+- Only upside: the MP-aligned focal model is **better balanced** (macro F1 0.271 vs 0.245,
+  non-zero "Low" recall). It is now the canonical `cnn_lstm_best.pt` (train==serve==browser);
+  the prior Haar model is preserved as `cnn_lstm_haar_baseline_f509_pre_mp.pt` on Drive.
+- `preprocess.py` now uses the MediaPipe cropper (serve-aligned) — a **correctness/hygiene**
+  change, not an accuracy win. 0.60 still needs an architectural change.

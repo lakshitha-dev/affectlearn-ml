@@ -1,0 +1,28 @@
+{
+  "_note": "DUX: intense confusion against no confusion, with mildly confused windows left out (E12).",
+  "windows_total": 1419,
+  "mild_removed": 142,
+  "windows_kept": 1277,
+  "intense_positives": 115,
+  "none_negatives": 1162,
+  "sessions_kept": 46,
+  "intense_threshold": 50.0,
+  "rows": {
+    "deployed_model": {
+      "auc": 0.7228691162164185,
+      "auc_ci95_session": [
+        0.6717267521260393,
+        0.7739357087206776
+      ],
+      "permutation_p_within_session": 0.0004997501249375312
+    },
+    "retrained": {
+      "auc": 0.6586470104018559,
+      "auc_ci95_session": [
+        0.6001688281180705,
+        0.7207401883201835
+      ],
+      "permutation_p_within_session": 0.0004997501249375312
+    }
+  }
+}

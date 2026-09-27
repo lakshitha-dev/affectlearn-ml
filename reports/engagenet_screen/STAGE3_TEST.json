@@ -1,0 +1,25 @@
+{
+  "stage": 3,
+  "rung": "4_lean",
+  "n": 2256,
+  "subjects": 26,
+  "auc": 0.9224929677703596,
+  "auc_ci95_subject": [
+    0.8893403696090145,
+    0.9478083083020499
+  ],
+  "ci_excludes_chance": true,
+  "perm_p_within_subject": 0.0004997501249375312,
+  "accuracy": 0.863031914893617,
+  "majority_baseline": 0.688386524822695,
+  "beats_baseline": true,
+  "published_engagenet": 0.736,
+  "average_precision": 0.8301061463361004,
+  "ap_over_base_rate": 2.663896822381568,
+  "kappa": 0.6876729415475491,
+  "score_min": 0.028294689692560014,
+  "score_max": 0.9961162910508365,
+  "score_spread": 0.9678216013582766,
+  "fit_on": "Train 2177 clips / 91 subjects",
+  "n_variants_screened": 8
+}

@@ -1,0 +1,69 @@
+{
+  "task": "binary confusion detection from facial video (DAiSEE, ANY cut)",
+  "labels": [
+    "not_confused",
+    "confused"
+  ],
+  "input": {
+    "name": "clip",
+    "shape": [
+      null,
+      16,
+      3,
+      96,
+      96
+    ],
+    "preprocessing": "MediaPipe BlazeFace crop, 10% pad, largest face, centre-crop fallback; ImageNet-normalised CHW float32"
+  },
+  "output": {
+    "name": "logits",
+    "shape": [
+      null,
+      2
+    ],
+    "note": "softmax; index 1 = confused"
+  },
+  "backend_env": {
+    "AFFECT_MODEL_KIND": "binary_confusion"
+  },
+  "export": {
+    "exporter": "legacy torchscript (dynamo=False)",
+    "opset": 17,
+    "batch_parity_verified": [
+      1,
+      2,
+      4
+    ],
+    "note": "the exporter warns about dynamic batch axes with LSTMs; parity was measured at batch 1/2/4 and held, and the backend serves batch 1 regardless"
+  },
+  "trained_on": {
+    "corpus": "DAiSEE",
+    "target": "Confusion",
+    "binary_cut": "any",
+    "crops": "mediapipe_blazeface",
+    "n_train": 4852,
+    "n_val": 1429,
+    "positive_rate_train": 0.313,
+    "backbone": "resnet18 FULLY FROZEN"
+  },
+  "honest_performance_test": {
+    "n": 1638,
+    "auc": 0.6414,
+    "cohen_kappa": 0.2119,
+    "accuracy": 0.6813,
+    "majority_baseline": 0.6929,
+    "confused_recall": 0.3917,
+    "confused_precision": 0.477,
+    "external_reference": "Bosch et al. IUI 2015 facial confusion AUC 0.649 (N=137, in the wild)"
+  },
+  "val_wf1_selected_on": 0.6256155612188744,
+  "ablation": {
+    "layer4_unfrozen_auc": 0.5735,
+    "note": "unfreezing layer4 OVERFIT (12M params on 4852 clips); frozen wins"
+  },
+  "limitations": [
+    "Binary: confusion only. Boredom, frustration and engagement are NOT detected.",
+    "Weaker than the behavioural channel (AUC 0.641 vs 0.747).",
+    "Trained on DAiSEE, a different corpus and different people from the behavioural model, so the two together do NOT constitute a demonstrated fusion gain."
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "settings": {
+    "seed": 42,
+    "bootstrap_resamples": 2000,
+    "permutation_draws": 2000,
+    "folds": "leave-one-session-out over namespaced DUX sessions",
+    "window_s": 30,
+    "label": "max human Confusion annotation in window >= 1.0",
+    "classifier": "HistGradientBoosting depth 3, 120 iter, lr 0.06, leaf 8, L2 1.0, balanced (train_dux_confusion._gbdt)",
+    "interval": "session-level cluster bootstrap, percentile",
+    "permutation": "labels shuffled within each session"
+  },
+  "pairs": {
+    "raw: interaction - fused": {
+      "delta_auc": 0.05357394000683102,
+      "ci95_session": [
+        0.029819252254055198,
+        0.07688407696693879
+      ],
+      "share_of_draws_above_zero": 1.0
+    },
+    "raw: interaction - facial": {
+      "delta_auc": 0.2575326319173301,
+      "ci95_session": [
+        0.2114809878942563,
+        0.3028154204152219
+      ],
+      "share_of_draws_above_zero": 1.0
+    },
+    "causal: interaction - fused": {
+      "delta_auc": 0.018169397992191083,
+      "ci95_session": [
+        0.002114320096115652,
+        0.036227293308148015
+      ],
+      "share_of_draws_above_zero": 0.9865
+    },
+    "causal: interaction - facial": {
+      "delta_auc": 0.18939069228554006,
+      "ci95_session": [
+        0.13686446893110502,
+        0.24410598790584673
+      ],
+      "share_of_draws_above_zero": 1.0
+    },
+    "transductive: interaction - fused": {
+      "delta_auc": 0.012242410442213636,
+      "ci95_session": [
+        -0.008004487922061427,
+        0.031471313521211575
+      ],
+      "share_of_draws_above_zero": 0.897
+    },
+    "transductive: interaction - facial": {
+      "delta_auc": 0.19410381939096022,
+      "ci95_session": [
+        0.13499674893104,
+        0.2531249639266459
+      ],
+      "share_of_draws_above_zero": 1.0
+    }
+  }
+}

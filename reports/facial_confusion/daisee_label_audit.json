@@ -1,0 +1,166 @@
+{
+  "Engagement": {
+    "Train": {
+      "n": 5358,
+      "levels": {
+        "0": 34,
+        "1": 213,
+        "2": 2617,
+        "3": 2494
+      },
+      "binary_high_frac": 0.9539007092198581,
+      "binary_any_frac": 0.9936543486375513,
+      "binary_high_baseline": 0.9539007092198581,
+      "binary_any_baseline": 0.9936543486375513
+    },
+    "Validation": {
+      "n": 1429,
+      "levels": {
+        "0": 23,
+        "1": 143,
+        "2": 813,
+        "3": 450
+      },
+      "binary_high_frac": 0.8838348495451365,
+      "binary_any_frac": 0.9839048285514346,
+      "binary_high_baseline": 0.8838348495451365,
+      "binary_any_baseline": 0.9839048285514346
+    },
+    "Test": {
+      "n": 1784,
+      "levels": {
+        "0": 4,
+        "1": 84,
+        "2": 882,
+        "3": 814
+      },
+      "binary_high_frac": 0.9506726457399103,
+      "binary_any_frac": 0.9977578475336323,
+      "binary_high_baseline": 0.9506726457399103,
+      "binary_any_baseline": 0.9977578475336323
+    }
+  },
+  "Boredom": {
+    "Train": {
+      "n": 5358,
+      "levels": {
+        "0": 2433,
+        "1": 1696,
+        "2": 1073,
+        "3": 156
+      },
+      "binary_high_frac": 0.2293766330720418,
+      "binary_any_frac": 0.5459126539753639,
+      "binary_high_baseline": 0.7706233669279582,
+      "binary_any_baseline": 0.5459126539753639
+    },
+    "Validation": {
+      "n": 1429,
+      "levels": {
+        "0": 446,
+        "1": 376,
+        "2": 475,
+        "3": 132
+      },
+      "binary_high_frac": 0.42477256822953113,
+      "binary_any_frac": 0.6878936319104269,
+      "binary_high_baseline": 0.5752274317704689,
+      "binary_any_baseline": 0.6878936319104269
+    },
+    "Test": {
+      "n": 1784,
+      "levels": {
+        "0": 823,
+        "1": 584,
+        "2": 338,
+        "3": 39
+      },
+      "binary_high_frac": 0.21132286995515695,
+      "binary_any_frac": 0.5386771300448431,
+      "binary_high_baseline": 0.7886771300448431,
+      "binary_any_baseline": 0.5386771300448431
+    }
+  },
+  "Confusion": {
+    "Train": {
+      "n": 5358,
+      "levels": {
+        "0": 3616,
+        "1": 1245,
+        "2": 431,
+        "3": 66
+      },
+      "binary_high_frac": 0.0927584919746174,
+      "binary_any_frac": 0.3251213139231056,
+      "binary_high_baseline": 0.9072415080253826,
+      "binary_any_baseline": 0.6748786860768944
+    },
+    "Validation": {
+      "n": 1429,
+      "levels": {
+        "0": 942,
+        "1": 322,
+        "2": 153,
+        "3": 12
+      },
+      "binary_high_frac": 0.11546536039188243,
+      "binary_any_frac": 0.34079776067179846,
+      "binary_high_baseline": 0.8845346396081175,
+      "binary_any_baseline": 0.6592022393282015
+    },
+    "Test": {
+      "n": 1784,
+      "levels": {
+        "0": 1200,
+        "1": 427,
+        "2": 136,
+        "3": 21
+      },
+      "binary_high_frac": 0.08800448430493274,
+      "binary_any_frac": 0.3273542600896861,
+      "binary_high_baseline": 0.9119955156950673,
+      "binary_any_baseline": 0.672645739910314
+    }
+  },
+  "Frustration": {
+    "Train": {
+      "n": 5358,
+      "levels": {
+        "0": 4183,
+        "1": 941,
+        "2": 191,
+        "3": 43
+      },
+      "binary_high_frac": 0.043673012318029114,
+      "binary_any_frac": 0.21929824561403508,
+      "binary_high_baseline": 0.9563269876819709,
+      "binary_any_baseline": 0.7807017543859649
+    },
+    "Validation": {
+      "n": 1429,
+      "levels": {
+        "0": 1058,
+        "1": 271,
+        "2": 81,
+        "3": 19
+      },
+      "binary_high_frac": 0.06997900629811056,
+      "binary_any_frac": 0.2596221133659902,
+      "binary_high_baseline": 0.9300209937018894,
+      "binary_any_baseline": 0.7403778866340098
+    },
+    "Test": {
+      "n": 1784,
+      "levels": {
+        "0": 1388,
+        "1": 316,
+        "2": 57,
+        "3": 23
+      },
+      "binary_high_frac": 0.04484304932735426,
+      "binary_any_frac": 0.2219730941704036,
+      "binary_high_baseline": 0.9551569506726457,
+      "binary_any_baseline": 0.7780269058295964
+    }
+  }
+}

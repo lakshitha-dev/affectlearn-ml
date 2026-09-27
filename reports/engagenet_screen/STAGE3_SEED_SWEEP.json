@@ -1,0 +1,100 @@
+{
+  "rung": "4_lean",
+  "split": "Test",
+  "n_clips": 2256,
+  "n_subjects": 26,
+  "fit_on": "Train 2177 clips / 91 subjects",
+  "version_drift_vs_committed": {
+    "sklearn_version_now": "1.9.0",
+    "committed_auc": 0.9224929677703596,
+    "refit_auc_seed_42": 0.923888880238221,
+    "auc_delta": 0.001396,
+    "per_clip_max_abs_diff": 0.162679,
+    "per_clip_mean_abs_diff": 0.016775,
+    "per_clip_pearson_r": 0.99687,
+    "labels_identical": true
+  },
+  "n_seeds": 10,
+  "seeds": [
+    42,
+    0,
+    1,
+    7,
+    13,
+    99,
+    123,
+    777,
+    2024,
+    31337
+  ],
+  "per_seed": [
+    {
+      "seed": 42,
+      "auc": 0.923888880238221,
+      "accuracy": 0.863031914893617,
+      "score_spread": 0.9646698759632881
+    },
+    {
+      "seed": 0,
+      "auc": 0.923888880238221,
+      "accuracy": 0.863031914893617,
+      "score_spread": 0.9646698759632881
+    },
+    {
+      "seed": 1,
+      "auc": 0.923888880238221,
+      "accuracy": 0.863031914893617,
+      "score_spread": 0.9646698759632881
+    },
+    {
+      "seed": 7,
+      "auc": 0.923888880238221,
+      "accuracy": 0.863031914893617,
+      "score_spread": 0.9646698759632881
+    },
+    {
+      "seed": 13,
+      "auc": 0.923888880238221,
+      "accuracy": 0.863031914893617,
+      "score_spread": 0.9646698759632881
+    },
+    {
+      "seed": 99,
+      "auc": 0.923888880238221,
+      "accuracy": 0.863031914893617,
+      "score_spread": 0.9646698759632881
+    },
+    {
+      "seed": 123,
+      "auc": 0.923888880238221,
+      "accuracy": 0.863031914893617,
+      "score_spread": 0.9646698759632881
+    },
+    {
+      "seed": 777,
+      "auc": 0.923888880238221,
+      "accuracy": 0.863031914893617,
+      "score_spread": 0.9646698759632881
+    },
+    {
+      "seed": 2024,
+      "auc": 0.923888880238221,
+      "accuracy": 0.863031914893617,
+      "score_spread": 0.9646698759632881
+    },
+    {
+      "seed": 31337,
+      "auc": 0.923888880238221,
+      "accuracy": 0.863031914893617,
+      "score_spread": 0.9646698759632881
+    }
+  ],
+  "auc_mean": 0.923888880238221,
+  "auc_sd": 0.0,
+  "auc_min": 0.923888880238221,
+  "auc_max": 0.923888880238221,
+  "auc_range": 0.0,
+  "accuracy_mean": 0.863031914893617,
+  "accuracy_sd": 0.0,
+  "_note": "Post-hoc stability check on the model already reported in STAGE3_TEST.json, not a re-selection: the variant was fixed at Stage 2 and no choice here depends on the outcome. Two separate things are measured. The seed sweep shows this estimator is seed-invariant on this data, which is expected for a histogram gradient-boosted tree without subsampling, so the single-seed concern does not apply to it. The version-drift block shows how far a refit under the current scikit-learn lands from the committed run, which is a real reproducibility gap and is reported rather than absorbed. Neither is the participant bootstrap in STAGE3_TEST.json, which measures sampling of test participants."
+}

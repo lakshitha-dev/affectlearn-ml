@@ -1,15 +1,47 @@
+"""
+!! GEOMETRY WARNING -- READ BEFORE TRUSTING THIS FILE FOR THE DEPLOYED MODEL !!
+
+This module crops the RAW detection box with NO padding and DROPS frames with no face. The
+facial model actually in production (`cnn_lstm_confusion_anycut.onnx`) was NOT trained that
+way: it was trained by `crops_mp.py` using 10% box padding, largest-face selection, and a
+centre-crop fallback. See `crops_mp.py` (now committed) and the model card
+`backend/models/cnn_lstm_confusion_anycut.json`.
+
+Serving this file's geometry against those weights collapsed live P(confused) into a ~0.05 band
+around 0.5 -- a face filled ~100% of the input where training had it fill ~69%, and the frozen
+ResNet18 backbone had no adapted response to the shift.
+
+The "byte-identical to the browser" claim below therefore describes THIS FILE and the browser as
+they once were, not this file and the deployed artifact. The browser now follows `crops_mp.py`
+geometry, pinned by `frontend/src/lib/preprocess.parity.test.ts`.
+
+Use `crops_mp.py` for anything touching the deployed confusion model.
+"""
+
 """Shared preprocessing pipeline.
 
-CRITICAL: This file MUST stay byte-identical to
-  affectlearn/backend/app/services/model_inference.py
-Any change here must ship with a matching change in the backend.
+CRITICAL — TRAIN/SERVE PREPROCESSING CONTRACT (three files, one behaviour):
+  1. THIS file                         affectlearn-ml/training/facial/preprocess.py   (training)
+  2. affectlearn/frontend/src/lib/preprocess.ts                                        (browser serve)
+  3. affectlearn/backend/app/services/model_inference.py                               (server serve, story 4.4)
 
-Pipeline: BGR video -> RGB -> OpenCV face crop -> 96x96 -> ImageNet normalize -> (T,3,H,W) float32
+All three MUST produce the same 96x96 RGB ImageNet-normalised CHW float32 crop
+from the same face, or the model silently misclassifies on inputs it never saw.
+
+Face crops use the SAME detector the browser uses: MediaPipe Face Detection
+`blaze_face_short_range`, confidence >= 0.5, the raw detection bounding box with
+NO padding, resized to 96x96. Frames with no face (or score < 0.5) are DROPPED,
+never centre-cropped — this mirrors `preprocess.ts` (AC4) where low-confidence
+frames are skipped rather than zero-padded.
+
+Pipeline: BGR video -> RGB -> MediaPipe face crop (raw bbox, no pad) -> 96x96
+          -> ImageNet normalize -> (T,3,H,W) float32
 """
 
 import os
 import zipfile
 import logging
+import urllib.request
 from pathlib import Path
 
 import cv2
@@ -23,21 +55,63 @@ INPUT_SIZE = 96
 IMAGENET_MEAN = np.array([0.485, 0.456, 0.406], dtype=np.float32)
 IMAGENET_STD  = np.array([0.229, 0.224, 0.225], dtype=np.float32)
 
-_cascade = None
+# MediaPipe face detector — identical model + threshold to the browser
+# (frontend/src/lib/mediapipe-config.ts / mediapipe-loader.ts).
+MIN_DETECTION_CONFIDENCE = 0.5
+# Oversample candidate frames so we can keep FRAMES_PER_CLIP *with a detected
+# face*. DAiSEE is near-frontal webcam footage so faces are present in almost
+# every frame; oversampling only matters for the rare blink/turn/occlusion.
+CANDIDATE_FRAMES = 32
+# blaze_face_short_range model asset — same URL the browser loads at runtime.
+FACE_DETECTOR_URL = (
+    "https://storage.googleapis.com/mediapipe-models/face_detector/"
+    "blaze_face_short_range/float16/1/blaze_face_short_range.tflite"
+)
+# Where to cache the .tflite locally; overridable via config (paths.face_detector_model).
+_DEFAULT_MODEL_PATH = str(Path(__file__).resolve().parent / "blaze_face_short_range.tflite")
 
-def _get_cascade():
-    global _cascade
-    if _cascade is not None:
-        return _cascade
-    xml = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
-    _cascade = cv2.CascadeClassifier(xml)
-    return _cascade
+_detector = None
+
+
+def _ensure_model(model_path: str) -> str:
+    """Download blaze_face_short_range.tflite if it isn't cached yet."""
+    p = Path(model_path)
+    if not p.exists():
+        p.parent.mkdir(parents=True, exist_ok=True)
+        log.info("Downloading MediaPipe face detector -> %s", p)
+        urllib.request.urlretrieve(FACE_DETECTOR_URL, str(p))
+    return str(p)
+
+
+def _get_detector(model_path: str = None):
+    """Lazily create a singleton MediaPipe FaceDetector (IMAGE running mode)."""
+    global _detector
+    if _detector is not None:
+        return _detector
+
+    # Imported lazily so importing this module (e.g. for constants) doesn't
+    # require mediapipe to be installed.
+    from mediapipe.tasks import python as mp_python
+    from mediapipe.tasks.python import vision
+
+    model_path = _ensure_model(model_path or _DEFAULT_MODEL_PATH)
+    options = vision.FaceDetectorOptions(
+        base_options=mp_python.BaseOptions(model_asset_path=model_path),
+        running_mode=vision.RunningMode.IMAGE,
+        min_detection_confidence=MIN_DETECTION_CONFIDENCE,
+    )
+    _detector = vision.FaceDetector.create_from_options(options)
+    return _detector
 
 
 # -- per-frame helpers ---------------------------------------------------------
 
-def extract_frames(video_path: str, num_frames: int = FRAMES_PER_CLIP):
-    """Sample num_frames evenly spaced from the clip. Returns (T,H,W,3) uint8 RGB or None."""
+def extract_frames(video_path: str, num_frames: int = CANDIDATE_FRAMES):
+    """Sample num_frames evenly spaced from the clip. Returns (T,H,W,3) uint8 RGB or None.
+
+    Oversamples (CANDIDATE_FRAMES) so the caller can keep FRAMES_PER_CLIP frames
+    that actually contain a detected face.
+    """
     cap = cv2.VideoCapture(video_path)
     total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
     if total < 1:
@@ -54,40 +128,45 @@ def extract_frames(video_path: str, num_frames: int = FRAMES_PER_CLIP):
         frames.append(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
     cap.release()
 
-    if len(frames) < num_frames:
+    if not frames:
         return None
-    return np.stack(frames[:num_frames])
+    return np.stack(frames)
 
 
-def crop_face(frame_rgb: np.ndarray, detector=None, size: int = INPUT_SIZE) -> np.ndarray:
-    """Detect the largest face and crop + resize to size x size.
-    Falls back to centre-square crop when no face is detected.
+def crop_face(frame_rgb: np.ndarray, size: int = INPUT_SIZE):
+    """Detect a face with MediaPipe and crop + resize to size x size.
+
+    Returns the size x size uint8 RGB crop, or None when no face is detected
+    with confidence >= MIN_DETECTION_CONFIDENCE (frame is dropped — matching
+    the browser, which never centre-crops a faceless frame).
+
+    The raw detection bounding box is used with NO padding, identical to
+    `preprocess.ts::cropAndNormalize` (drawImage of the bbox straight to 96x96).
     """
+    import mediapipe as mp
+
     h, w = frame_rgb.shape[:2]
-    gray = cv2.cvtColor(frame_rgb, cv2.COLOR_RGB2GRAY)
-    cascade = _get_cascade()
-    faces = cascade.detectMultiScale(
-        gray, scaleFactor=1.1, minNeighbors=4, minSize=(24, 24)
-    )
+    detector = _get_detector()
 
-    if len(faces) > 0:
-        # pick the largest face by area
-        x, y, fw, fh = max(faces, key=lambda f: f[2] * f[3])
-        pad_x = int(fw * 0.10)
-        pad_y = int(fh * 0.10)
-        x1 = max(0, x - pad_x)
-        y1 = max(0, y - pad_y)
-        x2 = min(w, x + fw + pad_x)
-        y2 = min(h, y + fh + pad_y)
-        if x2 > x1 and y2 > y1:
-            return cv2.resize(frame_rgb[y1:y2, x1:x2], (size, size),
-                              interpolation=cv2.INTER_LINEAR)
+    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB,
+                        data=np.ascontiguousarray(frame_rgb))
+    result = detector.detect(mp_image)
+    if not result.detections:
+        return None
 
-    # fallback: centre-square crop
-    side = min(h, w)
-    y0 = (h - side) // 2
-    x0 = (w - side) // 2
-    return cv2.resize(frame_rgb[y0:y0+side, x0:x0+side], (size, size),
+    det = result.detections[0]  # browser uses detections[0]
+    if det.categories and det.categories[0].score < MIN_DETECTION_CONFIDENCE:
+        return None
+
+    bbox = det.bounding_box  # origin_x, origin_y, width, height (pixels)
+    x1 = max(0, int(bbox.origin_x))
+    y1 = max(0, int(bbox.origin_y))
+    x2 = min(w, int(bbox.origin_x + bbox.width))
+    y2 = min(h, int(bbox.origin_y + bbox.height))
+    if x2 <= x1 or y2 <= y1:
+        return None
+
+    return cv2.resize(frame_rgb[y1:y2, x1:x2], (size, size),
                       interpolation=cv2.INTER_LINEAR)
 
 
@@ -99,16 +178,30 @@ def normalize(frame_uint8: np.ndarray) -> np.ndarray:
 
 # -- full clip pipeline --------------------------------------------------------
 
-def preprocess_clip(video_path: str):
+def preprocess_clip(video_path: str, frames_per_clip: int = FRAMES_PER_CLIP):
     """Run the full pipeline on one video clip.
 
-    Returns float32 ndarray of shape (T, 3, H, W), or None on failure.
+    Oversamples candidate frames, keeps only those with a detected face, then
+    selects `frames_per_clip` of them evenly across the retained set. Returns a
+    float32 ndarray of shape (T, 3, H, W), or None when fewer than
+    `frames_per_clip` frames contain a detectable face (clip dropped).
     """
     frames = extract_frames(video_path)
     if frames is None:
         return None
 
-    processed = [normalize(crop_face(frame)) for frame in frames]
+    cropped = []
+    for frame in frames:
+        face = crop_face(frame)
+        if face is not None:
+            cropped.append(face)
+
+    if len(cropped) < frames_per_clip:
+        return None  # too few real-face frames — drop (matches serve semantics)
+
+    # Pick frames_per_clip evenly across the retained (in-order) face crops.
+    sel = np.linspace(0, len(cropped) - 1, frames_per_clip, dtype=int)
+    processed = [normalize(cropped[i]) for i in sel]
     return np.stack(processed)
 
 
@@ -162,6 +255,7 @@ def run_preprocessing(
     """Preprocess all clips and save each as a .npy file."""
     out_root = Path(out_dir)
     failed = []
+    no_face = []
 
     for split in splits:
         split_out = out_root / split
@@ -179,8 +273,13 @@ def run_preprocessing(
 
             arr = preprocess_clip(video_path)
             if arr is None:
-                log.warning("Failed: %s", clip_id)
-                failed.append(clip_id)
+                # Distinguish "couldn't read" from "no detectable face" for diagnostics.
+                if extract_frames(video_path) is None:
+                    log.warning("Failed (unreadable): %s", clip_id)
+                    failed.append(clip_id)
+                else:
+                    log.warning("Dropped (no face): %s", clip_id)
+                    no_face.append(clip_id)
             else:
                 np.save(str(npy_path), arr)
 
@@ -191,12 +290,15 @@ def run_preprocessing(
                 log.info("Smoke-test done for %s (%d clips)", split, smoke_n)
                 break
 
-        log.info("%s finished -- %d clips, %d failed", split, count, len(failed))
+        log.info("%s finished -- %d clips, %d unreadable, %d no-face",
+                 split, count, len(failed), len(no_face))
 
     if failed:
-        fail_log = out_root / "failed_clips.txt"
-        fail_log.write_text("\n".join(failed))
-        log.warning("%d clips failed -> %s", len(failed), fail_log)
+        (out_root / "failed_clips.txt").write_text("\n".join(failed))
+        log.warning("%d clips unreadable -> failed_clips.txt", len(failed))
+    if no_face:
+        (out_root / "no_face_clips.txt").write_text("\n".join(no_face))
+        log.warning("%d clips dropped (no detectable face) -> no_face_clips.txt", len(no_face))
 
 
 # -- CLI -----------------------------------------------------------------------
@@ -214,6 +316,10 @@ if __name__ == "__main__":
 
     zip_p = paths.get("daisee_zip", "")
     raw_p = paths.get("daisee_raw", "")
+
+    # Optional override for the cached detector model path.
+    if paths.get("face_detector_model"):
+        _DEFAULT_MODEL_PATH = paths["face_detector_model"]
 
     run_preprocessing(
         out_dir=paths["daisee_preprocessed"],

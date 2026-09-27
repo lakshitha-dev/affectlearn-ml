@@ -1,0 +1,161 @@
+{
+  "ckpt": "/content/drive/MyDrive/affectlearn-ml/models/cnn_lstm_best.pt",
+  "reported_val_f1": 0.5194604939551039,
+  "target": "Engagement",
+  "total_labelled_clips": 1638,
+  "haar_dropped": 0,
+  "mp_dropped_no_face": 0,
+  "haar_full_set": {
+    "n": 1638,
+    "weighted_f1": 0.5091,
+    "macro_f1": 0.2839,
+    "accuracy": 0.5195,
+    "per_class_f1": [
+      0.0408,
+      0.0396,
+      0.6048,
+      0.4504
+    ],
+    "confusion": [
+      [
+        1,
+        0,
+        3,
+        0
+      ],
+      [
+        17,
+        2,
+        46,
+        16
+      ],
+      [
+        16,
+        12,
+        564,
+        257
+      ],
+      [
+        11,
+        6,
+        403,
+        284
+      ]
+    ]
+  },
+  "mp_full_set": {
+    "n": 1638,
+    "weighted_f1": 0.4797,
+    "macro_f1": 0.2448,
+    "accuracy": 0.5403,
+    "per_class_f1": [
+      0.0,
+      0.0,
+      0.6655,
+      0.3136
+    ],
+    "confusion": [
+      [
+        0,
+        0,
+        4,
+        0
+      ],
+      [
+        2,
+        0,
+        68,
+        11
+      ],
+      [
+        4,
+        1,
+        731,
+        113
+      ],
+      [
+        4,
+        1,
+        545,
+        154
+      ]
+    ]
+  },
+  "common_set_haar": {
+    "n": 1638,
+    "weighted_f1": 0.5091,
+    "macro_f1": 0.2839,
+    "accuracy": 0.5195,
+    "per_class_f1": [
+      0.0408,
+      0.0396,
+      0.6048,
+      0.4504
+    ],
+    "confusion": [
+      [
+        1,
+        0,
+        3,
+        0
+      ],
+      [
+        17,
+        2,
+        46,
+        16
+      ],
+      [
+        16,
+        12,
+        564,
+        257
+      ],
+      [
+        11,
+        6,
+        403,
+        284
+      ]
+    ]
+  },
+  "common_set_mp": {
+    "n": 1638,
+    "weighted_f1": 0.4797,
+    "macro_f1": 0.2448,
+    "accuracy": 0.5403,
+    "per_class_f1": [
+      0.0,
+      0.0,
+      0.6655,
+      0.3136
+    ],
+    "confusion": [
+      [
+        0,
+        0,
+        4,
+        0
+      ],
+      [
+        2,
+        0,
+        68,
+        11
+      ],
+      [
+        4,
+        1,
+        731,
+        113
+      ],
+      [
+        4,
+        1,
+        545,
+        154
+      ]
+    ]
+  },
+  "gap_weighted_f1_haar_minus_mp": 0.0294
+}

@@ -1,0 +1,11 @@
+{
+  "rung": "4_lean",
+  "n_features": 20,
+  "onnx_bytes": 60669,
+  "onnx_opset": 17,
+  "latency_ms_per_clip": 0.037,
+  "latency_reps": 2000,
+  "committed_prediction_max_abs_drift": 1.309253431780455e-07,
+  "reproduces_committed_predictions": true,
+  "_note": "Latency is single-clip steady state on CPU, which is the serving shape. The drift figure checks that the exported artefact still reproduces the predictions Chapter 4 is computed over; nothing here refits the model. No sklearn comparison is reported: the pickled estimator was written under a different library version and no longer loads, and the ONNX is what the platform serves."
+}

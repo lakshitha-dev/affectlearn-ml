@@ -1,0 +1,79 @@
+{
+  "inputs": "LOSO P(confused), raw features: interaction (80) and AFFDEX (60)",
+  "interaction_alone": {
+    "n": 1419,
+    "n_sessions": 46,
+    "positives": 257,
+    "base_rate": 0.18111346018322763,
+    "auc": 0.7341026139019668,
+    "auc_ci95_session": [
+      0.6996467530025794,
+      0.7670133648481993
+    ],
+    "kappa_at_0.5": 0.21947578050948602,
+    "accuracy_at_0.5": 0.6842847075405215,
+    "majority_accuracy": 0.8188865398167724,
+    "average_precision": 0.3624864163232122,
+    "ap_over_base_rate": 2.0014327811775803,
+    "permutation_p_within_session": 0.0004997501249375312,
+    "score_max": 0.8809843231442183,
+    "score_p99": 0.8091295270338039,
+    "score_mean": 0.38224404764122494
+  },
+  "late_mean": {
+    "n": 1419,
+    "n_sessions": 46,
+    "positives": 257,
+    "base_rate": 0.18111346018322763,
+    "auc": 0.6741663708753859,
+    "auc_ci95_session": [
+      0.6343965039549769,
+      0.7170582284211461
+    ],
+    "kappa_at_0.5": 0.20202221853569113,
+    "accuracy_at_0.5": 0.7181113460183227,
+    "majority_accuracy": 0.8188865398167724,
+    "average_precision": 0.27844898137617685,
+    "ap_over_base_rate": 1.5374284224622372,
+    "permutation_p_within_session": 0.0004997501249375312,
+    "score_max": 0.7696366607819625,
+    "score_p99": 0.681716255206836,
+    "score_mean": 0.3925946871057474
+  },
+  "interaction_minus_late_mean": {
+    "delta_auc": 0.05993624302658096,
+    "ci95_session": [
+      0.038761919774466025,
+      0.07832651666316467
+    ],
+    "share_of_draws_above_zero": 1.0
+  },
+  "late_max": {
+    "n": 1419,
+    "n_sessions": 46,
+    "positives": 257,
+    "base_rate": 0.18111346018322763,
+    "auc": 0.6685441041542489,
+    "auc_ci95_session": [
+      0.6226338928172155,
+      0.7153424068156448
+    ],
+    "kappa_at_0.5": 0.11696592314581822,
+    "accuracy_at_0.5": 0.547568710359408,
+    "majority_accuracy": 0.8188865398167724,
+    "average_precision": 0.32580287963869814,
+    "ap_over_base_rate": 1.798888273180205,
+    "permutation_p_within_session": 0.0004997501249375312,
+    "score_max": 0.8809843231442183,
+    "score_p99": 0.8091295270338039,
+    "score_mean": 0.5008442050586093
+  },
+  "interaction_minus_late_max": {
+    "delta_auc": 0.06555850974771793,
+    "ci95_session": [
+      0.04270689122816245,
+      0.08581057145800532
+    ],
+    "share_of_draws_above_zero": 1.0
+  }
+}

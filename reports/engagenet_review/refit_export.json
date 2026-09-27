@@ -1,0 +1,92 @@
+{
+  "rung": "4_lean",
+  "seed": 42,
+  "hyperparameters": {
+    "categorical_features": "from_dtype",
+    "class_weight": "balanced",
+    "early_stopping": "auto",
+    "interaction_cst": null,
+    "l2_regularization": 1.0,
+    "learning_rate": 0.06,
+    "loss": "log_loss",
+    "max_bins": 255,
+    "max_depth": 3,
+    "max_features": 1.0,
+    "max_iter": 120,
+    "max_leaf_nodes": 31,
+    "min_samples_leaf": 8,
+    "monotonic_cst": null,
+    "n_iter_no_change": 10,
+    "random_state": 42,
+    "scoring": "loss",
+    "tol": 1e-07,
+    "validation_fraction": 0.1,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "n_features": 20,
+  "feature_names": [
+    "mean_gaze_x",
+    "mean_gaze_y",
+    "mean_mouth_open",
+    "mean_motion",
+    "std_gaze_x",
+    "std_gaze_y",
+    "std_mouth_open",
+    "std_motion",
+    "min_gaze_x",
+    "min_gaze_y",
+    "min_mouth_open",
+    "min_motion",
+    "max_gaze_x",
+    "max_gaze_y",
+    "max_mouth_open",
+    "max_motion",
+    "trend_gaze_x",
+    "trend_gaze_y",
+    "trend_mouth_open",
+    "trend_motion"
+  ],
+  "fit_on": "Train subset 2177 clips / 91 participants",
+  "scored_on": "Test 2256 clips / 26 participants",
+  "versions": {
+    "scikit_learn": "1.9.0",
+    "skl2onnx": "1.20.0",
+    "onnx": "1.22.0",
+    "onnxruntime": "1.27.0",
+    "numpy": "2.4.6",
+    "onnx_opset": 17
+  },
+  "export_path_outside_repo": "C:\\engagenet\\models\\refit\\engagenet_lean_gbdt_refit.onnx",
+  "export_bytes": 60367,
+  "latency_ms_per_clip": 0.1228,
+  "test_auc": {
+    "committed_dump": 0.9224929677703596,
+    "committed_onnx": 0.9224929677703596,
+    "refit_sklearn": 0.923888880238221,
+    "refit_onnx": 0.923888880238221
+  },
+  "per_clip": {
+    "refit_onnx_vs_refit_sklearn": {
+      "max_abs_diff": 1.6314259199123882e-07,
+      "mean_abs_diff": 3.2013337612929957e-08,
+      "pearson_r": 0.999999999999993
+    },
+    "refit_onnx_vs_committed_onnx": {
+      "max_abs_diff": 0.16267937421798706,
+      "mean_abs_diff": 0.016775459051132202,
+      "pearson_r": 0.996870148944757
+    },
+    "refit_onnx_vs_committed_dump": {
+      "max_abs_diff": 0.16267934697253905,
+      "mean_abs_diff": 0.01677545816798648,
+      "pearson_r": 0.9968701485138262
+    },
+    "committed_onnx_vs_committed_dump": {
+      "max_abs_diff": 1.309253431780455e-07,
+      "mean_abs_diff": 3.2093045688903906e-08,
+      "pearson_r": 0.9999999999999932
+    }
+  },
+  "_note": "The served model is the committed ONNX, which reproduces the committed Test dump. This refit uses the same data, features and hyperparameters under the library versions listed; its per-clip difference from the committed model is the version drift, not a different model choice. Aggregates only."
+}

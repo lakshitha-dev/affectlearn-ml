@@ -1,0 +1,78 @@
+{
+  "n": 471,
+  "labels": [
+    "Happy",
+    "Sad",
+    "Angry",
+    "Calm"
+  ],
+  "confusion_matrix": [
+    [
+      36,
+      25,
+      34,
+      39
+    ],
+    [
+      23,
+      52,
+      21,
+      31
+    ],
+    [
+      25,
+      9,
+      35,
+      17
+    ],
+    [
+      33,
+      30,
+      22,
+      39
+    ]
+  ],
+  "accuracy": 0.34394904458598724,
+  "weighted_f1": 0.34370317809132306,
+  "macro_f1": 0.34509287056785953,
+  "cohen_kappa": 0.12418233789679567,
+  "per_class": {
+    "Happy": {
+      "precision": 0.3076923076923077,
+      "recall": 0.26865671641791045,
+      "f1": 0.2868525896414343,
+      "support": 134
+    },
+    "Sad": {
+      "precision": 0.4482758620689655,
+      "recall": 0.4094488188976378,
+      "f1": 0.4279835390946502,
+      "support": 127
+    },
+    "Angry": {
+      "precision": 0.3125,
+      "recall": 0.4069767441860465,
+      "f1": 0.35353535353535354,
+      "support": 86
+    },
+    "Calm": {
+      "precision": 0.30952380952380953,
+      "recall": 0.31451612903225806,
+      "f1": 0.312,
+      "support": 124
+    }
+  },
+  "zero_recall_classes": [],
+  "errors_total": 309,
+  "errors_between_adjacent_classes": 117,
+  "adjacent_error_share": 0.3786407766990291,
+  "worst_confused_pair": "Happy<->Calm",
+  "confused_pairs": {
+    "Happy<->Calm": 72,
+    "Sad<->Calm": 61,
+    "Happy<->Angry": 59,
+    "Happy<->Sad": 48,
+    "Angry<->Calm": 39,
+    "Sad<->Angry": 30
+  }
+}

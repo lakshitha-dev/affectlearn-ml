@@ -1,0 +1,96 @@
+{
+  "label_files": {
+    "Train": {
+      "path": "C:\\engagenet\\labels\\train_engagement_labels.xlsx",
+      "bytes": 180356,
+      "mtime": "2023-04-16T22:55:35",
+      "rows": 7983,
+      "columns": [
+        "Unnamed: 0",
+        "chunk",
+        "label"
+      ],
+      "label_counts": {
+        "Highly-Engaged": 3740,
+        "Engaged": 1658,
+        "Not-Engaged": 1446,
+        "Barely-engaged": 1035,
+        "SNP(Subject Not Present)": 104
+      }
+    },
+    "Validation": {
+      "path": "C:\\engagenet\\labels\\validation_engagement_labels.xlsx",
+      "bytes": 33028,
+      "mtime": "2024-02-12T13:38:41",
+      "rows": 1071,
+      "columns": [
+        "Unnamed: 0",
+        "chunk",
+        "label"
+      ],
+      "label_counts": {
+        "Highly-Engaged": 569,
+        "Engaged": 273,
+        "Not-Engaged": 132,
+        "Barely-engaged": 97
+      }
+    },
+    "Test": {
+      "path": "C:\\engagenet\\labels\\test_engagement_labels.csv",
+      "bytes": 112634,
+      "mtime": "2025-12-14T13:56:46",
+      "rows": 2257,
+      "columns": [
+        "chunk",
+        "label"
+      ],
+      "label_counts": {
+        "Highly-Engaged": 1134,
+        "Not-Engaged": 457,
+        "Engaged": 419,
+        "Barely-engaged": 246,
+        "SNP(Subject Not Present)": 1
+      }
+    }
+  },
+  "download": {
+    "script": {
+      "path": "C:\\engagenet\\download_all.sh",
+      "bytes": 637,
+      "mtime": "2026-09-05T10:24:58"
+    },
+    "rclone_remote": "onedrive:EmotiW_2023_EngageNet",
+    "log": {
+      "path": "C:\\engagenet\\dl_all.log",
+      "bytes": 7403,
+      "mtime": "2026-09-05T15:21:08"
+    },
+    "note": "download_all.sh copies video from the remote only; the label files are not fetched by it, so their origin is not recorded by any script."
+  },
+  "train_subset": {
+    "file_list": {
+      "path": "C:\\engagenet\\trainsub_files.txt",
+      "bytes": 80214,
+      "mtime": "2026-09-05T10:48:28"
+    },
+    "clips": 2177,
+    "participants": 91,
+    "max_clips_per_participant": 27,
+    "participants_at_cap_27": 79,
+    "participants_with_all_their_clips_or_27": 91,
+    "clip_count_histogram": {
+      "1": 3,
+      "2": 3,
+      "3": 2,
+      "4": 1,
+      "6": 1,
+      "9": 1,
+      "10": 1,
+      "27": 79
+    },
+    "positive_rate_full_train_excl_snp": 0.314887676101028,
+    "positive_rate_subset": 0.31327514928801103,
+    "generator_committed": false,
+    "note": "Each participant contributes min(own clip count, 27) clips. The script that drew the list (and any seed) is not in the repository."
+  }
+}

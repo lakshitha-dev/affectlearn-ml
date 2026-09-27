@@ -1,0 +1,78 @@
+{
+  "settings": {
+    "seed": 42,
+    "bootstrap_resamples": 2000,
+    "permutation_draws": 2000,
+    "folds": "leave-one-session-out over namespaced DUX sessions",
+    "window_s": 30,
+    "label": "max human Confusion annotation in window >= 1.0",
+    "classifier": "HistGradientBoosting depth 3, 120 iter, lr 0.06, leaf 8, L2 1.0, balanced (train_dux_confusion._gbdt)",
+    "interval": "session-level cluster bootstrap, percentile",
+    "permutation": "labels shuffled within each session"
+  },
+  "raw_interaction": {
+    "rule": "lowest floor in [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9] whose inner 5-fold grouped OOF gated precision >= 2.0 x inner base rate with >= 10 offers; else the highest floor",
+    "held_out_offers": 34,
+    "held_out_correct": 15,
+    "held_out_precision": 0.4411764705882353,
+    "held_out_precision_ci95_session": [
+      0.2894590643274854,
+      0.5945945945945946
+    ],
+    "base_rate": 0.18111346018322763,
+    "lift": 2.435912108033875,
+    "offers_per_hour": 2.875264270613108,
+    "chosen_floor_distribution": {
+      "0.5": 2,
+      "0.55": 6,
+      "0.6": 7,
+      "0.65": 12,
+      "0.7": 7,
+      "0.75": 3,
+      "0.9": 9
+    }
+  },
+  "matched_same_windows_interaction": {
+    "rule": "lowest floor in [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9] whose inner 5-fold grouped OOF gated precision >= 2.0 x inner base rate with >= 10 offers; else the highest floor",
+    "held_out_offers": 56,
+    "held_out_correct": 19,
+    "held_out_precision": 0.3392857142857143,
+    "held_out_precision_ci95_session": [
+      0.21308991554893192,
+      0.4745762711864407
+    ],
+    "base_rate": 0.18111346018322763,
+    "lift": 1.8733324068927182,
+    "offers_per_hour": 4.735729386892178,
+    "chosen_floor_distribution": {
+      "0.5": 4,
+      "0.55": 6,
+      "0.6": 16,
+      "0.65": 4,
+      "0.7": 7,
+      "0.9": 9
+    }
+  },
+  "matched_serving_rule_interaction": {
+    "rule": "lowest floor in [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9] whose inner 5-fold grouped OOF gated precision >= 2.0 x inner base rate with >= 10 offers; else the highest floor",
+    "held_out_offers": 61,
+    "held_out_correct": 21,
+    "held_out_precision": 0.3442622950819672,
+    "held_out_precision_ci95_session": [
+      0.22388059701492538,
+      0.4615740740740739
+    ],
+    "base_rate": 0.18085855031667838,
+    "lift": 1.9034891879823947,
+    "offers_per_hour": 5.151301900070373,
+    "chosen_floor_distribution": {
+      "0.5": 7,
+      "0.55": 11,
+      "0.6": 7,
+      "0.65": 5,
+      "0.7": 6,
+      "0.9": 10
+    }
+  },
+  "rule_prespecified": true
+}
