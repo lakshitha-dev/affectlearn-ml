@@ -1,0 +1,775 @@
+{
+  "source_predictions": "C:/engagenet/results/test_predictions.npz (committed Test dump)",
+  "counts": {
+    "frames_per_clip": 10,
+    "rule": "scorable iff >= 5 of 10 frames have face_found == 1",
+    "all_clips": {
+      "n": 2256,
+      "positive_rate": 0.311613475177305,
+      "positives": 703
+    },
+    "scorable": {
+      "n": 2162,
+      "positive_rate": 0.288159111933395,
+      "positives": 623
+    },
+    "unscorable": {
+      "n": 94,
+      "positive_rate": 0.851063829787234,
+      "positives": 80
+    },
+    "all_frames_with_face": {
+      "n": 2001,
+      "positive_rate": 0.2543728135932034,
+      "positives": 509
+    },
+    "any_frame_missing_face": {
+      "n": 255,
+      "positive_rate": 0.7607843137254902,
+      "positives": 194
+    },
+    "no_face_in_any_frame": {
+      "n": 36,
+      "positive_rate": 1.0,
+      "positives": 36
+    },
+    "share_of_test_positives_in_unscorable": 0.11379800853485064,
+    "share_of_test_positives_with_any_missing_frame": 0.2759601706970128,
+    "face_frame_histogram": [
+      36,
+      11,
+      14,
+      12,
+      21,
+      18,
+      19,
+      23,
+      41,
+      60,
+      2001
+    ]
+  },
+  "auc": {
+    "all_clips": {
+      "n": 2256,
+      "participants": 26,
+      "positive_rate": 0.311613475177305,
+      "auc": 0.9224929677703596,
+      "auc_ci95_participant": [
+        0.8893403696090145,
+        0.9478083083020499
+      ],
+      "accuracy": 0.863031914893617,
+      "majority_baseline": 0.688386524822695,
+      "kappa": 0.6876729415475491,
+      "average_precision": 0.8301061463361004,
+      "ap_over_base_rate": 2.663896822381568,
+      "decision_threshold": 0.5,
+      "perm_p_within_participant": 0.0004997501249375312
+    },
+    "scorable_only_deployment_rule": {
+      "n": 2162,
+      "participants": 26,
+      "positive_rate": 0.288159111933395,
+      "auc": 0.9166142572411053,
+      "auc_ci95_participant": [
+        0.8819809086762241,
+        0.943636570002628
+      ],
+      "accuracy": 0.8593894542090657,
+      "majority_baseline": 0.711840888066605,
+      "kappa": 0.66649380277888,
+      "average_precision": 0.8000908275492388,
+      "ap_over_base_rate": 2.776559180034437,
+      "decision_threshold": 0.5,
+      "perm_p_within_participant": 0.0004997501249375312
+    },
+    "all_frames_with_face_only": {
+      "n": 2001,
+      "participants": 26,
+      "positive_rate": 0.2543728135932034,
+      "auc": 0.9127277371916759,
+      "auc_ci95_participant": [
+        0.8760752474440159,
+        0.9425807867716157
+      ],
+      "accuracy": 0.8600699650174912,
+      "majority_baseline": 0.7456271864067966,
+      "kappa": 0.6440189490591548,
+      "average_precision": 0.7625406235250298,
+      "ap_over_base_rate": 2.9977284630129364,
+      "decision_threshold": 0.5,
+      "perm_p_within_participant": 0.0004997501249375312
+    },
+    "delta_all_minus_scorable": 0.005878710529254261
+  },
+  "gate_sweep": {
+    "all_clips": {
+      "n_windows_in_sequence": 2256,
+      "n_scorable": 2256,
+      "participants": 26,
+      "base_rate_scorable": 0.311613475177305,
+      "min_consecutive": 2,
+      "cooldown_cycles": 3,
+      "seed": 42,
+      "n_bootstrap": 2000,
+      "rows": [
+        {
+          "floor": null,
+          "interventions": 2256,
+          "correct": 703,
+          "precision": 0.311613475177305,
+          "lift": 1.0,
+          "ci95_participant": null,
+          "as_30s_cycle": {
+            "interventions_per_hour": 120.0,
+            "minutes_between": 0.5
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 360.0,
+            "minutes_between": 0.16666666666666666
+          }
+        },
+        {
+          "floor": 0.5,
+          "interventions": 194,
+          "correct": 148,
+          "precision": 0.7628865979381443,
+          "lift": 2.4481823114487247,
+          "ci95_participant": [
+            0.6349171842650103,
+            0.8531158679135008
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 10.319148936170212,
+            "minutes_between": 5.814432989690721
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 30.95744680851064,
+            "minutes_between": 1.9381443298969072
+          }
+        },
+        {
+          "floor": 0.55,
+          "interventions": 180,
+          "correct": 140,
+          "precision": 0.7777777777777778,
+          "lift": 2.4959696538643907,
+          "ci95_participant": [
+            0.6558387804248732,
+            0.8682014106583071
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 9.574468085106382,
+            "minutes_between": 6.266666666666667
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 28.72340425531915,
+            "minutes_between": 2.088888888888889
+          }
+        },
+        {
+          "floor": 0.6,
+          "interventions": 165,
+          "correct": 132,
+          "precision": 0.8,
+          "lift": 2.5672830725462306,
+          "ci95_participant": [
+            0.6827531472359059,
+            0.8819455227743271
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 8.77659574468085,
+            "minutes_between": 6.836363636363636
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 26.329787234042552,
+            "minutes_between": 2.278787878787879
+          }
+        },
+        {
+          "floor": 0.65,
+          "interventions": 151,
+          "correct": 122,
+          "precision": 0.8079470198675497,
+          "lift": 2.5927858845251666,
+          "ci95_participant": [
+            0.6862472766884532,
+            0.8913085608358611
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 8.03191489361702,
+            "minutes_between": 7.470198675496689
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 24.095744680851062,
+            "minutes_between": 2.4900662251655628
+          }
+        },
+        {
+          "floor": 0.7,
+          "interventions": 133,
+          "correct": 116,
+          "precision": 0.8721804511278195,
+          "lift": 2.798917635482732,
+          "ci95_participant": [
+            0.7834958390262079,
+            0.9367854923889407
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 7.074468085106383,
+            "minutes_between": 8.481203007518797
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 21.22340425531915,
+            "minutes_between": 2.827067669172932
+          }
+        },
+        {
+          "floor": 0.75,
+          "interventions": 117,
+          "correct": 103,
+          "precision": 0.8803418803418803,
+          "lift": 2.8251085093190356,
+          "ci95_participant": [
+            0.8051868862844473,
+            0.9518072289156626
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 6.223404255319148,
+            "minutes_between": 9.64102564102564
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 18.670212765957448,
+            "minutes_between": 3.213675213675214
+          }
+        },
+        {
+          "floor": 0.8,
+          "interventions": 103,
+          "correct": 92,
+          "precision": 0.8932038834951457,
+          "lift": 2.8663840130370533,
+          "ci95_participant": [
+            0.8073835125448029,
+            0.9811408106219427
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 5.478723404255319,
+            "minutes_between": 10.951456310679612
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 16.43617021276596,
+            "minutes_between": 3.650485436893204
+          }
+        },
+        {
+          "floor": 0.85,
+          "interventions": 88,
+          "correct": 80,
+          "precision": 0.9090909090909091,
+          "lift": 2.9173671278934434,
+          "ci95_participant": [
+            0.7777777777777778,
+            1.0
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 4.680851063829787,
+            "minutes_between": 12.818181818181818
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 14.042553191489361,
+            "minutes_between": 4.2727272727272725
+          }
+        },
+        {
+          "floor": 0.9,
+          "interventions": 69,
+          "correct": 64,
+          "precision": 0.927536231884058,
+          "lift": 2.9765600841115716,
+          "ci95_participant": [
+            0.788694935570872,
+            1.0
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 3.6702127659574466,
+            "minutes_between": 16.347826086956523
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 11.01063829787234,
+            "minutes_between": 5.449275362318841
+          }
+        }
+      ]
+    },
+    "scorable_masked_deployment_rule": {
+      "n_windows_in_sequence": 2256,
+      "n_scorable": 2162,
+      "participants": 26,
+      "base_rate_scorable": 0.288159111933395,
+      "min_consecutive": 2,
+      "cooldown_cycles": 3,
+      "seed": 42,
+      "n_bootstrap": 2000,
+      "rows": [
+        {
+          "floor": null,
+          "interventions": 2162,
+          "correct": 623,
+          "precision": 0.288159111933395,
+          "lift": 1.0,
+          "ci95_participant": null,
+          "as_30s_cycle": {
+            "interventions_per_hour": 115.0,
+            "minutes_between": 0.5217391304347826
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 345.0,
+            "minutes_between": 0.17391304347826086
+          }
+        },
+        {
+          "floor": 0.5,
+          "interventions": 179,
+          "correct": 135,
+          "precision": 0.7541899441340782,
+          "lift": 2.6172691159195463,
+          "ci95_participant": [
+            0.6260799438990183,
+            0.8505810630596303
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 9.52127659574468,
+            "minutes_between": 6.301675977653631
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 28.56382978723404,
+            "minutes_between": 2.100558659217877
+          }
+        },
+        {
+          "floor": 0.55,
+          "interventions": 167,
+          "correct": 128,
+          "precision": 0.7664670658682635,
+          "lift": 2.659874472563701,
+          "ci95_participant": [
+            0.6436118670625103,
+            0.8658622466506355
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 8.882978723404255,
+            "minutes_between": 6.754491017964072
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 26.648936170212767,
+            "minutes_between": 2.251497005988024
+          }
+        },
+        {
+          "floor": 0.6,
+          "interventions": 152,
+          "correct": 119,
+          "precision": 0.7828947368421053,
+          "lift": 2.7168835008870493,
+          "ci95_participant": [
+            0.6641157226249278,
+            0.874129014697877
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 8.085106382978724,
+            "minutes_between": 7.421052631578948
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 24.25531914893617,
+            "minutes_between": 2.473684210526316
+          }
+        },
+        {
+          "floor": 0.65,
+          "interventions": 137,
+          "correct": 108,
+          "precision": 0.7883211678832117,
+          "lift": 2.7357148715305035,
+          "ci95_participant": [
+            0.6611459563164109,
+            0.882367288378766
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 7.287234042553191,
+            "minutes_between": 8.233576642335766
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 21.861702127659576,
+            "minutes_between": 2.7445255474452557
+          }
+        },
+        {
+          "floor": 0.7,
+          "interventions": 118,
+          "correct": 101,
+          "precision": 0.8559322033898306,
+          "lift": 2.9703457844764265,
+          "ci95_participant": [
+            0.7608695652173914,
+            0.9310505461554935
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 6.276595744680851,
+            "minutes_between": 9.559322033898304
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 18.829787234042552,
+            "minutes_between": 3.1864406779661016
+          }
+        },
+        {
+          "floor": 0.75,
+          "interventions": 100,
+          "correct": 86,
+          "precision": 0.86,
+          "lift": 2.98446227929374,
+          "ci95_participant": [
+            0.7659372985170857,
+            0.9464618869936032
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 5.319148936170213,
+            "minutes_between": 11.28
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 15.957446808510639,
+            "minutes_between": 3.76
+          }
+        },
+        {
+          "floor": 0.8,
+          "interventions": 85,
+          "correct": 74,
+          "precision": 0.8705882352941177,
+          "lift": 3.0212066849211596,
+          "ci95_participant": [
+            0.75,
+            0.98
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 4.5212765957446805,
+            "minutes_between": 13.270588235294118
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 13.563829787234043,
+            "minutes_between": 4.423529411764706
+          }
+        },
+        {
+          "floor": 0.85,
+          "interventions": 71,
+          "correct": 63,
+          "precision": 0.8873239436619719,
+          "lift": 3.0792846969457193,
+          "ci95_participant": [
+            0.7390947968638631,
+            1.0
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 3.776595744680851,
+            "minutes_between": 15.887323943661972
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 11.329787234042554,
+            "minutes_between": 5.295774647887324
+          }
+        },
+        {
+          "floor": 0.9,
+          "interventions": 50,
+          "correct": 45,
+          "precision": 0.9,
+          "lift": 3.123274478330658,
+          "ci95_participant": [
+            0.714217032967033,
+            1.0
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 2.6595744680851063,
+            "minutes_between": 22.56
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 7.9787234042553195,
+            "minutes_between": 7.52
+          }
+        }
+      ]
+    },
+    "all_frames_with_face_masked": {
+      "n_windows_in_sequence": 2256,
+      "n_scorable": 2001,
+      "participants": 26,
+      "base_rate_scorable": 0.2543728135932034,
+      "min_consecutive": 2,
+      "cooldown_cycles": 3,
+      "seed": 42,
+      "n_bootstrap": 2000,
+      "rows": [
+        {
+          "floor": null,
+          "interventions": 2001,
+          "correct": 509,
+          "precision": 0.2543728135932034,
+          "lift": 1.0,
+          "ci95_participant": null,
+          "as_30s_cycle": {
+            "interventions_per_hour": 106.43617021276596,
+            "minutes_between": 0.5637181409295352
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 319.3085106382979,
+            "minutes_between": 0.18790604697651175
+          }
+        },
+        {
+          "floor": 0.5,
+          "interventions": 152,
+          "correct": 110,
+          "precision": 0.7236842105263158,
+          "lift": 2.8449746665287976,
+          "ci95_participant": [
+            0.5826754536117768,
+            0.8343568051268023
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 8.085106382978724,
+            "minutes_between": 7.421052631578948
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 24.25531914893617,
+            "minutes_between": 2.473684210526316
+          }
+        },
+        {
+          "floor": 0.55,
+          "interventions": 140,
+          "correct": 103,
+          "precision": 0.7357142857142858,
+          "lift": 2.892267751894471,
+          "ci95_participant": [
+            0.5853593668915412,
+            0.8476925978707351
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 7.446808510638298,
+            "minutes_between": 8.057142857142857
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 22.340425531914892,
+            "minutes_between": 2.6857142857142855
+          }
+        },
+        {
+          "floor": 0.6,
+          "interventions": 125,
+          "correct": 94,
+          "precision": 0.752,
+          "lift": 2.9562907662082516,
+          "ci95_participant": [
+            0.6052305888483586,
+            0.8623205025927404
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 6.648936170212766,
+            "minutes_between": 9.024
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 19.9468085106383,
+            "minutes_between": 3.008
+          }
+        },
+        {
+          "floor": 0.65,
+          "interventions": 112,
+          "correct": 85,
+          "precision": 0.7589285714285714,
+          "lift": 2.9835286275610438,
+          "ci95_participant": [
+            0.6020967741935485,
+            0.868688446969697
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 5.957446808510638,
+            "minutes_between": 10.071428571428571
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 17.872340425531917,
+            "minutes_between": 3.357142857142857
+          }
+        },
+        {
+          "floor": 0.7,
+          "interventions": 101,
+          "correct": 84,
+          "precision": 0.8316831683168316,
+          "lift": 3.269544243225894,
+          "ci95_participant": [
+            0.7157894736842105,
+            0.9250132978723404
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 5.372340425531915,
+            "minutes_between": 11.168316831683168
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 16.117021276595747,
+            "minutes_between": 3.722772277227723
+          }
+        },
+        {
+          "floor": 0.75,
+          "interventions": 85,
+          "correct": 72,
+          "precision": 0.8470588235294118,
+          "lift": 3.3299895989830115,
+          "ci95_participant": [
+            0.7297156531531531,
+            0.9397693337452373
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 4.5212765957446805,
+            "minutes_between": 13.270588235294118
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 13.563829787234043,
+            "minutes_between": 4.423529411764706
+          }
+        },
+        {
+          "floor": 0.8,
+          "interventions": 71,
+          "correct": 62,
+          "precision": 0.8732394366197183,
+          "lift": 3.4329118127230966,
+          "ci95_participant": [
+            0.75,
+            0.9777898550724636
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 3.776595744680851,
+            "minutes_between": 15.887323943661972
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 11.329787234042554,
+            "minutes_between": 5.295774647887324
+          }
+        },
+        {
+          "floor": 0.85,
+          "interventions": 54,
+          "correct": 47,
+          "precision": 0.8703703703703703,
+          "lift": 3.4216328312595503,
+          "ci95_participant": [
+            0.7083333333333334,
+            1.0
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 2.872340425531915,
+            "minutes_between": 20.88888888888889
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 8.617021276595745,
+            "minutes_between": 6.962962962962963
+          }
+        },
+        {
+          "floor": 0.9,
+          "interventions": 36,
+          "correct": 32,
+          "precision": 0.8888888888888888,
+          "lift": 3.494433529796987,
+          "ci95_participant": [
+            0.7142857142857143,
+            1.0
+          ],
+          "as_30s_cycle": {
+            "interventions_per_hour": 1.9148936170212765,
+            "minutes_between": 31.333333333333332
+          },
+          "as_10s_clip": {
+            "interventions_per_hour": 5.74468085106383,
+            "minutes_between": 10.444444444444445
+          }
+        }
+      ]
+    }
+  },
+  "at_floor_0_70": {
+    "all_clips": {
+      "floor": 0.7,
+      "interventions": 133,
+      "correct": 116,
+      "precision": 0.8721804511278195,
+      "lift": 2.798917635482732,
+      "ci95_participant": [
+        0.7834958390262079,
+        0.9367854923889407
+      ],
+      "as_30s_cycle": {
+        "interventions_per_hour": 7.074468085106383,
+        "minutes_between": 8.481203007518797
+      },
+      "as_10s_clip": {
+        "interventions_per_hour": 21.22340425531915,
+        "minutes_between": 2.827067669172932
+      }
+    },
+    "scorable_masked_deployment_rule": {
+      "floor": 0.7,
+      "interventions": 118,
+      "correct": 101,
+      "precision": 0.8559322033898306,
+      "lift": 2.9703457844764265,
+      "ci95_participant": [
+        0.7608695652173914,
+        0.9310505461554935
+      ],
+      "as_30s_cycle": {
+        "interventions_per_hour": 6.276595744680851,
+        "minutes_between": 9.559322033898304
+      },
+      "as_10s_clip": {
+        "interventions_per_hour": 18.829787234042552,
+        "minutes_between": 3.1864406779661016
+      }
+    },
+    "all_frames_with_face_masked": {
+      "floor": 0.7,
+      "interventions": 101,
+      "correct": 84,
+      "precision": 0.8316831683168316,
+      "lift": 3.269544243225894,
+      "ci95_participant": [
+        0.7157894736842105,
+        0.9250132978723404
+      ],
+      "as_30s_cycle": {
+        "interventions_per_hour": 5.372340425531915,
+        "minutes_between": 11.168316831683168
+      },
+      "as_10s_clip": {
+        "interventions_per_hour": 16.117021276595747,
+        "minutes_between": 3.722772277227723
+      }
+    }
+  },
+  "offers_lost_to_mask_at_0_70": 15,
+  "masking_semantics": "An unscorable window yields no reading: it cannot fire and does not extend or reset the persistence streak, but it takes one cycle, so an active cooldown counts it down. Unmasked, the simulator is asserted identical to evaluation/gate_calibration.simulate.",
+  "seed": 42,
+  "n_bootstrap": 2000,
+  "versions": {
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "onnx": "1.22.0",
+    "onnxruntime": "1.27.0",
+    "skl2onnx": "1.20.0"
+  }
+}

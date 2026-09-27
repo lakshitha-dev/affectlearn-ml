@@ -1,0 +1,93 @@
+{
+  "settings": {
+    "seed": 42,
+    "bootstrap_resamples": 2000,
+    "permutation_draws": 2000,
+    "folds": "leave-one-session-out over namespaced DUX sessions",
+    "window_s": 30,
+    "label": "max human Confusion annotation in window >= 1.0",
+    "classifier": "HistGradientBoosting depth 3, 120 iter, lr 0.06, leaf 8, L2 1.0, balanced (train_dux_confusion._gbdt)",
+    "interval": "session-level cluster bootstrap, percentile",
+    "permutation": "labels shuffled within each session"
+  },
+  "majority": {
+    "accuracy": 0.8188865398167724,
+    "auc": 0.5
+  },
+  "logistic_regression_l2_standardised": {
+    "n": 1419,
+    "n_sessions": 46,
+    "positives": 257,
+    "base_rate": 0.18111346018322763,
+    "auc": 0.6920310480387364,
+    "auc_ci95_session": [
+      0.6560953348258903,
+      0.7299108360235532
+    ],
+    "kappa_at_0.5": 0.19717824276659512,
+    "accuracy_at_0.5": 0.6391825229034531,
+    "majority_accuracy": 0.8188865398167724,
+    "average_precision": 0.3055011010294026,
+    "ap_over_base_rate": 1.6867940169677909,
+    "permutation_p_within_session": 0.0004997501249375312,
+    "score_max": 0.9959219694137573,
+    "score_p99": 0.8928412330150604,
+    "score_mean": 0.43098172669866974
+  },
+  "random_forest_500_balanced": {
+    "n": 1419,
+    "n_sessions": 46,
+    "positives": 257,
+    "base_rate": 0.18111346018322763,
+    "auc": 0.722089581226518,
+    "auc_ci95_session": [
+      0.6939262904547627,
+      0.752482853498475
+    ],
+    "kappa_at_0.5": 0.19647304387345765,
+    "accuracy_at_0.5": 0.7822410147991543,
+    "majority_accuracy": 0.8188865398167724,
+    "average_precision": 0.32370821471876,
+    "ap_over_base_rate": 1.787322788661169,
+    "permutation_p_within_session": 0.0004997501249375312,
+    "score_max": 0.832,
+    "score_p99": 0.71,
+    "score_mean": 0.2897491190979563
+  },
+  "gbdt_reference_raw": {
+    "n": 1419,
+    "n_sessions": 46,
+    "positives": 257,
+    "base_rate": 0.18111346018322763,
+    "auc": 0.7341026139019668,
+    "auc_ci95_session": [
+      0.6996467530025794,
+      0.7670133648481993
+    ],
+    "kappa_at_0.5": 0.21947578050948602,
+    "accuracy_at_0.5": 0.6842847075405215,
+    "majority_accuracy": 0.8188865398167724,
+    "average_precision": 0.3624864163232122,
+    "ap_over_base_rate": 2.0014327811775803,
+    "permutation_p_within_session": 0.0004997501249375312,
+    "score_max": 0.8809843231442183,
+    "score_p99": 0.8091295270338039,
+    "score_mean": 0.38224404764122494
+  },
+  "paired_gbdt_minus_lr": {
+    "delta_auc": 0.042071565863230465,
+    "ci95_session": [
+      0.011159202055225696,
+      0.07186525575802687
+    ],
+    "share_of_draws_above_zero": 0.9935
+  },
+  "paired_gbdt_minus_rf": {
+    "delta_auc": 0.012013032675448843,
+    "ci95_session": [
+      -0.0077107066159371376,
+      0.031503948128347274
+    ],
+    "share_of_draws_above_zero": 0.89
+  }
+}

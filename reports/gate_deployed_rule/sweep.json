@@ -1,0 +1,665 @@
+{
+  "_note": "Gate sweep under the rule the deployed gate applies, for both detection channels.",
+  "rule": {
+    "floor_applies_to": "current reading only",
+    "persistence": "last 2 readings share the actionable state",
+    "cooldown_cycles": 3,
+    "window_s": 30.0
+  },
+  "n_bootstrap": 2000,
+  "seed": 42,
+  "engagenet_geometry": {
+    "all_clips": {
+      "windows": 2256,
+      "scorable": 2256,
+      "participants": 26,
+      "base_rate": 0.311613475177305,
+      "rows": [
+        {
+          "floor": null,
+          "offers": 2256,
+          "precision": 0.311613475177305,
+          "lift": 1.0,
+          "ci95": null,
+          "offers_per_hour": 120.0
+        },
+        {
+          "floor": 0.5,
+          "offers": 233,
+          "correct": 181,
+          "precision": 0.776824034334764,
+          "lift": 2.492908992118389,
+          "ci95": [
+            0.6388649425287356,
+            0.8708552685526855
+          ],
+          "offers_per_hour": 12.393617021276595,
+          "minutes_between": 4.8412017167381975
+        },
+        {
+          "floor": 0.55,
+          "offers": 225,
+          "correct": 176,
+          "precision": 0.7822222222222223,
+          "lift": 2.5102323376007587,
+          "ci95": [
+            0.6484683794466403,
+            0.8740465083404014
+          ],
+          "offers_per_hour": 11.968085106382977,
+          "minutes_between": 5.013333333333334
+        },
+        {
+          "floor": 0.6,
+          "offers": 214,
+          "correct": 172,
+          "precision": 0.8037383177570093,
+          "lift": 2.5792797224179416,
+          "ci95": [
+            0.6728851111827263,
+            0.8930238776271607
+          ],
+          "offers_per_hour": 11.382978723404255,
+          "minutes_between": 5.271028037383178
+        },
+        {
+          "floor": 0.65,
+          "offers": 205,
+          "correct": 166,
+          "precision": 0.8097560975609757,
+          "lift": 2.5985914026992334,
+          "ci95": [
+            0.6795856449375867,
+            0.9004536142815335
+          ],
+          "offers_per_hour": 10.904255319148936,
+          "minutes_between": 5.5024390243902435
+        },
+        {
+          "floor": 0.7,
+          "offers": 191,
+          "correct": 160,
+          "precision": 0.837696335078534,
+          "lift": 2.688254526226419,
+          "ci95": [
+            0.7205842820999367,
+            0.917654600301659
+          ],
+          "offers_per_hour": 10.159574468085106,
+          "minutes_between": 5.9057591623036645
+        },
+        {
+          "floor": 0.75,
+          "offers": 172,
+          "correct": 151,
+          "precision": 0.877906976744186,
+          "lift": 2.8172946508319825,
+          "ci95": [
+            0.7739104554865425,
+            0.9441545794679923
+          ],
+          "offers_per_hour": 9.148936170212766,
+          "minutes_between": 6.558139534883721
+        },
+        {
+          "floor": 0.8,
+          "offers": 154,
+          "correct": 141,
+          "precision": 0.9155844155844156,
+          "lift": 2.938205464521254,
+          "ci95": [
+            0.8292557634480454,
+            0.9781566096965468
+          ],
+          "offers_per_hour": 8.191489361702127,
+          "minutes_between": 7.324675324675325
+        },
+        {
+          "floor": 0.85,
+          "offers": 137,
+          "correct": 125,
+          "precision": 0.9124087591240876,
+          "lift": 2.928014453177726,
+          "ci95": [
+            0.8311616692131398,
+            0.9765670421511627
+          ],
+          "offers_per_hour": 7.287234042553191,
+          "minutes_between": 8.233576642335766
+        },
+        {
+          "floor": 0.9,
+          "offers": 120,
+          "correct": 112,
+          "precision": 0.9333333333333333,
+          "lift": 2.9951635846372686,
+          "ci95": [
+            0.8399615384615384,
+            1.0
+          ],
+          "offers_per_hour": 6.382978723404255,
+          "minutes_between": 9.4
+        }
+      ]
+    },
+    "scorable_deployment_rule": {
+      "windows": 2256,
+      "scorable": 2162,
+      "participants": 26,
+      "base_rate": 0.288159111933395,
+      "rows": [
+        {
+          "floor": null,
+          "offers": 2256,
+          "precision": 0.288159111933395,
+          "lift": 1.0,
+          "ci95": null,
+          "offers_per_hour": 120.0
+        },
+        {
+          "floor": 0.5,
+          "offers": 211,
+          "correct": 158,
+          "precision": 0.7488151658767772,
+          "lift": 2.5986169961887517,
+          "ci95": [
+            0.607838446383338,
+            0.8518599033816425
+          ],
+          "offers_per_hour": 11.22340425531915,
+          "minutes_between": 5.345971563981043
+        },
+        {
+          "floor": 0.55,
+          "offers": 204,
+          "correct": 153,
+          "precision": 0.75,
+          "lift": 2.602728731942215,
+          "ci95": [
+            0.6172804232804232,
+            0.8542515207617032
+          ],
+          "offers_per_hour": 10.851063829787234,
+          "minutes_between": 5.529411764705882
+        },
+        {
+          "floor": 0.6,
+          "offers": 192,
+          "correct": 149,
+          "precision": 0.7760416666666666,
+          "lift": 2.6931012573568753,
+          "ci95": [
+            0.6432535885167464,
+            0.8772019334049408
+          ],
+          "offers_per_hour": 10.212765957446807,
+          "minutes_between": 5.875
+        },
+        {
+          "floor": 0.65,
+          "offers": 183,
+          "correct": 146,
+          "precision": 0.7978142076502732,
+          "lift": 2.768658614670772,
+          "ci95": [
+            0.6787230486378071,
+            0.8898738926271966
+          ],
+          "offers_per_hour": 9.73404255319149,
+          "minutes_between": 6.163934426229508
+        },
+        {
+          "floor": 0.7,
+          "offers": 170,
+          "correct": 141,
+          "precision": 0.8294117647058824,
+          "lift": 2.878311774147862,
+          "ci95": [
+            0.7239221435108294,
+            0.9111155913978494
+          ],
+          "offers_per_hour": 9.042553191489361,
+          "minutes_between": 6.635294117647059
+        },
+        {
+          "floor": 0.75,
+          "offers": 153,
+          "correct": 131,
+          "precision": 0.8562091503267973,
+          "lift": 2.971306874809849,
+          "ci95": [
+            0.75,
+            0.930855649303008
+          ],
+          "offers_per_hour": 8.138297872340425,
+          "minutes_between": 7.372549019607843
+        },
+        {
+          "floor": 0.8,
+          "offers": 134,
+          "correct": 121,
+          "precision": 0.9029850746268657,
+          "lift": 3.1336335976617717,
+          "ci95": [
+            0.8119496855345912,
+            0.9756195121951219
+          ],
+          "offers_per_hour": 7.127659574468085,
+          "minutes_between": 8.417910447761194
+        },
+        {
+          "floor": 0.85,
+          "offers": 116,
+          "correct": 104,
+          "precision": 0.896551724137931,
+          "lift": 3.1113079094481653,
+          "ci95": [
+            0.8091725708502024,
+            0.9748466981132076
+          ],
+          "offers_per_hour": 6.170212765957446,
+          "minutes_between": 9.724137931034482
+        },
+        {
+          "floor": 0.9,
+          "offers": 96,
+          "correct": 88,
+          "precision": 0.9166666666666666,
+          "lift": 3.1811128945960405,
+          "ci95": [
+            0.8125,
+            1.0
+          ],
+          "offers_per_hour": 5.106382978723404,
+          "minutes_between": 11.75
+        }
+      ]
+    }
+  },
+  "dux_interaction": {
+    "raw_interaction": {
+      "windows": 1419,
+      "sessions": 46,
+      "base_rate": 0.18111346018322763,
+      "rows": [
+        {
+          "floor": null,
+          "offers": 1419,
+          "precision": 0.18111346018322763,
+          "lift": 1.0,
+          "ci95": null,
+          "offers_per_hour": 120.00000000000001
+        },
+        {
+          "floor": 0.5,
+          "offers": 129,
+          "correct": 46,
+          "precision": 0.35658914728682173,
+          "lift": 1.9688715953307394,
+          "ci95": [
+            0.2738741540605095,
+            0.43967125579001537
+          ],
+          "offers_per_hour": 10.90909090909091,
+          "minutes_between": 5.5
+        },
+        {
+          "floor": 0.55,
+          "offers": 115,
+          "correct": 44,
+          "precision": 0.3826086956521739,
+          "lift": 2.112535949923871,
+          "ci95": [
+            0.2941059757236228,
+            0.4666666666666667
+          ],
+          "offers_per_hour": 9.725158562367865,
+          "minutes_between": 6.1695652173913045
+        },
+        {
+          "floor": 0.6,
+          "offers": 100,
+          "correct": 42,
+          "precision": 0.42,
+          "lift": 2.318988326848249,
+          "ci95": [
+            0.3146044762595143,
+            0.5172489413188143
+          ],
+          "offers_per_hour": 8.456659619450317,
+          "minutes_between": 7.095
+        },
+        {
+          "floor": 0.65,
+          "offers": 87,
+          "correct": 37,
+          "precision": 0.42528735632183906,
+          "lift": 2.3481819401583253,
+          "ci95": [
+            0.3066219512195122,
+            0.5341107293868921
+          ],
+          "offers_per_hour": 7.357293868921777,
+          "minutes_between": 8.155172413793103
+        },
+        {
+          "floor": 0.7,
+          "offers": 64,
+          "correct": 27,
+          "precision": 0.421875,
+          "lift": 2.3293409533073928,
+          "ci95": [
+            0.29409229208924953,
+            0.5454545454545454
+          ],
+          "offers_per_hour": 5.412262156448203,
+          "minutes_between": 11.0859375
+        },
+        {
+          "floor": 0.75,
+          "offers": 40,
+          "correct": 20,
+          "precision": 0.5,
+          "lift": 2.7607003891050583,
+          "ci95": [
+            0.3404255319148936,
+            0.6579107830551989
+          ],
+          "offers_per_hour": 3.382663847780127,
+          "minutes_between": 17.7375
+        },
+        {
+          "floor": 0.8,
+          "offers": 12,
+          "correct": 6,
+          "precision": 0.5,
+          "lift": 2.7607003891050583,
+          "ci95": [
+            0.2,
+            0.7777777777777778
+          ],
+          "offers_per_hour": 1.0147991543340382,
+          "minutes_between": 59.125
+        },
+        {
+          "floor": 0.85,
+          "offers": 3,
+          "correct": 1,
+          "precision": 0.3333333333333333,
+          "lift": 1.8404669260700388,
+          "ci95": [
+            0.0,
+            1.0
+          ],
+          "offers_per_hour": 0.25369978858350956,
+          "minutes_between": 236.5
+        },
+        {
+          "floor": 0.9,
+          "offers": 0,
+          "correct": 0,
+          "precision": null,
+          "lift": null,
+          "ci95": null,
+          "offers_per_hour": 0.0,
+          "minutes_between": null
+        }
+      ]
+    },
+    "matched_serving_rule_interaction": {
+      "windows": 1421,
+      "sessions": 46,
+      "base_rate": 0.18085855031667838,
+      "rows": [
+        {
+          "floor": null,
+          "offers": 1421,
+          "precision": 0.18085855031667838,
+          "lift": 1.0,
+          "ci95": null,
+          "offers_per_hour": 120.0
+        },
+        {
+          "floor": 0.5,
+          "offers": 144,
+          "correct": 46,
+          "precision": 0.3194444444444444,
+          "lift": 1.7662667531344574,
+          "ci95": [
+            0.23910455486542445,
+            0.39375473484848483
+          ],
+          "offers_per_hour": 12.160450387051371,
+          "minutes_between": 4.934027777777778
+        },
+        {
+          "floor": 0.55,
+          "offers": 128,
+          "correct": 41,
+          "precision": 0.3203125,
+          "lift": 1.7710663910505837,
+          "ci95": [
+            0.23942085347908346,
+            0.3984389685150376
+          ],
+          "offers_per_hour": 10.809289232934553,
+          "minutes_between": 5.55078125
+        },
+        {
+          "floor": 0.6,
+          "offers": 109,
+          "correct": 34,
+          "precision": 0.3119266055045872,
+          "lift": 1.7246992467782818,
+          "ci95": [
+            0.21782178217821782,
+            0.4035172064777327
+          ],
+          "offers_per_hour": 9.20478536242083,
+          "minutes_between": 6.518348623853211
+        },
+        {
+          "floor": 0.65,
+          "offers": 90,
+          "correct": 27,
+          "precision": 0.3,
+          "lift": 1.6587548638132297,
+          "ci95": [
+            0.19753086419753085,
+            0.4056637954607602
+          ],
+          "offers_per_hour": 7.600281491907108,
+          "minutes_between": 7.894444444444445
+        },
+        {
+          "floor": 0.7,
+          "offers": 63,
+          "correct": 17,
+          "precision": 0.2698412698412698,
+          "lift": 1.492001729355815,
+          "ci95": [
+            0.16437845021468,
+            0.38235294117647056
+          ],
+          "offers_per_hour": 5.320197044334975,
+          "minutes_between": 11.277777777777779
+        },
+        {
+          "floor": 0.75,
+          "offers": 24,
+          "correct": 7,
+          "precision": 0.2916666666666667,
+          "lift": 1.612678339818418,
+          "ci95": [
+            0.11764705882352941,
+            0.4706656346749222
+          ],
+          "offers_per_hour": 2.0267417311752287,
+          "minutes_between": 29.604166666666668
+        },
+        {
+          "floor": 0.8,
+          "offers": 4,
+          "correct": 1,
+          "precision": 0.25,
+          "lift": 1.382295719844358,
+          "ci95": [
+            0.0,
+            1.0
+          ],
+          "offers_per_hour": 0.3377902885292048,
+          "minutes_between": 177.625
+        },
+        {
+          "floor": 0.85,
+          "offers": 0,
+          "correct": 0,
+          "precision": null,
+          "lift": null,
+          "ci95": null,
+          "offers_per_hour": 0.0,
+          "minutes_between": null
+        },
+        {
+          "floor": 0.9,
+          "offers": 0,
+          "correct": 0,
+          "precision": null,
+          "lift": null,
+          "ci95": null,
+          "offers_per_hour": 0.0,
+          "minutes_between": null
+        }
+      ]
+    },
+    "transductive_interaction": {
+      "windows": 1419,
+      "sessions": 46,
+      "base_rate": 0.18111346018322763,
+      "rows": [
+        {
+          "floor": null,
+          "offers": 1419,
+          "precision": 0.18111346018322763,
+          "lift": 1.0,
+          "ci95": null,
+          "offers_per_hour": 120.00000000000001
+        },
+        {
+          "floor": 0.5,
+          "offers": 105,
+          "correct": 36,
+          "precision": 0.34285714285714286,
+          "lift": 1.8930516953863257,
+          "ci95": [
+            0.24545025728987993,
+            0.4381241655540719
+          ],
+          "offers_per_hour": 8.879492600422834,
+          "minutes_between": 6.757142857142857
+        },
+        {
+          "floor": 0.55,
+          "offers": 93,
+          "correct": 32,
+          "precision": 0.34408602150537637,
+          "lift": 1.899836826911008,
+          "ci95": [
+            0.23709954550493292,
+            0.4444444444444444
+          ],
+          "offers_per_hour": 7.864693446088795,
+          "minutes_between": 7.629032258064516
+        },
+        {
+          "floor": 0.6,
+          "offers": 82,
+          "correct": 30,
+          "precision": 0.36585365853658536,
+          "lift": 2.0200246749549207,
+          "ci95": [
+            0.25,
+            0.48148148148148145
+          ],
+          "offers_per_hour": 6.93446088794926,
+          "minutes_between": 8.652439024390244
+        },
+        {
+          "floor": 0.65,
+          "offers": 68,
+          "correct": 29,
+          "precision": 0.4264705882352941,
+          "lift": 2.354715037766079,
+          "ci95": [
+            0.30158730158730157,
+            0.5505658687510178
+          ],
+          "offers_per_hour": 5.750528541226216,
+          "minutes_between": 10.433823529411764
+        },
+        {
+          "floor": 0.7,
+          "offers": 51,
+          "correct": 24,
+          "precision": 0.47058823529411764,
+          "lift": 2.598306248569467,
+          "ci95": [
+            0.3488119312436805,
+            0.580674486803519
+          ],
+          "offers_per_hour": 4.312896405919662,
+          "minutes_between": 13.911764705882353
+        },
+        {
+          "floor": 0.75,
+          "offers": 31,
+          "correct": 12,
+          "precision": 0.3870967741935484,
+          "lift": 2.137316430274884,
+          "ci95": [
+            0.25,
+            0.5185185185185185
+          ],
+          "offers_per_hour": 2.6215644820295987,
+          "minutes_between": 22.887096774193548
+        },
+        {
+          "floor": 0.8,
+          "offers": 13,
+          "correct": 5,
+          "precision": 0.38461538461538464,
+          "lift": 2.123615683926968,
+          "ci95": [
+            0.14285714285714285,
+            0.6428571428571429
+          ],
+          "offers_per_hour": 1.0993657505285412,
+          "minutes_between": 54.57692307692308
+        },
+        {
+          "floor": 0.85,
+          "offers": 1,
+          "correct": 0,
+          "precision": 0.0,
+          "lift": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "offers_per_hour": 0.08456659619450317,
+          "minutes_between": 709.5
+        },
+        {
+          "floor": 0.9,
+          "offers": 0,
+          "correct": 0,
+          "precision": null,
+          "lift": null,
+          "ci95": null,
+          "offers_per_hour": 0.0,
+          "minutes_between": null
+        }
+      ]
+    }
+  }
+}

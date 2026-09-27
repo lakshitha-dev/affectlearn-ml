@@ -1,0 +1,283 @@
+{
+  "protocol": "fit on Train subset, scored once on Test; same 20 features as the deployed model",
+  "train": "2177 clips / 91 participants",
+  "test": "2256 clips / 26 participants",
+  "features": [
+    "mean_gaze_x",
+    "mean_gaze_y",
+    "mean_mouth_open",
+    "mean_motion",
+    "std_gaze_x",
+    "std_gaze_y",
+    "std_mouth_open",
+    "std_motion",
+    "min_gaze_x",
+    "min_gaze_y",
+    "min_mouth_open",
+    "min_motion",
+    "max_gaze_x",
+    "max_gaze_y",
+    "max_mouth_open",
+    "max_motion",
+    "trend_gaze_x",
+    "trend_gaze_y",
+    "trend_mouth_open",
+    "trend_motion"
+  ],
+  "seed": 42,
+  "n_bootstrap": 2000,
+  "decision_threshold": 0.5,
+  "threshold_source": "rungs.report() thresholds at 0.5; STAGE3_TEST.json was produced by that function, and engagenet_lean_gbdt.json records threshold_default 0.5",
+  "binary": {
+    "prior": {
+      "n": 2256,
+      "participants": 26,
+      "positive_rate": 0.311613475177305,
+      "auc": 0.5,
+      "auc_ci95_participant": null,
+      "accuracy": 0.688386524822695,
+      "majority_baseline": 0.688386524822695,
+      "kappa": 0.0,
+      "average_precision": 0.311613475177305,
+      "ap_over_base_rate": 1.0,
+      "decision_threshold": null,
+      "note": "constant score; AUC 0.5 and kappa 0 by construction"
+    },
+    "mean_gaze_y_raw": {
+      "n": 2256,
+      "participants": 26,
+      "positive_rate": 0.311613475177305,
+      "auc": 0.6888681476406423,
+      "auc_ci95_participant": [
+        0.5260312387373894,
+        0.8200371406132201
+      ],
+      "accuracy": 0.6148049645390071,
+      "majority_baseline": 0.688386524822695,
+      "kappa": 0.22960992907801414,
+      "average_precision": 0.6064859489826778,
+      "ap_over_base_rate": 1.9462763882004568,
+      "decision_threshold": "median score (a raw feature has no 0.5 threshold)",
+      "perm_p_within_participant": 0.0004997501249375312
+    },
+    "mean_gaze_y_logistic": {
+      "n": 2256,
+      "participants": 26,
+      "positive_rate": 0.311613475177305,
+      "auc": 0.6888681476406423,
+      "auc_ci95_participant": [
+        0.5260312387373894,
+        0.8200371406132201
+      ],
+      "accuracy": 0.7189716312056738,
+      "majority_baseline": 0.688386524822695,
+      "kappa": 0.35941756112679135,
+      "average_precision": 0.6064859489826778,
+      "ap_over_base_rate": 1.9462763882004568,
+      "decision_threshold": 0.5,
+      "perm_p_within_participant": 0.0004997501249375312
+    },
+    "logistic_regression": {
+      "n": 2256,
+      "participants": 26,
+      "positive_rate": 0.311613475177305,
+      "auc": 0.8804827805403939,
+      "auc_ci95_participant": [
+        0.843278318528518,
+        0.9142158178041424
+      ],
+      "accuracy": 0.8195921985815603,
+      "majority_baseline": 0.688386524822695,
+      "kappa": 0.578011166118533,
+      "average_precision": 0.790483945018812,
+      "ap_over_base_rate": 2.5367450639579516,
+      "decision_threshold": 0.5,
+      "perm_p_within_participant": 0.0004997501249375312
+    },
+    "random_forest": {
+      "n": 2256,
+      "participants": 26,
+      "positive_rate": 0.311613475177305,
+      "auc": 0.9184774295426005,
+      "auc_ci95_participant": [
+        0.8845095413175125,
+        0.9441953332929197
+      ],
+      "accuracy": 0.8572695035460993,
+      "majority_baseline": 0.688386524822695,
+      "kappa": 0.667828423379386,
+      "average_precision": 0.8222255119833176,
+      "ap_over_base_rate": 2.638607048413036,
+      "decision_threshold": 0.5,
+      "perm_p_within_participant": 0.0004997501249375312
+    },
+    "gbdt_refit": {
+      "n": 2256,
+      "participants": 26,
+      "positive_rate": 0.311613475177305,
+      "auc": 0.923888880238221,
+      "auc_ci95_participant": [
+        0.8905945374637428,
+        0.949124213763759
+      ],
+      "accuracy": 0.863031914893617,
+      "majority_baseline": 0.688386524822695,
+      "kappa": 0.6867184859749915,
+      "average_precision": 0.8317558857098095,
+      "ap_over_base_rate": 2.6691910073418637,
+      "decision_threshold": 0.5,
+      "perm_p_within_participant": 0.0004997501249375312
+    },
+    "gbdt_committed": {
+      "n": 2256,
+      "participants": 26,
+      "positive_rate": 0.311613475177305,
+      "auc": 0.9224929677703596,
+      "auc_ci95_participant": [
+        0.8893403696090145,
+        0.9478083083020499
+      ],
+      "accuracy": 0.863031914893617,
+      "majority_baseline": 0.688386524822695,
+      "kappa": 0.6876729415475491,
+      "average_precision": 0.8301061463361004,
+      "ap_over_base_rate": 2.663896822381568,
+      "decision_threshold": 0.5,
+      "perm_p_within_participant": 0.0004997501249375312
+    }
+  },
+  "paired_vs_gbdt_committed": {
+    "gbdt_committed_minus_mean_gaze_y_logistic": {
+      "delta_auc": 0.2336248201297173,
+      "ci95_participant": [
+        0.09790217472254435,
+        0.40739827662792816
+      ],
+      "ci_excludes_zero": true
+    },
+    "gbdt_committed_minus_logistic_regression": {
+      "delta_auc": 0.042010187229965745,
+      "ci95_participant": [
+        0.011230034470499117,
+        0.07665199136810595
+      ],
+      "ci_excludes_zero": true
+    },
+    "gbdt_committed_minus_random_forest": {
+      "delta_auc": 0.00401553822775913,
+      "ci95_participant": [
+        -0.0016562999824992653,
+        0.009849628700125441
+      ],
+      "ci_excludes_zero": false
+    },
+    "gbdt_committed_minus_gbdt_refit": {
+      "delta_auc": -0.0013959124678614154,
+      "ci95_participant": [
+        -0.003170051129249532,
+        2.5843529969693374e-05
+      ],
+      "ci_excludes_zero": false
+    }
+  },
+  "four_class": {
+    "levels": [
+      "Not-Engaged",
+      "Barely-engaged",
+      "Engaged",
+      "Highly-Engaged"
+    ],
+    "train_counts": [
+      394,
+      288,
+      479,
+      1016
+    ],
+    "test_counts": [
+      457,
+      246,
+      419,
+      1134
+    ],
+    "test_majority_accuracy": 0.5026595744680851,
+    "balanced": {
+      "accuracy": 0.6812943262411347,
+      "accuracy_ci95_participant": [
+        0.6184926144040744,
+        0.7441813924600866
+      ],
+      "macro_f1": 0.5786363891864493,
+      "kappa": 0.5186716574074459,
+      "confusion_counts": [
+        [
+          299,
+          102,
+          42,
+          14
+        ],
+        [
+          39,
+          84,
+          88,
+          35
+        ],
+        [
+          38,
+          71,
+          191,
+          119
+        ],
+        [
+          8,
+          26,
+          137,
+          963
+        ]
+      ]
+    },
+    "unweighted": {
+      "accuracy": 0.7030141843971631,
+      "accuracy_ci95_participant": [
+        0.6307407360387137,
+        0.7760956606659426
+      ],
+      "macro_f1": 0.5588686060750497,
+      "kappa": 0.5240770081386006,
+      "confusion_counts": [
+        [
+          318,
+          36,
+          55,
+          48
+        ],
+        [
+          46,
+          44,
+          96,
+          60
+        ],
+        [
+          42,
+          29,
+          160,
+          188
+        ],
+        [
+          5,
+          5,
+          60,
+          1064
+        ]
+      ]
+    },
+    "engagenet_paper_best_test_accuracy": 0.6761,
+    "comparability": "Not directly comparable with the EngageNet paper: different features (20 landmark-geometry statistics against the paper's gaze, head-pose and action-unit features), different models, and a 2,177-clip training subset against the full 7,983-clip split."
+  },
+  "versions": {
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "onnx": "1.22.0",
+    "onnxruntime": "1.27.0",
+    "skl2onnx": "1.20.0"
+  }
+}
