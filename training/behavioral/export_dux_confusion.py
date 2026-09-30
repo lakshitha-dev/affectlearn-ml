@@ -56,6 +56,54 @@ from feature_engineering import FEATURE_NAMES, extract_features  # noqa: E402
 from train_dux_confusion import _gbdt  # noqa: E402  - the SAME estimator LOPO measured
 
 
+def to_onnx_bool_safe(clf, n_features: int):
+    """Convert a fitted HistGradientBoostingClassifier to ONNX (probabilities, no zipmap)."""
+    # --- skl2onnx compatibility shim -------------------------------------------------------
+    # skl2onnx 1.20.0 + onnx 1.22.0 + sklearn 1.9.0 cannot export a HistGradientBoostingClassifier:
+    #   TypeError: Field onnx.AttributeProto.ints: Expected an int, got a boolean
+    # The converter builds `nodes_missing_value_tracks_true` as a MIXED list of Python `bool` and
+    # numpy `uint8`, and ONNX's `ints` field rejects the bools. Note that coercing via
+    # `np.asarray(v).dtype == bool` does NOT catch it — the mixed list promotes to uint8 — so the
+    # check has to be per-element. Verified to reproduce sklearn to ~7e-08 after coercion.
+    import skl2onnx.common._container as _container
+    from skl2onnx import to_onnx
+    from skl2onnx.common.data_types import FloatTensorType
+
+    _real_add_node = _container.ModelComponentContainer.add_node
+
+    def _add_node_bool_safe(self, op_type, inputs, outputs, op_domain="", op_version=1, **attrs):
+        for k, v in list(attrs.items()):
+            if isinstance(v, (list, tuple)) and any(isinstance(x, (bool, np.bool_)) for x in v):
+                attrs[k] = [int(x) for x in v]
+        return _real_add_node(self, op_type, inputs, outputs,
+                              op_domain=op_domain, op_version=op_version, **attrs)
+
+    _container.ModelComponentContainer.add_node = _add_node_bool_safe
+    try:
+        onx = to_onnx(clf, initial_types=[("features", FloatTensorType([None, n_features]))],
+                      options={id(clf): {"zipmap": False}}, target_opset=15)
+    finally:
+        _container.ModelComponentContainer.add_node = _real_add_node
+
+    return onx
+
+
+def verify_onnx(onnx_path: Path, clf, X_probe: np.ndarray):
+    """Refuse an export whose graph does not reproduce sklearn on real windows."""
+    import onnxruntime as ort
+    sess = ort.InferenceSession(str(onnx_path))
+    name = sess.get_inputs()[0].name
+    probe = X_probe.astype(np.float32)
+    onnx_p = sess.run(None, {name: probe})[1]
+    onnx_p = np.asarray(onnx_p)[:, 1] if np.asarray(onnx_p).ndim == 2 else np.asarray(onnx_p)
+    skl_p = clf.predict_proba(probe)[:, 1]
+    max_diff = float(np.abs(onnx_p - skl_p).max())
+    print(f"  ONNX vs sklearn max abs prob diff over {len(probe)} windows: {max_diff:.2e}")
+    if max_diff > 1e-4:
+        raise SystemExit(f"ONNX export DISAGREES with sklearn (max diff {max_diff:.2e}) — refusing")
+    return sess
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -85,32 +133,7 @@ def main() -> int:
     print(f"  in-sample AUC {train_auc:.4f}  <- NOT a performance estimate, it is fitted on this "
           "data. The honest number is the LOPO AUC 0.7473.")
 
-    # --- skl2onnx compatibility shim -------------------------------------------------------
-    # skl2onnx 1.20.0 + onnx 1.22.0 + sklearn 1.9.0 cannot export a HistGradientBoostingClassifier:
-    #   TypeError: Field onnx.AttributeProto.ints: Expected an int, got a boolean
-    # The converter builds `nodes_missing_value_tracks_true` as a MIXED list of Python `bool` and
-    # numpy `uint8`, and ONNX's `ints` field rejects the bools. Note that coercing via
-    # `np.asarray(v).dtype == bool` does NOT catch it — the mixed list promotes to uint8 — so the
-    # check has to be per-element. Verified to reproduce sklearn to ~7e-08 after coercion.
-    import skl2onnx.common._container as _container
-    from skl2onnx import to_onnx
-    from skl2onnx.common.data_types import FloatTensorType
-
-    _real_add_node = _container.ModelComponentContainer.add_node
-
-    def _add_node_bool_safe(self, op_type, inputs, outputs, op_domain="", op_version=1, **attrs):
-        for k, v in list(attrs.items()):
-            if isinstance(v, (list, tuple)) and any(isinstance(x, (bool, np.bool_)) for x in v):
-                attrs[k] = [int(x) for x in v]
-        return _real_add_node(self, op_type, inputs, outputs,
-                              op_domain=op_domain, op_version=op_version, **attrs)
-
-    _container.ModelComponentContainer.add_node = _add_node_bool_safe
-    try:
-        onx = to_onnx(clf, initial_types=[("features", FloatTensorType([None, X.shape[1]]))],
-                      options={id(clf): {"zipmap": False}}, target_opset=15)
-    finally:
-        _container.ModelComponentContainer.add_node = _real_add_node
+    onx = to_onnx_bool_safe(clf, X.shape[1])
 
     out = Path(a.out_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -155,18 +178,7 @@ def main() -> int:
     }
     (out / "behavioral_confusion_gbdt.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
-    # Verify the exported graph reproduces sklearn before anything downstream trusts it.
-    import onnxruntime as ort
-    sess = ort.InferenceSession(str(onnx_path))
-    name = sess.get_inputs()[0].name
-    probe = X[:64].astype(np.float32)
-    onnx_p = sess.run(None, {name: probe})[1]
-    onnx_p = np.asarray(onnx_p)[:, 1] if np.asarray(onnx_p).ndim == 2 else np.asarray(onnx_p)
-    skl_p = clf.predict_proba(probe)[:, 1]
-    max_diff = float(np.abs(onnx_p - skl_p).max())
-    print(f"  ONNX vs sklearn max abs prob diff over 64 windows: {max_diff:.2e}")
-    if max_diff > 1e-4:
-        raise SystemExit(f"ONNX export DISAGREES with sklearn (max diff {max_diff:.2e}) — refusing")
+    sess = verify_onnx(onnx_path, clf, X[:64])
     print(f"  outputs: {[(o.name, o.shape) for o in sess.get_outputs()]}")
     print(f"\nwrote {onnx_path}  ({onnx_path.stat().st_size/1024:.0f} KB)")
     print(f"wrote {out / 'behavioral_confusion_gbdt.json'}")

@@ -1,0 +1,288 @@
+{
+  "model": "HistGradientBoostingClassifier (depth 3, class_weight=balanced)",
+  "task": "binary confusion detection from interaction behaviour",
+  "labels": [
+    "not_confused",
+    "confused"
+  ],
+  "input": {
+    "name": "features",
+    "shape": [
+      null,
+      80
+    ],
+    "pipeline": "extract_features(events) -> (30,16) -> aggregate() -> (80,)"
+  },
+  "feature_names_window": [
+    "mouse_entropy",
+    "mouse_velocity_mean",
+    "mouse_velocity_std",
+    "click_count",
+    "hover_dwell_mean",
+    "keystroke_count",
+    "typing_rhythm_std",
+    "backspace_pct",
+    "pause_count",
+    "scroll_velocity_mean",
+    "scroll_direction_changes",
+    "scroll_back_runs",
+    "scroll_inactivity_pct",
+    "idle_time_pct",
+    "blur_time_pct",
+    "tab_switch_count"
+  ],
+  "feature_names_aggregate": [
+    "mouse_entropy_mean",
+    "mouse_entropy_std",
+    "mouse_entropy_min",
+    "mouse_entropy_max",
+    "mouse_entropy_trend",
+    "mouse_velocity_mean_mean",
+    "mouse_velocity_mean_std",
+    "mouse_velocity_mean_min",
+    "mouse_velocity_mean_max",
+    "mouse_velocity_mean_trend",
+    "mouse_velocity_std_mean",
+    "mouse_velocity_std_std",
+    "mouse_velocity_std_min",
+    "mouse_velocity_std_max",
+    "mouse_velocity_std_trend",
+    "click_count_mean",
+    "click_count_std",
+    "click_count_min",
+    "click_count_max",
+    "click_count_trend",
+    "hover_dwell_mean_mean",
+    "hover_dwell_mean_std",
+    "hover_dwell_mean_min",
+    "hover_dwell_mean_max",
+    "hover_dwell_mean_trend",
+    "keystroke_count_mean",
+    "keystroke_count_std",
+    "keystroke_count_min",
+    "keystroke_count_max",
+    "keystroke_count_trend",
+    "typing_rhythm_std_mean",
+    "typing_rhythm_std_std",
+    "typing_rhythm_std_min",
+    "typing_rhythm_std_max",
+    "typing_rhythm_std_trend",
+    "backspace_pct_mean",
+    "backspace_pct_std",
+    "backspace_pct_min",
+    "backspace_pct_max",
+    "backspace_pct_trend",
+    "pause_count_mean",
+    "pause_count_std",
+    "pause_count_min",
+    "pause_count_max",
+    "pause_count_trend",
+    "scroll_velocity_mean_mean",
+    "scroll_velocity_mean_std",
+    "scroll_velocity_mean_min",
+    "scroll_velocity_mean_max",
+    "scroll_velocity_mean_trend",
+    "scroll_direction_changes_mean",
+    "scroll_direction_changes_std",
+    "scroll_direction_changes_min",
+    "scroll_direction_changes_max",
+    "scroll_direction_changes_trend",
+    "scroll_back_runs_mean",
+    "scroll_back_runs_std",
+    "scroll_back_runs_min",
+    "scroll_back_runs_max",
+    "scroll_back_runs_trend",
+    "scroll_inactivity_pct_mean",
+    "scroll_inactivity_pct_std",
+    "scroll_inactivity_pct_min",
+    "scroll_inactivity_pct_max",
+    "scroll_inactivity_pct_trend",
+    "idle_time_pct_mean",
+    "idle_time_pct_std",
+    "idle_time_pct_min",
+    "idle_time_pct_max",
+    "idle_time_pct_trend",
+    "blur_time_pct_mean",
+    "blur_time_pct_std",
+    "blur_time_pct_min",
+    "blur_time_pct_max",
+    "blur_time_pct_trend",
+    "tab_switch_count_mean",
+    "tab_switch_count_std",
+    "tab_switch_count_min",
+    "tab_switch_count_max",
+    "tab_switch_count_trend"
+  ],
+  "trained_on": {
+    "corpus": "DUX v0+v1 (Zenodo 10.5281/zenodo.7778612, CC BY 4.0)",
+    "input": "platform-matched (training/behavioral/review/input_matched.py): pointer resampled to one sample per 100 ms, one click per press, windows scored from one event",
+    "label_source": "emotion_manual_Confusion >= 1.0, HUMAN annotation",
+    "n_windows": 1421,
+    "n_sessions": 46,
+    "n_confused": 257,
+    "positive_rate": 0.18085855031667838,
+    "fit": "all windows (hyperparameters fixed by the deployed model's LOPO)"
+  },
+  "honest_performance_loso": {
+    "source": "reports/dux_review/input_matched.json (matched_serving_rule)",
+    "auc": 0.7030767379357374,
+    "auc_ci95_session": [
+      0.6746348311883352,
+      0.7311514975219187
+    ],
+    "cohen_kappa_at_0.5": 0.21129145882403166,
+    "average_precision": 0.29399255478483516,
+    "base_rate": 0.18085855031667838,
+    "permutation_p_within_session": 0.0004997501249375312,
+    "held_out_score_max": 0.8185622138447194,
+    "held_out_score_p99": 0.7751406964290463,
+    "deployed_model_on_the_same_input_auc": 0.6775249971537065
+  },
+  "gate": {
+    "source": "reports/dux_review/gate_sweeps.json (matched_serving_rule_interaction|deployed) and nested_floor.json",
+    "rule": "offline = evaluation/gate_calibration.simulate (both readings >= floor; streak counts through cooldown; next offer at k+4). deployed = edges.passes_adaptation_gate (current reading >= floor and previous reading same state P>=0.5; next offer at k+3).",
+    "sweep": [
+      {
+        "threshold": null,
+        "interventions": 1421,
+        "correct": 257,
+        "precision": 0.18085855031667838,
+        "interventions_per_hour": 120.0,
+        "ci95_session": null
+      },
+      {
+        "threshold": 0.5,
+        "interventions": 144,
+        "correct": 46,
+        "precision": 0.3194444444444444,
+        "interventions_per_hour": 12.160450387051371,
+        "ci95_session": [
+          0.23910455486542445,
+          0.39375473484848483
+        ]
+      },
+      {
+        "threshold": 0.55,
+        "interventions": 128,
+        "correct": 41,
+        "precision": 0.3203125,
+        "interventions_per_hour": 10.809289232934553,
+        "ci95_session": [
+          0.23942085347908346,
+          0.3984389685150376
+        ]
+      },
+      {
+        "threshold": 0.6,
+        "interventions": 109,
+        "correct": 34,
+        "precision": 0.3119266055045872,
+        "interventions_per_hour": 9.20478536242083,
+        "ci95_session": [
+          0.21782178217821782,
+          0.4035172064777327
+        ]
+      },
+      {
+        "threshold": 0.65,
+        "interventions": 90,
+        "correct": 27,
+        "precision": 0.3,
+        "interventions_per_hour": 7.600281491907108,
+        "ci95_session": [
+          0.19753086419753085,
+          0.4056637954607602
+        ]
+      },
+      {
+        "threshold": 0.7,
+        "interventions": 63,
+        "correct": 17,
+        "precision": 0.2698412698412698,
+        "interventions_per_hour": 5.320197044334975,
+        "ci95_session": [
+          0.16437845021468,
+          0.38235294117647056
+        ]
+      },
+      {
+        "threshold": 0.75,
+        "interventions": 24,
+        "correct": 7,
+        "precision": 0.2916666666666667,
+        "interventions_per_hour": 2.0267417311752287,
+        "ci95_session": [
+          0.11764705882352941,
+          0.4706656346749222
+        ]
+      },
+      {
+        "threshold": 0.8,
+        "interventions": 4,
+        "correct": 1,
+        "precision": 0.25,
+        "interventions_per_hour": 0.3377902885292048,
+        "ci95_session": [
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "threshold": 0.85,
+        "interventions": 0,
+        "correct": 0,
+        "precision": null,
+        "interventions_per_hour": 0.0,
+        "ci95_session": [
+          null,
+          null
+        ]
+      },
+      {
+        "threshold": 0.9,
+        "interventions": 0,
+        "correct": 0,
+        "precision": null,
+        "interventions_per_hour": 0.0,
+        "ci95_session": [
+          null,
+          null
+        ]
+      }
+    ],
+    "prespecified_floor": null,
+    "prespecified_rule": "lowest floor with gated precision >= 2.0 x base rate and >= 10 offers",
+    "prespecified_outcome": "no floor qualifies on the full out-of-fold predictions",
+    "nested_held_out": {
+      "held_out_offers": 61,
+      "held_out_correct": 21,
+      "held_out_precision": 0.3442622950819672,
+      "held_out_precision_ci95_session": [
+        0.22388059701492538,
+        0.4615740740740739
+      ],
+      "lift": 1.9034891879823947,
+      "chosen_floor_distribution": {
+        "0.5": 7,
+        "0.55": 11,
+        "0.6": 7,
+        "0.65": 5,
+        "0.7": 6,
+        "0.9": 10
+      }
+    }
+  },
+  "calibration_uncalibrated": {
+    "ece_10_equal_width": 0.2045103352847783,
+    "brier": 0.19512270272253984,
+    "mean_predicted": 0.38536888560145666,
+    "base_rate": 0.18085855031667838
+  },
+  "limitations": [
+    "DUX participants filled in business expense forms, not lessons: the input is matched to the platform, the activity is not. Nothing here measures detection on lesson pages.",
+    "Under the deployed gate rule its offers are correct about 30% of the time (base rate 18%), lower than the native model on native input.",
+    "Scores are not calibrated probabilities (ECE about 0.20): a floor is a rank threshold.",
+    "Binary: confusion only. The negative class means 'not annotated as confused'.",
+    "DUX sessions are not verified as distinct people."
+  ]
+}
