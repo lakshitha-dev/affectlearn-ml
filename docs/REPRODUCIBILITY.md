@@ -1,6 +1,6 @@
 # Reproducing the paper's system and results
 
-This supports paper V4 ("A Gated Affective Multi-Agent System for Pedagogical Adaptation in Online Learning"). It records what the code alone does not: the deployed configuration, where the prompts live, and how each reported number is produced.
+This supports the project's conference paper. It records what the code alone does not: the deployed configuration, where the prompts live, and how each reported number is produced.
 
 ## 1. Deployed configuration against code defaults
 
